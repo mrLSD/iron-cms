@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+{{append . "moreStyles" "/bootstrap/css/bootstrap.min.css" -}}
+{{append . "moreStyles" "/font-awesome/css/font-awesome.min.css" -}}
+{{append . "moreStyles" "/css/bootstrap-yii.css" -}}
+{{append . "moreStyles" "/css/jquery-ui-bootstrap.css" -}}
+{{append . "moreStyles" "/css/redactor.css" -}}
+{{append . "moreStyles" "/themes/admin/metismenu/metisMenu.min.css" -}}
+{{append . "moreStyles" "/themes/admin/css/fancybox/jquery.fancybox-1.3.4.css" -}}
+{{append . "moreStyles" "/themes/admin/css/style.css?v=2" -}}
+{{append . "moreStyles" "/themes/admin/css/all.css?v=2" -}}
+{{append . "moreStyles" "/themes/admin/css/buttons.css?v=2" -}}
+
+{{append . "moreScripts" "/bootstrap/js/bootstrap.min.js" -}}
+{{append . "moreScripts" "/js/bootstrap-noconflict.js" -}}
+{{append . "moreScripts" "/bootbox/bootbox.min.js" -}}
+{{append . "moreScripts" "/notify/notify.min.js" -}}
+{{append . "moreScripts" "/js/redactor.min.js" -}}
+{{append . "moreScripts" "/js/jquery.yiiactiveform.js" -}}
+{{append . "moreScripts" "/themes/admin/js/jquery.jtabs.js" -}}
+{{append . "moreScripts" "/js/jquery-ui-no-conflict.min.js" -}}
+{{append . "moreScripts" "/themes/admin/metismenu/metisMenu.min.js" -}}
+{{append . "moreScripts" "/themes/admin/js/main.js" -}}
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin area | yogaGo - {{.title}}</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/public/themes/admin/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" media="handheld" href="/public/themes/admin/css/handheld.css?v=2">
+{{range .moreStyles}}
+  <link rel="stylesheet" type="text/css" href="/public{{.}}">
+{{end}}
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{range .moreScripts}}
+  <script type="text/javascript" charset="utf-8" src="/public/{{.}}"></script>
+{{end}}
+</head><body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="/admin"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Preview</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{.userEmail}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/logout/">Exit</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

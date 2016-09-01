@@ -1,11 +1,8 @@
-extern crate time;
-
 use router::Router;
 use iron::prelude::*;
 use iron::status;
 use hbs::{Template};
-use rustc_serialize::json::{ToJson};
-use std::collections::BTreeMap;
+use time;
 
 pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes.get("/admin/login.html", admin_handler, "admin_login");
@@ -18,9 +15,10 @@ fn admin_handler(_: &mut Request) -> IronResult<Response> {
     let time = time::now();
     let t = format!("Current date: {}", time.strftime("%Y-%m-%d %T").unwrap());
 
-    let mut data = BTreeMap::new();
-    data.insert("name".to_string(), "mrLSD".to_json());
-    data.insert("date".to_string(), t.to_json());
+    let data = btreemap! {
+        "name".to_string() => "mrLSD".to_string(),
+        "date".to_string() => t.to_string()
+    };
 
     resp.set_mut(Template::new("admin/hello", data)).set_mut(status::Ok);
     Ok(resp)

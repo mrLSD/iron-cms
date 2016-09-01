@@ -4,9 +4,13 @@ extern crate iron_cms;
 use iron::{Iron, Chain};
 
 fn main() {
-    let routes = iron_cms::routes();
-    let mut chain = Chain::new(routes);
-    chain.link_after(iron_cms::template());
-    chain.link_after(iron_cms::Error404);
+    // Add routers
+    let mut chain = Chain::new(iron_cms::routes());
+    // Add Template renderer and views path
+    let paths = vec!["./views/"];
+    chain.link_after(iron_cms::middleware::template_render(paths));
+    // Add error-404 handler
+    chain.link_after(iron_cms::middleware::Error404);
+    // Start application
     Iron::new(chain).http("localhost:3000").unwrap();
 }

@@ -5,33 +5,35 @@ extern crate rustc_serialize;
 extern crate staticfile;
 extern crate mount;
 extern crate time;
+#[macro_use]
+extern crate maplit;
+
+pub mod middleware;
 
 mod admin;
 mod frontend;
-mod middleware;
 
-pub use middleware::Error404;
+//pub use middleware::error404;
 use router::Router;
-use hbs::{HandlebarsEngine};
 
 use staticfile::Static;
 use mount::Mount;
 use std::path::Path;
 
+/// Routes aggregator.
+/// It accamilate all posible routes
 pub fn routes() -> Mount {
+    // Init router
     let mut routes = Router::new();
+
+    // Add routes
     frontend::add_routes(&mut routes);
     admin::add_routes(&mut routes);
 
+    // Add static router
     let mut mount = Mount::new();
     mount
         .mount("/", routes)
         .mount("/assets/", Static::new(Path::new("static")));
     mount
-}
-
-pub fn template() -> HandlebarsEngine {
-    let mut tmpl = HandlebarsEngine::new();
-    middleware::template(&mut tmpl, "./views/");
-    tmpl
 }

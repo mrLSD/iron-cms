@@ -1,0 +1,111 @@
+.logo {
+    background:url(../images/logo.png) no-repeat;
+    background-size: contain;
+    width: 147px;
+    height: 30px;
+    display:block;
+    text-indent:-9999px;
+    overflow:hidden;
+    margin-top: 10px;
+    margin-left: 5px !important;
+}
+
+.sidebar {
+    height:100%;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 50px 0 20px;
+    z-index:300;
+    overflow:auto;
+    font-size: 14px;
+}
+@media (min-width: 768px) {
+    .sidebar {
+        position:fixed;
+        top:0;
+        left:0;
+    }
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #e7e7e7;
+}
+.sidebar .nav-second-level li, #sidebar .nav-third-level li {
+    border-bottom: 0!important;
+}
+.sidebar .nav-second-level li a {
+    padding-left: 37px;
+}
+.sidebar ul li.active>a {
+    background-color: #eee;
+}
+.sidebar ul li.active>a[aria-expanded="true"] {
+    background-color: #f8f8f8;
+}
+#container{
+    min-height:100%;
+    padding:0 0 0 250px;
+}
+.main {
+    margin-top: 61px;
+}
+.main:after {
+    clear: both;
+    content:'';
+    display: block;
+}
+@media only screen and (max-width: 760px), (max-device-width: 1024px) and (min-device-width: 768px) {
+    .toggle-column {
+        text-align: left;
+        width: auto;
+    }
+}
+.ct-form-control {
+    min-width: auto;
+}
+
+.ui-autocomplete {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 300px;
+}
+.ui-autocomplete-loading {
+    background: url(../images/icon-ajax-uploader.gif) no-repeat;
+    background-position: right center;
+}
+
+ul.files > li {
+    height: auto!important;
+    position: relative;
+    vertical-align: top;
+ }
+ul.files > li .active-buttons {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+ul.files.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+ul.files .progress {
+    width: 100%;
+}
+.template-upload {
+    margin-bottom: 20px;
+}
+.template-upload span.fade {
+    display: block; overflow:hidden;
+}
+.template-download {
+   overflow: hidden;
+}
+.tab-content {
+    padding-top: 50px;
+}
+
+.form-horizontal .form-inline .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}

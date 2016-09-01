@@ -1,7 +1,8 @@
 [root]
 name = "iron-cms"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
+ "handlebars 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars-iron 0.19.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "iron 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "maplit 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",

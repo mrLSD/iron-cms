@@ -1,6 +1,7 @@
 extern crate iron;
 extern crate router;
 extern crate handlebars_iron as hbs;
+extern crate handlebars;
 extern crate rustc_serialize;
 extern crate staticfile;
 extern crate mount;

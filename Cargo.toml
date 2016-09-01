@@ -1,6 +1,6 @@
 [package]
 name = "iron-cms"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
 
 [dependencies]
@@ -12,3 +12,4 @@ time = "0.1.35"
 staticfile = "0.3.0"
 mount = "0.2.1"
 maplit = "0.1.4"
+handlebars = "*"

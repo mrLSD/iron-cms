@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 /// # Render engine middlware
 /// Currently only `HandlebarsEngine` support
 ///
@@ -18,10 +19,11 @@
 /// chain.link_after(iron_cms::middleware::template_render(paths));
 /// ```
 /// it's included paths ./views/**/*
-#![allow(dead_code)]
+
 use hbs::{HandlebarsEngine, DirectorySource};
 use handlebars::{Handlebars, RenderError, RenderContext, Helper, Context};
 use time;
+use std::error::Error;
 
 /// Init Template renderer and add Tempaltes path.
 /// It invoke to after middleware
@@ -45,7 +47,7 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
     // load templates from all registered sources
     if let Err(r) = template.reload() {
         // Paniced cause it critical situation
-        panic!("{:?}", r);
+        panic!("{:?}", r.description());
     }
     template
 }

@@ -1,15 +1,18 @@
 #![allow(dead_code)]
 use hbs::{HandlebarsEngine, DirectorySource};
 use handlebars::{Handlebars, RenderError, RenderContext, Helper, Context};
+use time;
 
 /// Init Template renderer and add Tempaltes path.
 /// It invoke to after middleware
 pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
-    let mut template = HandlebarsEngine::new();
+    let mut hregistry = Handlebars::new();
 
     // Add helpers
-    template.register_helper("link", Box::new(link_helper));
-    template.register_helper("script", Box::new(script_helper));
+    hregistry.register_helper("link", Box::new(link_helper));
+    hregistry.register_helper("script", Box::new(script_helper));
+
+    let mut template = HandlebarsEngine::from(hregistry);
 
     // add a directory source, all files with .html suffix
     // will be loaded as template
@@ -19,7 +22,7 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
 
     // load templates from all registered sources
     if let Err(r) = template.reload() {
-        panic!("{}", r);
+        panic!("{:?}", r);
     }
     template
 }
@@ -27,10 +30,23 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
 /// Css link Helper
 /// usege: `{{#link ...}}`
 fn link_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-    let css_links = h.param(0).unwrap().value().as_array().unwrap();
     let mut css = "".to_owned();
-    for link in css_links.iter() {
-        css = format!("{}\t<link rel=\"stylesheet\" type=\"text/css\" href=\"{}\">\n", css, link);
+    if h.params().len() == 1 {
+        let value = h.param(0).unwrap().value();
+        if value.is_array() {
+            let css_links = value.as_array().unwrap();
+            for link in css_links.iter() {
+                if link.is_string() {
+                    css = format!("{}\t<link rel=\"stylesheet\" type=\"text/css\" href=\"{}\">\n", css, link.as_string().unwrap());
+                } else {
+                    helper_log(&h, rc, "wrong array value type - string expected")
+                }
+            }
+        } else {
+            helper_log(&h, rc, "wrong type - array expected")
+        }
+    } else {
+        helper_log(&h, rc, "wrong params count")
     }
     try!(rc.writer.write(css.into_bytes().as_ref()));
     Ok(())
@@ -39,8 +55,32 @@ fn link_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) 
 /// Js link Helper
 /// usege: `{{#script ...}}`
 fn script_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-    let js_link = h.param(0).unwrap().value().as_string().unwrap();
-    let js = format!("\t<script type=\"text/javascript\" charset=\"utf-8\" src=\"{}\"></script>\n", js_link);
+    let mut js = "".to_owned();
+    if h.params().len() == 1 {
+        let value = h.param(0).unwrap().value();
+        if value.is_array() {
+            let js_links = value.as_array().unwrap();
+            for link in js_links.iter() {
+                if link.is_string() {
+                    js = format!("{}\t<script type=\"text/javascript\" charset=\"utf-8\" src=\"{}\"></script>\n", js, link.as_string().unwrap());
+                } else {
+                    helper_log(&h, rc, "wrong array value type - string expected")
+                }
+            }
+        } else {
+            helper_log(&h, rc, "wrong type - array expected")
+        }
+    } else {
+        helper_log(&h, rc, "wrong params count")
+    }
     try!(rc.writer.write(js.into_bytes().as_ref()));
     Ok(())
+}
+
+fn helper_log(h: &Helper, rc: &mut RenderContext, message: &str) {
+    println!("{} {:?} |> Helper[{}]: {}",
+                time::now().strftime("%Y-%m-%d %T").unwrap(),
+                rc.current_template,
+                h.name(),
+                message);
 }

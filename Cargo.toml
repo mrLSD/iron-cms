@@ -1,15 +1,15 @@
 [package]
 name = "iron-cms"
-version = "0.2.3"
+version = "0.2.4"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
 
 [dependencies]
 iron = "0.4.0"
-router = "0.4.0"
-handlebars-iron = "0.19.1"
-rustc-serialize = "0.3.19"
-time = "0.1.35"
-staticfile = "0.3.0"
-mount = "0.2.1"
-maplit = "0.1.4"
+router = "*"
+handlebars-iron = "*"
+rustc-serialize = "*"
+time = "*"
+staticfile = "*"
+mount = "*"
+maplit = "*"
 handlebars = "*"

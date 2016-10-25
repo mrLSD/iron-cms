@@ -19,10 +19,28 @@
 /// chain.link_after(iron_cms::middleware::template_render(paths));
 /// ```
 /// it's included paths ./views/**/*
-
+use iron::prelude::*;
+use iron::status;
 use hbs::{HandlebarsEngine, DirectorySource};
 use handlebars::{Handlebars, RenderError, RenderContext, Helper, Context};
 use std::error::Error;
+use std::collections::BTreeMap;
+use rustc_serialize::json::{Json, ToJson};
+use hbs::{Template};
+
+pub type BaseDataMap = BTreeMap<String, Json>;
+pub type RenderResult = IronResult<Response>;
+pub struct Render {
+    pub data : BTreeMap<String, Json>
+}
+
+impl Render {
+    pub fn new<T: ToJson>(name: &str, data: T) -> IronResult<Response> {
+        let mut resp = Response::new();
+        resp.set_mut(Template::new(name, data)).set_mut(status::Ok);
+        Ok(resp)
+    }
+}
 
 /// Init Template renderer and add Tempaltes path.
 /// It invoke to after middleware

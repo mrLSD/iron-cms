@@ -1,8 +1,7 @@
 use router::Router;
 use iron::prelude::*;
-use iron::status;
-use hbs::{Template};
 use time;
+pub use super::middleware::*;
 
 mod main;
 mod pages;
@@ -14,9 +13,7 @@ pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes
 }
 
-fn admin_login_handler(_: &mut Request) -> IronResult<Response> {
-    let mut resp = Response::new();
-
+fn admin_login_handler(_: &mut Request) -> RenderResult {
     let time = time::now();
     let t = format!("Current date: {}", time.strftime("%Y-%m-%d %T").unwrap());
 
@@ -25,6 +22,5 @@ fn admin_login_handler(_: &mut Request) -> IronResult<Response> {
         "date".to_string() => t.to_string()
     };
 
-    resp.set_mut(Template::new("admin/main/index", data)).set_mut(status::Ok);
-    Ok(resp)
+    Render::new("admin/main/index", data)
 }

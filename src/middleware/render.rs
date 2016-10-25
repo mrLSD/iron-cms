@@ -28,12 +28,18 @@ use std::collections::BTreeMap;
 use rustc_serialize::json::{Json, ToJson};
 use hbs::{Template};
 
+/// Alias for Basic Data struct
 pub type BaseDataMap = BTreeMap<String, Json>;
+/// Alias for basic Iron Response Result
 pub type RenderResult = IronResult<Response>;
+/// Templфte Render strшct
 pub struct Render {
-    pub data : BTreeMap<String, Json>
+    pub data : BaseDataMap
 }
 
+/// Basic render with StatusOK tempalte name and data
+/// basic usage:
+/// `Render::new("my/template/path", ())``
 impl Render {
     pub fn new<T: ToJson>(name: &str, data: T) -> IronResult<Response> {
         let mut resp = Response::new();

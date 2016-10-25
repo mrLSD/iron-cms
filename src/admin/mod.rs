@@ -8,7 +8,8 @@ mod pages;
 
 pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes.get("/admin.html", main::main_handler, "admin_main");
-    routes.get("/admin/pages/index.html", pages::main_handler, "admin_pages_main");
+    routes.get("/admin/pages.html", pages::main_handler, "admin_pages_main");
+    routes.get("/admin/pages/create.html", pages::create_handler, "admin_pages_create");
     routes.get("/admin/login.html", admin_login_handler, "admin_login");
     routes
 }
@@ -18,7 +19,7 @@ fn admin_login_handler(_: &mut Request) -> RenderResult {
     let t = format!("Current date: {}", time.strftime("%Y-%m-%d %T").unwrap());
 
     let data = btreemap! {
-        "name".to_string() => "mrLSD".to_string(),
+        "name".to_string() => "Iron CMS".to_string(),
         "date".to_string() => t.to_string()
     };
 

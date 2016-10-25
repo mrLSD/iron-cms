@@ -18,8 +18,12 @@ mod frontend;
 use router::Router;
 
 use staticfile::Static;
+#[cfg(feature = "cache")]
+use staticfile::Cache;
 use mount::Mount;
 use std::path::Path;
+#[cfg(feature = "cache")]
+use time::Duration;
 
 /// Routes aggregator.
 /// It accamilate all posible routes
@@ -33,6 +37,10 @@ pub fn routes() -> Mount {
 
     // Add static router
     let mut mount = Mount::new();
+//    mount
+//        .mount("/", routes)
+//        .mount("/assets/", Static::new(Path::new("static"))
+//            .cache(Duration::days(30)));
     mount
         .mount("/", routes)
         .mount("/assets/", Static::new(Path::new("static")));

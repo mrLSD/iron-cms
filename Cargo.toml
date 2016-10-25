@@ -13,3 +13,5 @@ staticfile = "*"
 mount = "*"
 maplit = "*"
 handlebars = "*"
+
+[features]

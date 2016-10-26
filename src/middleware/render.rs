@@ -22,7 +22,6 @@
 
 use hbs::{HandlebarsEngine, DirectorySource};
 use handlebars::{Handlebars, RenderError, RenderContext, Helper, Context};
-use time;
 use std::error::Error;
 
 /// Init Template renderer and add Tempaltes path.
@@ -34,6 +33,7 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
     // Add helpers to Handlebars
     hregistry.register_helper("link", Box::new(link_helper));
     hregistry.register_helper("script", Box::new(script_helper));
+    hregistry.register_helper("active", Box::new(active_page));
 
     // Our instance HandlebarsEngine depended of Handlebars
     let mut template = HandlebarsEngine::from(hregistry);
@@ -86,12 +86,17 @@ fn script_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext
     Ok(())
 }
 
-/// Helper logger (currently simple stdout)
-/// Pretty log with Time, Template name, Helper name, Message
-fn helper_log(h: &Helper, rc: &mut RenderContext, message: &str) {
-    println!("{} \n\t |> Template:{:?} \n\t |> Helper[{}] \n\t |> Message: {}",
-                time::now().strftime("%Y-%m-%d %T").unwrap(),
-                rc.current_template,
-                h.name(),
-                message);
+fn active_page(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+    let exact_page = try!(h.param(0)
+            .and_then(|v| v.value().as_string())
+            .ok_or(RenderError::new("|> active_page - param 1 with string type is required")));
+    let active_page = try!(h.param(1)
+            .and_then(|v| v.value().as_string())
+            .ok_or(RenderError::new("|> active_page - param 2 with string type is required")));
+    let mut active = "".to_owned();
+    if exact_page == active_page {
+        active = "active".to_owned();
+    }
+    try!(rc.writer.write(active.into_bytes().as_ref()));
+    Ok(())
 }

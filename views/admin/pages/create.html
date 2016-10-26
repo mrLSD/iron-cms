@@ -1,6 +1,33 @@
 {{#partial content}}
+{{> admin/pages/_form.js }}
 <div class="page-title">
-	<h2>admin/pages/create</h2>
+    <a href="/admin/pages.html" class="go-back">go back</a>
+    <h2>Page <span>Add new</span></h2>
 </div>
+<div class="content-box">
+        <div class="box-header empty"></div>
+        <div class="box-content">
+            <form id="page-form" method="POST" action="/admin/pages/create.html">
+                <fieldset class="form">
+                    <div class="page-title-row">
+                        <a href="#" class="btn-6 show-additional"><em class="add"></em><span>Show Additional Options</span></a>
+                        <label for="pages_title" class="required">Title <span class="required">*</span></label>
+                        <div class="input-holder">
+                            <input maxlength="1000" class="large" name="pages[title]" id="pages_title" type="text" value="" />
+                            <div class="errorMessage" id="Pages_title_em_" style="display:none"></div>
+                        </div>
+                    </div>
+                    {{> admin/pages/_options}}
+                    {{> admin/pages/_tabs}}
+                    <div class="buttons">
+                        <button class="btn-4" type="submit"><span>Save</span></button>
+                        <button class="btn-8" type="button" onclick="window.location = '/admin/pages.hmtl'"><span>Cancel</span></button>
+                        <button class="btn-4" type="button" onclick="window.location = '/admin/pages/view.html'"><span>View</span></button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+</div>
+
 {{/partial}}
 {{~> admin/layout/main ~}}

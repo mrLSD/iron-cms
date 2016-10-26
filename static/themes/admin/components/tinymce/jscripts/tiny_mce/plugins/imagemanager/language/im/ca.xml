@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+    <header>
+        <author>Moxiecode Systems AB</author>
+        <version minor="2" major="0" releasedate="2005-10-28" />
+        <description>
+            Aquest és el paquet d'idioma en català de MCFileManager.
+        </description>
+    </header>
+
+    <language code="ca" title="Català" dir="ltr">
+        <group target="common">
+            <item name="exe">Fitxer Executable</item>
+            <item name="image">Fitxer d'Imatge</item>
+            <item name="archive">Fitxer Comprimit</item>
+            <item name="html">Fitxer HTML o Script</item>
+            <item name="movie">Fitxer de Mitjans</item>
+            <item name="sound">Fitxer de so</item>
+            <item name="swf">Fitxer Flash</item>
+            <item name="powerpoint">Fitxer Powerpoint</item>
+            <item name="document">Fitxer de Document</item>
+            <item name="word">Document d'Office</item>
+            <item name="pdf">Fitxer Adobe acrobat</item>
+            <item name="excel">Fitxer Excel</item>
+            <item name="txt">Fitxer de text</item>
+            <item name="xml">Fitxer XML</item>
+        </group>
+
+        <group target="frameset">
+            <item name="title">Moxiecode File Browser</item>
+        </group>
+
+        <group target="filelist">
+            <item name="title">Moxiecode File Browser</item>
+            <item name="filename">Nom de Fitxer</item>
+            <item name="size">Mida</item>
+            <item name="modified">Data de Modificació</item>
+            <item name="confirm_cut">Esteu segurs de voler tallar i moure els Fitxers seleccionats?</item>
+            <item name="confirm_copy">Esteu segurs de voler copiar els Fitxers seleccionats?</item>
+            <item name="confirm_paste">Esteu segurs de voler col·locar els Fitxers seleccionats del portapapers?</item>
+            <item name="confirm_delete">Esteu segurs de voler esborrar els Fitxers seleccionats?</item>
+            <item name="confirm_unzip">Esteu segurs de voler descomprimir el Fitxer seleccionat?\n Si el Fitxer comprimit és massa gran, l'acció trigarà una estona.</item>
+            <item name="zip_removed">Els següents Fitxers han estat esborrats degut a que no són Fitxers comprimits (zip).</item>
+            <item name="createdir">Crear Directori</item>
+            <item name="createdoc">Crear Fitxer</item>
+            <item name="refresh">Actualitzar</item>
+            <item name="upload">Pujar un Fitxer nou</item>
+            <item name="download">Descarregar Fitxers seleccionats</item>
+            <item name="props">Propietats de Fitxer/Directori</item>
+            <item name="cut">Tallar Fitxers/directoris seleccionats</item>
+            <item name="copy">Copiar Fitxers/directoris seleccionats</item>
+            <item name="paste">Enganxar Fitxers/directoris seleccionats</item>
+            <item name="delete">Esborrar Fitxers/directoris seleccionats</item>
+            <item name="unzip">Descomprimir el Fitxer seleccionat</item>
+            <item name="zip">Comprimir els Fitxers/directoris seleccionats</item>
+            <item name="imagemanager"> Canviar a ImageManager</item>
+            <item name="dir">Directori</item>
+            <item name="parent_dir">Directori Arrel</item>
+            <item name="toggle_all">Alternar amb Tots</item>
+            <item name="error_exists">Error: El Fitxer/directori {path} ja existeix.</item>
+            <item name="error_delete_failed">Error: No teniu accés a esborrar Fitxers o Directoris.</item>
+            <item name="error_directory_not_empty">Error: El directori {path} no ha pogut ser esborrat ja que no és buit.</item>
+        </group>
+
+        <group target="preview">
+            <item name="title">Informació de Fitxer / Directori</item>
+            <item name="directory_information">Informació de Directori</item>
+            <item name="file_information">Informació de Fitxer</item>
+            <item name="creationdate">Data de creació:</item>
+            <item name="modificationdate">Data de Modificació:</item>
+            <item name="access">Accés:</item>
+            <item name="directory">Directori:</item>
+            <item name="subdirectories">Subdirectoris:</item>
+            <item name="files">Fitxers:</item>
+            <item name="total_file_size">Mida total:</item>
+            <item name="filename">Nom:</item>
+            <item name="file_size">Mida:</item>
+            <item name="file_description">descripció:</item>
+            <item name="preview">Previsualitzar</item>
+            <item name="no_preview">No es pot previsualitzar.</item>
+            <item name="button_select">Seleccionar</item>
+            <item name="button_view">Veure</item>
+            <item name="readable">Lectura</item>
+            <item name="not_readable">No lectura</item>
+            <item name="writable">Escriptura</item>
+            <item name="not_writable">No escriptura</item>
+        </group>
+
+        <group target="fileprops">
+            <item name="title">Propietats de Fitxer / Directori</item>
+            <item name="description">Propietats de Fitxer / Directori</item>
+            <item name="properties_on">Propietats a:</item>
+            <item name="name">Nom:</item>
+            <item name="button_save">Guardar</item>
+            <item name="button_cancel">Cancel·lar</item>
+            <item name="error_exists">Error: Un fitxer o directori amb el nom especificat ja existeix.</item>
+        </group>
+
+        <group target="createdir">
+            <item name="title">Crear directori</item>
+            <item name="description">Introduïu el nom del directori que voleu crear.</item>
+            <item name="template">Plantilla:</item>
+            <item name="select_template">-- Seleccionar Plantilla --</item>
+            <item name="directory_name">Nom del Directori:</item>
+            <item name="create_in">Crear a:</item>
+            <item name="button_create">Crear</item>
+            <item name="button_cancel">Cancel·lar</item>
+            <item name="error_missing_name">Error: Cal que especifiqueu un nom.</item>
+            <item name="error_invalid_template_selection">Error: Cal que seleccioneu una plantilla.</item>
+            <item name="error_template_not_found">Error: La plantilla seleccionada no s'ha pogut localitzar.</item>
+            <item name="error_invalid_name">Error: El nom del directori que intenteu crear és invàlid.\\ninclou caràcters no vàlidos com ara: :;</item>
+            <item name="error_exists">Error: El nom del directori especificat ja existeix.</item>
+        </group>
+
+        <group target="createdoc">
+            <item name="title">Crear document</item>
+            <item name="description">Ompleneu el formulari per crear un nou document a partir de la plantilla.</item>
+            <item name="template">Plantilla:</item>
+            <item name="select_template">-- Seleccionar Plantilla --</item>
+            <item name="required_filename">Cal que escrigueu un nom de Fitxer per al nou document.</item>
+            <item name="filename">Nom de Fitxer:</item>
+            <item name="create_in">Crear a:</item>
+            <item name="button_create">Crear</item>
+            <item name="button_cancel">Cancel·lar</item>
+            <item name="error_missing_document_name">Error: Cal que especifiqueu el nom del document.</item>
+            <item name="error_missing_template_selection">Error: Cal que seleccioneu una plantilla.</item>
+            <item name="error_missing_template">Error: La plantilla seleccionada no s'ha pogut trobar.</item>
+            <item name="error_invalid_file_name">Error: El nom del fitxer que intenteu crear no és vàlid.\\ninclou caràcters no vàlids com ara:;.</item>
+            <item name="error_exists">Error: El nom del fitxer ja existeix.</item>
+        </group>
+
+        <group target="upload">
+            <item name="title">Pujar</item>
+            <item name="description">Useu el formulari per pujar fitxers.</item>
+            <item name="upload_in">Pujar a:</item>
+            <item name="valid_extensions">Extensions vàlides:</item>
+            <item name="max_upload_size">Mida màxima permesa:</item>
+            <item name="file_to_upload">Fitxer per pujar:</item>
+            <item name="as_file_name">Amb nom de fitxer:</item>
+            <item name="required_filename">Cal que escrigueu un nom de fitxer per al fitxer que vulgueu pujar.</item>
+            <item name="button_upload">Pujar</item>
+            <item name="button_add_upload">Agregar Casella</item>
+            <item name="button_cancel">Cancel·lar</item>
+            <item name="error_exists">Error: El fitxer que intenteu pujar ja existeix.</item>
+            <item name="error_to_large">Error: El fitxer que intenteu pujar sobrepassa el límit de la mida permesa.</item>
+            <item name="remove">Treure</item>
+        </group>
+
+        <group target="unzip">
+            <item name="title">Resum de fitxer comprimit</item>
+            <item name="description">Resum dels fitxers comprimits seleccionats.</item>
+            <item name="zipfile_name">Nom del fitxer comprimit:</item>
+            <item name="current_folder">Carpeta actual:</item>
+            <item name="overwrite_files">Fitxers reescrits:</item>
+            <item name="name">Nom</item>
+            <item name="size">Mida</item>
+            <item name="csize">Cmida</item>
+            <item name="exists">Existeix</item>
+            <item name="status">Estat</item>
+            <item name="created">Creat</item>
+            <item name="button_unzip">Descomprimir</item>
+            <item name="button_cancel">Cancel·lar</item>
+            <item name="button_back">Enrera</item>
+            <item name="button_close">Tancar</item>
+            <item name="Accepted">Acceptat</item>
+            <item name="Denied">Denegat</item>
+            <item name="Passed">Passat</item>
+            <item name="Failed">Fallit</item>
+            <item name="Yes">Sí</item>
+            <item name="No">No</item>
+        </group>
+
+        <group target="zip">
+            <item name="title">Crear zip</item>
+            <item name="description">Escrigueu el nom del fitxer zip que voleu crear.</item>
+            <item name="created_in">El fitxer zip serà creat a:</item>
+            <item name="name">Nom:</item>
+            <item name="required_filename">Cal que escrigueu un nom.</item>
+            <item name="button_create">Crear</item>
+            <item name="button_cancel">Cancel·lar</item>
+        </group>
+    </language>
+</language-pack>

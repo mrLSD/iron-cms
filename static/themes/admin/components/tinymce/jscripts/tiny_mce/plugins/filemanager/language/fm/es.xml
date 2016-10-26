@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+	<header>
+		<author>Moxiecode Systems AB</author>
+		<version minor="2" major="0" releasedate="2005-10-28" />
+		<description>
+			Este es el paquete de lenguaje en español de MCFileManager.
+		</description>
+	</header>
+
+	<language code="es" title="Español" dir="ltr">
+		<group target="common">
+			<item name="exe">Archivo Ejecutable</item>
+			<item name="image">Archivo de Imagen</item>
+			<item name="archive">Archivo Comprimido</item>
+			<item name="html">Archivo HTML o Script</item>
+			<item name="movie">Archivo Media</item>
+			<item name="sound">Archivo de sonido</item>
+			<item name="swf">Archivo Flash</item>
+			<item name="powerpoint">Archivo Powerpoint</item>
+			<item name="document">Archivo de Documento</item>
+			<item name="word">Office documento</item>
+			<item name="pdf">Archivo Adobe acrobat</item>
+			<item name="excel">Archivo Excel</item>
+			<item name="txt">Archivo de texto</item>
+			<item name="xml">Archivo XML</item>
+		</group>
+
+		<group target="frameset">
+			<item name="title">Moxiecode File Browser</item>
+		</group>
+
+		<group target="filelist">
+			<item name="title">Moxiecode File Browser</item>
+			<item name="filename">Nombre de Archivo</item>
+			<item name="size">Tamaño</item>
+			<item name="modified">Fecha de Modificación</item>
+			<item name="confirm_cut">¿Está seguro de cortar y mover los archivos seleccionados?</item>
+			<item name="confirm_copy">¿Está seguro de copiar los archivos seleccionados?</item>
+			<item name="confirm_paste">¿Está seguro de colocar los archivos seleccionados del porta papeles?</item>
+			<item name="confirm_delete">¿Está seguro de borrar los archivos seleccionados?</item>
+			<item name="confirm_unzip">¿Está seguro descomprimir el archivo seleccionado?\n Si el archivo comprimido es demasiado grande, la acción llevará su tiempo.</item>
+			<item name="zip_removed">Los siguientes archivos han sido borrados debido a que nos son archivos comprimidos (zip).</item>
+			<item name="createdir">Crear Directorio</item>
+			<item name="createdoc">Crear Archivo</item>
+			<item name="refresh">Actualizar</item>
+			<item name="upload">Subir nuevo archivo</item>
+			<item name="download">Descargar archivos seleccionados</item>
+			<item name="props">Propiedades de Archivo/Directorio</item>
+			<item name="cut">Cortar archivos/directorios seleccionados</item>
+			<item name="copy">Copiar archivos/directorios seleccionados</item>
+			<item name="paste">Pegar archivos/directorios seleccionados</item>
+			<item name="delete">Borrar archivos/directorios seleccionados</item>
+			<item name="unzip">Descomprimir el archivo seleccionado</item>
+			<item name="zip">Comprimir los archivos/directorios seleccionados</item>
+			<item name="imagemanager"> Cambiar a ImageManager</item>
+			<item name="dir">Directorio</item>
+			<item name="parent_dir">Directorio Raíz</item>
+			<item name="toggle_all">Toggle todos</item>
+			<item name="error_exists">Error: El archivo/directorio {path} ya existe.</item>
+			<item name="error_delete_failed">Error: No tiene acceso a borrar Archivo o Directorios.</item>
+			<item name="error_directory_not_empty">Error: El directorio {path} No ha podido ser borrado, no está vacío.</item>
+		</group>
+
+		<group target="preview">
+			<item name="title">Información de Archivo / Directorio</item>
+			<item name="directory_information">Información de Directorio</item>
+			<item name="file_information">Información de Archivo</item>
+			<item name="creationdate">Fecha de creación:</item>
+			<item name="modificationdate">Fecha de Modificación:</item>
+			<item name="access">Acceso:</item>
+			<item name="directory">Directorio:</item>
+			<item name="subdirectories">Subdirectorios:</item>
+			<item name="files">Archivos:</item>
+			<item name="total_file_size">Tamaño total:</item>
+			<item name="filename">Nombre:</item>
+			<item name="file_size">Tamaño:</item>
+			<item name="file_description">descripción:</item>
+			<item name="preview">Previzualizar</item>
+			<item name="no_preview">No puede previsualizarse.</item>
+			<item name="button_select">Seleccionar</item>
+			<item name="button_view">Ver</item>
+			<item name="readable">Lectura</item>
+			<item name="not_readable">No lectura</item>
+			<item name="writable">Escritura</item>
+			<item name="not_writable">No escritura</item>
+		</group>
+
+		<group target="fileprops">
+			<item name="title">Propiedades de Archivo / Directorio</item>
+			<item name="description">Propiedades de Archivo / Directorio</item>
+			<item name="properties_on">Propiedades en:</item>
+			<item name="name">Nombre:</item>
+			<item name="button_save">Salvar</item>
+			<item name="button_cancel">Cancelar</item>
+			<item name="error_exists">Error: Un archvio o directorio con el nombre especificado ya existe.</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">Crear directorio</item>
+			<item name="description">Inserte el nombre del directorio que desea crear.</item>
+			<item name="template">Plantilla:</item>
+			<item name="select_template">-- Seleccionar Plantilla --</item>
+			<item name="directory_name">Nombre del Directorio:</item>
+			<item name="create_in">Crear en:</item>
+			<item name="button_create">Crear</item>
+			<item name="button_cancel">Cancelar</item>
+			<item name="error_missing_name">Error: Debe especificar un nombre.</item>
+			<item name="error_invalid_template_selection">Error: Debe seleccionar una plantilla.</item>
+			<item name="error_template_not_found">Error: La plantilla seleccionada no pudo ser localizada.</item>
+			<item name="error_invalid_name">Error: El nombre del directorio que intenta crear es inválido.\\nincluye caracteres no validos tales como: :;</item>
+			<item name="error_exists">Error: El nombre del directorio especificado ya existe.</item>
+		</group>
+
+		<group target="createdoc">
+			<item name="title">Crear documento</item>
+			<item name="description">Llene la forma para crear un nuevo documento a partir de la plantilla.</item>
+			<item name="template">Plantilla:</item>
+			<item name="select_template">-- Seleccionar Plantilla --</item>
+			<item name="required_filename">Debe escribir un nombre de archivo para el nuevo documento.</item>
+			<item name="filename">Nombre de Archivo:</item>
+			<item name="create_in">Crear en:</item>
+			<item name="button_create">Crear</item>
+			<item name="button_cancel">Cancelar</item>
+			<item name="error_missing_document_name">Error: Debe especificar el nombre del documento.</item>
+			<item name="error_missing_template_selection">Error: Debe seleccionar una plantilla.</item>
+			<item name="error_missing_template">Error: La plantilla seleccionada no pudo ser encontrada.</item>
+			<item name="error_invalid_file_name">Error: El nombre del archivo que intenta crear es inválido.\\nincluye caracteres no validos tales como: :;.</item>
+			<item name="error_exists">Error: El nombre del archivo ya existe.</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">Subir</item>
+			<item name="description">Use la forma para subir archivos.</item>
+			<item name="upload_in">Subir a:</item>
+			<item name="valid_extensions">Extensiones Validas:</item>
+			<item name="max_upload_size">Máximo tamaño permitido:</item>
+			<item name="file_to_upload">Archivo para subir:</item>
+			<item name="as_file_name">Con nombre de archivo:</item>
+			<item name="required_filename">Debe escribir un nombre de archivo para el archivo que desea subir.</item>
+			<item name="button_upload">Subir</item>
+			<item name="button_add_upload">Agregar Casilla</item>
+			<item name="button_cancel">Cancelar</item>
+			<item name="error_exists">Error: El archivo que intenta subir ya existe.</item>
+			<item name="error_to_large">Error: El archivo que intenta subir sobrepasa el límite del tamaño permitido.</item>
+			<item name="remove">Quitar</item>
+		</group>
+
+		<group target="unzip">
+			<item name="title">Resumen de archivo comprimido</item>
+			<item name="description">Resumen de los archivos comprimidos seleccionados.</item>
+			<item name="zipfile_name">Nombre del archivo comprimido:</item>
+			<item name="current_folder">Carpeta actual:</item>
+			<item name="overwrite_files">Archivos re-escribidos:</item>
+			<item name="name">Nombre</item>
+			<item name="size">Tamaño</item>
+			<item name="csize">Ctamaño</item>
+			<item name="exists">Existe</item>
+			<item name="status">Estatus</item>
+			<item name="created">Creado</item>
+			<item name="button_unzip">Descomprimir</item>
+			<item name="button_cancel">Cancelar</item>
+			<item name="button_back">Atrás</item>
+			<item name="button_close">Cerrar</item>
+			<item name="Accepted">Aceptado</item>
+			<item name="Denied">Denegado</item>
+			<item name="Passed">Pasado</item>
+			<item name="Failed">Fallido</item>
+			<item name="Yes">Si</item>
+			<item name="No">No</item>
+		</group>
+
+		<group target="zip">
+			<item name="title">Crear zip</item>
+			<item name="description">Escriba el nombre del archivo zip que desea crear.</item>
+			<item name="created_in">El archivo zip será creado en:</item>
+			<item name="name">Nombre:</item>
+			<item name="required_filename">Debe escribir un nombre.</item>
+			<item name="button_create">Crear</item>
+			<item name="button_cancel">Cancelar</item>
+		</group>
+	</language>
+</language-pack>

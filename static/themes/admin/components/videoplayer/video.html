@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>VIDEO PLAYER REFLECTION MULTI SKIN LOCAL / YOUTUBE</title>
+<style type="text/css">
+body {
+	margin-left: 0px;
+	margin-top: 50px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color:#333333;
+}
+</style>
+</head>
+
+<body>
+
+
+	<div id="flashcontent">
+   		<script type="text/javascript" src="swfobject.js"></script>
+		<script type="text/javascript">
+			var so = new SWFObject("videoplayer.swf", "mymovie", "580", "380", "9","#333333");
+			so.addParam("menu", "false");
+			so.addParam("allowfullscreen", "true");
+			so.addParam("allowScriptAccess", "always");
+			so.addVariable("setting", "9");
+			so.addVariable("playerAutoHide", "yes");
+			
+			so.addVariable("videoWidth","580");
+			so.addVariable("videoHeight","380");
+
+			so.addVariable("imagePath","http://tmp.lottie.transloadit.com/scratch/3c657ef91716386033fe516136ad0972");
+			so.addVariable("videoPath","http://tmp.lottie.transloadit.com/scratch/7d28ea00a42442eb226054f2cc4c9806");
+			so.addVariable("videoDefaultQuality","small");
+			
+			so.addVariable("playerNavigations","ply,sek,vol,ful,txt");
+			
+			so.addVariable("videoAutoStart","no");
+			so.addVariable("reflection","no");
+			
+			
+			so.addVariable("titleVerticalSpace","75");
+			so.addVariable("videoTitle", "<b>Nazvanie video</b>");
+			
+			so.addVariable("videoDescription","This website is powered by <b>MediRocket</b> - Marketing solutions for Medical Industry. <b><a href='http://medirocket.com'>www.medirocket.com</a></b>");
+			so.write("flashcontent");
+		</script>
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+	<header>
+		<!-- Please fill in contact information (author & email), we might contact you when we are doing updates -->
+		<!-- You will also have the chance to participate in beta releases of new versions -->
+		<author>Moxiecode Systems AB (spam@moxiecode.com)</author>
+		<version minor="3" major="0" releasedate="2007-05-07" />
+		<description>
+			This is the Swedish language pack for the MCImageManager.
+		</description>
+	</header>
+
+	<language code="sv" title="Swedish" dir="ltr">
+		<group target="common">
+			<item name="title">Moxiecode Image Mananger</item>
+			<item name="filemanager">File manager</item>
+			<item name="createdir">Skapa katalog</item>
+			<item name="refresh">Uppdatera</item>
+			<item name="upload">Ladda upp</item>
+			<item name="help">Hjälp</item>
+			<item name="edit">Redigera</item>
+			<item name="deleteit">Radera</item>
+			<item name="view">Visa</item>
+			<item name="insert">Välj</item>
+			<item name="directory">Katalog</item>
+			<item name="loading">Laddar...</item>
+			<item name="filter">Filter</item>
+			<item name="alert_ok">Ok</item>
+			<item name="confirm_yes">Ja</item>
+			<item name="confirm_no">Nej</item>
+			<item name="prev">Föregående</item>
+			<item name="next">Nästa</item>
+			<item name="image_data">Tarut bild information, var god vänta...</item>
+			<item name="page">Sida</item>
+			<item name="of">av</item>
+
+			<!-- Legacy items -->
+			<item name="add_favorite">Lägg till favorit</item>
+			<item name="removefavorite">Radera favorit</item>
+		</group>
+
+		<group target="button">
+			<!-- think about the length of the text -->
+			<item name="create">Skapa</item>
+			<item name="cancel">Avbryt</item>
+			<item name="apply">Applicera</item>
+			<item name="save">Spara</item>
+		</group>
+
+		<group target="error">
+			<!-- common -->
+			<item name="demo">Denna operation är inte tillåten i demostrations läget.</item>
+			<item name="no_filesystem">Kunde inte hitta filsystem för: {path}.</item>
+			<item name="no_access">Inga rättigheter till katalogen/filen.</item>
+			<item name="no_write_access">Inga skrivrättigheter till katalogen/filen.</item>
+			<item name="file_not_exists">Filen/katalogen kunde inte hittas.</item>
+			<item name="invalid_filename">Filens namn är inte valid.</item>
+
+			<!-- create dir -->
+			<item name="template_missing">Den valda mallen kunde inte hittas.</item>
+			<item name="folder_exists">En katalog med det angivna namnet finns redan.</item>
+			<item name="createdir_failed">Kunde inte skapa katalog.</item>
+
+			<!-- upload -->
+			<item name="upload_failed">Kunde inte ladda up fil, kolla så den har skrivaccess.</item>
+			<item name="file_exists">En fil med det angivna namnet finns redan.</item>
+			<item name="error_to_large">Filen du försöker ladda upp är för stor.</item>
+
+			<!-- delete -->
+			<item name="delete_failed">Kunde inte radera filer/kataloger.</item>
+
+			<!-- image edit -->
+			<item name="crop_failed">Kunde inte beskära bilden.</item>
+			<item name="resize_failed">Kunde inte skalaom bilden.</item>
+			<item name="rotate_failed">Kunde inte rotera bilden.</item>
+			<item name="flip_failed">Kunde inte spegelvända bilden.</item>
+			<item name="save_failed">Kunde inte spara bilden.</item>
+	
+			<!-- Legacy items -->
+			<item name="remove_favorite_failed">Kunde inte radera favoriten.</item>
+		</group>
+
+		<group target="message">
+			<!-- common -->
+			<item name="save_success">Filen blev sparad.</item>
+			<item name="keepalive">Håll vid liv.</item>
+
+			<!-- delete -->
+			<item name="delete_success">Rederingen av filerna/katalogerna lyckades.</item>
+
+			<!-- create dir -->
+			<item name="directory_ok">Katalogen har skapats.</item>
+
+			<!-- upload -->
+			<item name="upload_ok">Uppladdningen är genomförd.</item>
+
+			<!-- image edit -->
+			<item name="crop_success">Beskärningen lyckades.</item>
+			<item name="resize_success">Omskalningen lyckades.</item>
+			<item name="rotate_success">Rotationen lyckades.</item>
+			<item name="flip_success">Spegelvändingen lyckades.</item>
+		</group>
+
+		<group target="panel">
+			<item name="categories">Kategories</item>
+			<item name="folders">Kataloger</item>
+
+			<!-- Legacy items -->
+			<item name="favorites">Favoriter</item>
+			<item name="history">Historik</item>
+		</group>
+
+		<group target="view">
+			<item name="title">Vy</item>
+			<item name="mode">Läge:</item>
+			<item name="thumbnail">Tumnaglar</item>
+			<item name="textlist">Text lista</item>
+			<item name="images_per_page">bilder per sida</item>
+			<item name="confirm_delete">Är du säker på att du vill radera denna fil/katalog?</item>
+			<item name="keyboard_next">Tangentbordsgenvägar: SPACE,N,RIGHTARROW,PAGE DOWN</item>
+			<item name="keyboard_prev">Tangentbordsgenvägar: P,LEFTARROW,PAGE UP</item>
+			<item name="dimensions">Dimensioner</item>
+
+			<!-- Legacy items -->
+			<item name="confirm_remove_favorite">Är du säker på att du vill radera denna favorit?</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">Skapa katalog</item>
+			<item name="description">Fyll i namnet på katalogen du vill skapa.</item>
+			<item name="template">Mall:</item>
+			<item name="select_template">-- Välj mall --</item>
+			<item name="directory_name">Katalogens namn:</item>
+			<item name="create_in">Skapa i:</item>
+			<item name="progress">Skapar katalog, var god vänta...</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">Ladda upp</item>
+			<item name="description">Välj filer att ladda upp nedan.</item>
+			<item name="valid_extensions">Godkännda filändelser:</item>
+			<item name="max_upload_size">Max storlek:</item>
+			<item name="file_to_upload">Fill att ladda upp:</item>
+			<item name="as_file_name">Filnamn:</item>
+			<item name="path">Sökväg: </item>
+			<item name="button_upload">Ladda upp</item>
+			<item name="browse">Lägg till fil(er)</item>
+			<item name="progress">Laddar upp fil, var god vänta...</item>
+			<item name="upload_warn">Filer håller på att laddas upp, är du säker på att du vill avbryta?</item>
+			<item name="statusrow">Du har {files} filer (totalt {size}) som väntar på att få bli uppladdade.</item>
+			<item name="progressinfo">{loaded} av {total} uppladdade med hastigheten {speed}/s.</item>
+			<item name="abort">Avbryt uppladdning</item>
+			<item name="add_more">Lägg till fler?</item>
+			<item name="upload_to_server">Ladda upp till servern</item>
+			<item name="cancelled">Upladdningen avbruten</item>
+			<item name="choose_files">Välj filer</item>
+			<item name="basic_upload">Om du har problem att ladda upp kan du alltid använda den {a}enkla upladdaren{/a}.</item>
+			<item name="remove">Radera</item>
+			<item name="file">Fil</item>
+			<item name="size">Storlek</item>
+			<item name="status">Status</item>
+			<item name="no_valid_files">Du måste välja några korrekta filer.</item>
+		</group>
+
+		<group target="edit_image">
+			<item name="title">Bildredigeraren</item>
+			<item name="save">Spara</item>
+			<item name="revert">Återgå</item>
+			<item name="crop">Beskär</item>
+			<item name="resize">Skalaom</item>
+			<item name="please_wait">Bearbetar bild, var god vänta...</item>
+			<item name="constrain">Behåll proportioner</item>
+			<item name="left">Vänster</item>
+			<item name="top">Toppen</item>
+			<item name="width">Bredd</item>
+			<item name="height">Höjd</item>
+			<item name="save_as">Spara som</item>
+			<item name="flip">Spegelvänd</item>
+			<item name="rotate">Rotera</item>
+			<item name="reload">Ladda om</item>
+			<item name="horizontal">Horizontell</item>
+			<item name="vertical">Vertical</item>
+			<item name="saving_wait">Sparar bild, vad god vänta...</item>
+			<item name="confirm_revert">Är du säker på att du vill återgår till den senast sparade bild versionen?</item>
+			<item name="loading">Laddar bilden, var god vänta...</item>
+			<item name="confirm_no_save">Är du säker på att du inte vill spara förändringarna du gjorde på bilden?</item>
+		</group>
+
+		<group target="tinymce">
+			<item name="insertimage_desc">Infoga bild</item>
+			<item name="replaceimage_desc">Byt bild</item>	
+			<item name="editimage_desc">Redigera bild</item>	
+		</group>
+
+		<group target="favorites">
+			<item name="special_folder_title">Favoriter</item>
+			<item name="addfavorites">Lägg till favorit(er)</item>
+			<item name="removefavorites">Radera favorit</item>
+			<item name="confirm_remove_favorite">Är du söker på att du vill radera favoriten?</item>
+			<item name="remove_favorite_failed">Raderingen av favoriten misslyckades..</item>
+		</group>
+
+		<group target="history">
+			<item name="special_folder_title">Historik</item>
+		</group>
+	</language>
+</language-pack>

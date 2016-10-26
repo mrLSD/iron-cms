@@ -1,0 +1,163 @@
+.attention-box { 
+	position: absolute; 
+	overflow: hidden; 
+	line-height: 30px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, sans-serif, Helvetica, Arial, tahoma;
+	font-size: 14px;
+	background: url(../img/bg.png); 
+	width: 500px;	
+	z-index:999;
+	padding-bottom: 8px;
+
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+
+	-moz-box-shadow: 0 0 20px #222;
+	-webkit-box-shadow: 0 0 20px #222;
+	box-shadow: 0 0 20px #222; 
+}
+
+.attention-box .message, .attention-box .buttons
+{
+	color: #FFF;
+	display: block;
+	overflow: hidden;
+	padding: 12px 5px 12px 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	padding-left: 70px;
+}
+
+.attention-box-ie6
+{
+	background: #000;
+}
+
+.attention-box .bubble
+{
+ 	background: url(../img/bubble.png) no-repeat 10px 10px;
+}
+
+.attention-box .bubbleie6
+{
+ 	background: url(../img/bubbleie6.gif) no-repeat 10px 10px;
+}
+
+.attention-box .message
+{
+	padding: 20px 15px 20px 70px;
+	line-height: normal;
+}
+
+.attention-box .input-container
+{
+	padding: 10px 0px;
+	text-indent: 0px;
+ 	background: #F3F3F3;
+}
+
+.attention-box .input-container label
+{
+	display: block;
+	text-transform: capitalize;
+	margin-left: 70px;
+	font-size: 12px;
+	line-height: normal;
+	padding: 4px 0px;
+}
+
+.attention-box .input-container label .error
+{
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	color: #F70000; 
+	margin-left: 4px;
+	margin-right: 15px;
+	float: right;
+}
+
+.attention-box .input-container div
+{
+	padding: 0px;
+	margin: 0px;
+	line-height: normal;
+}
+
+.attention-box .input-container input
+{
+	margin-left: 70px;
+	margin-bottom: 5px;
+	width: 410px; 
+	height: 18px;
+	font: inherit;
+	padding: 3px;
+	border-color:#7C7C7C #C3C3C3 #DDDDDD;
+	border-style:solid;
+	border-width:1px;
+}
+
+.attention-box .buttons
+{
+	padding-left: 0px;
+	text-indent: 0px;
+	padding: 8px 10px 0px 10px;
+	background: none;
+	overflow: hidden;
+}
+
+.attention-box .buttons button 
+{
+	float: right;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #318DF2;
+	background-image: url("../img/overlay-button.png");
+	background-repeat: repeat-x;
+	border-radius: 3px; 
+	border:medium none;
+	color:#FFFFFF;
+	cursor:pointer;
+	margin: 0px 2px 0px 4px;
+	font-size: 12px;
+	padding: 4px 14px;
+	line-height: normal; 
+}
+
+.attention-box .buttons button:hover 
+{
+	background: #2F71E1;
+	background-image: url("../img/overlay-button.png");
+	background-repeat: repeat-x;
+}
+
+.attention-box .buttons button.important
+{
+	background: #FF3000;
+	background-image: url("../img/overlay-button.png");
+	background-repeat: repeat-x;
+}
+
+.attention-box .buttons button.important:hover
+{
+	background: #F00000;
+}
+
+.attention-box-modal
+{
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	z-index:999;
+	background: #222;
+} 
+
+.ie6IsCrap
+{
+	background-image: none !important;
+}

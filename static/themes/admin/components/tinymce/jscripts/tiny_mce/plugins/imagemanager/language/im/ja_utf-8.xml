@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-pack>
+	<header>
+		<author>Moxiecode Systems AB</author>
+		<version minor="1" major="0" releasedate="2005-09-27" />
+		<description>
+			This is the japanese unicode language pack for the MCImageManager.
+		</description>
+	</header>
+
+	<language code="ja_utf-8" title="Japanese" dir="ltr">
+		<group target="common">
+			<item name="filemanager">ファイル管理に行く</item>
+			<item name="createdir">フォルダ新規作成</item>
+			<item name="refresh">更新</item>
+			<item name="upload">イメージをアップロード</item>
+			<item name="error_no_access">エラー：アクセス権利がありません</item>
+			<item name="error_delete_failed">エラー：アクセス権利がありません</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">フォルダ新規作成</item>
+			<item name="description">フォルダ名を記入してください</item>
+			<item name="template">テンプレート:</item>
+			<item name="select_template">-- テンプレートを選択 --</item>
+			<item name="directory_name">フォルダ名:</item>
+			<item name="create_in">作成先:</item>
+			<item name="button_create">作成</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="error_missing_name">エラー：名前を設定していない</item>
+			<item name="error_select_template">エラー: フォルダのテンプレートを選択する必要がある</item>
+			<item name="error_template_missing">エラー: 選択されたテンプレートがない。</item>
+			<item name="error_invalid_name">エラー：そのフォルダ名が無効</item>
+			<item name="error_exists">エラー：そのフォルダがすでに存在する</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">アップロード</item>
+			<item name="description">ファイルをアップロードのフォルム</item>
+			<item name="upload_in">アップロード先:</item>
+			<item name="valid_extensions">有効拡張形式:</item>
+			<item name="max_upload_size">最大のサイズ:</item>
+			<item name="file_to_upload">アップロードするファイル名:</item>
+			<item name="as_file_name">ファイル名:</item>
+			<item name="required_filename">ファイル名が必要</item>
+			<item name="button_upload">アップロード</item>
+			<item name="button_add_upload">アップロードを追加</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="error_exists">エラー：そのファイルがすでに存在する</item>
+			<item name="error_to_large">エラー：そのファイルが大きすぎる</item>
+			<item name="remove">取り除く</item>
+		</group>
+
+		<group target="images">
+			<item name="title">イメージ管理</item>
+			<item name="subtitle">イメージ管理</item>
+			<item name="select_directory">フォルダを選択:</item>
+			<item name="width">幅:</item>
+			<item name="height">高さ:</item>
+			<item name="type">種類:</item>
+			<item name="size">サイズ:</item>
+			<item name="scale">スケール:</item>
+			<item name="confirm_delete">削除しますか?</item>
+			<item name="no_files">イメージがありません</item>
+			<item name="image">イメージ</item>
+			<item name="bmp">BMP形式</item>
+			<item name="png">PNG形式</item>
+			<item name="jpg">JPEG形式</item>
+			<item name="gif">GIF形式</item>
+			<item name="tif">TIFF形式</item>
+			<item name="editwriteaccess">書込み権利がありません</item>
+		</group>
+
+		<group target="edit_image">
+			<item name="save_image">イメージを保存</item>
+			<item name="revert_image">保存したイメージに戻る</item>
+			<item name="toggle_color">選択色を交換</item>
+			<item name="crop_image">切り抜き</item>
+			<item name="resize_image">イメージサイズ変更</item>
+			<item name="please_wait">イメージを整備中</item>
+			<item name="constrain">縦横比を固定</item>
+			<item name="left">左:</item>
+			<item name="top">上:</item>
+			<item name="width">幅:</item>
+			<item name="height">高さ:</item>
+		</group>
+
+		<group target="preview">
+			<item name="title">プレビュー</item>
+			<item name="prev">前</item>	
+			<item name="next">次</item>	
+			<item name="keyboard_next">ショートカットキー: スペース,N,→,次のページへ</item>	
+			<item name="keyboard_prev">ショートカットキー: P,←,前のページへ</item>	
+		</group>
+	</language>
+</language-pack>

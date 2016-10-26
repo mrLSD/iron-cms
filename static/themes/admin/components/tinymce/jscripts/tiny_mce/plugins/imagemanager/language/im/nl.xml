@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+	<header>
+		<author>Duraserve - T. de Roode - tinymce@intrnet.nl</author>
+		<version minor="1" major="0" releasedate="2006-06-13" />
+		<description>
+			This is the Dutch language pack for the MCImageManager.
+		</description>
+	</header>
+
+	<language code="en" title="English" dir="ltr">
+		<group target="common">
+			<item name="filemanager">Filemanager knop</item>
+			<item name="createdir">Map aanmaken</item>
+			<item name="refresh">Verversen</item>
+			<item name="upload">Upload een nieuwe afbeelding</item>
+			<item name="error_no_access">Fout: Er zijn geen schrijfrechten voor deze map.</item>
+			<item name="error_delete_failed">Fout: U heeft geen rechten om deze actie uit te voeren.</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">Map aanmaken</item>
+			<item name="description">Specificeer de naam voor de aan te maken map</item>
+			<item name="template">Template:</item>
+			<item name="select_template">-- Selecteer template --</item>
+			<item name="directory_name">Map naam:</item>
+			<item name="create_in">Maak in:</item>
+			<item name="button_create">Maken</item>
+			<item name="button_cancel">Annuleren</item>
+			<item name="error_missing_name">Fout: U moet een map naam opgeven.</item>
+			<item name="error_select_template">Fout: U moet een map template selecteren.</item>
+			<item name="error_template_missing">Fout: De geselecteerde template kan niet worden gevonden.</item>
+			<item name="error_invalid_name">Fout: Deze map naam is niet toegestaan.</item>
+			<item name="error_exists">Fout: Er bestaat reeds een map met deze naam.</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">Uploaden</item>
+			<item name="description">Gebruik het formulier om bestanden te uploaden.</item>
+			<item name="upload_in">Upload in:</item>
+			<item name="valid_extensions">Toegestane bestandstypen:</item>
+			<item name="max_upload_size">Maximale upload grootte:</item>
+			<item name="file_to_upload">Bestand voor uploaden:</item>
+			<item name="as_file_name">Als bestandsnaam:</item>
+			<item name="required_filename">Er dient een naam voor het te uploaden bestand te worden gespecificeerd.</item>
+			<item name="button_upload">Uploaden</item>
+			<item name="button_add_upload">Toevoegen upload</item>
+			<item name="button_cancel">Annuleren</item>
+			<item name="error_exists">Fout: Er bestaat reeds een bestand met deze naam.</item>
+			<item name="error_to_large">Fout: Het bestand dat u probeert te uploaden is te groot.</item>
+			<item name="remove">Verwijderen</item>
+		</group>
+		
+		<group target="images">
+			<item name="title">Image Manager</item>
+			<item name="subtitle">Image Manager</item>
+			<item name="select_category">Categorie:</item>
+			<item name="select_directory">Map:</item>
+			<item name="width">Breedte:</item>
+			<item name="height">Hoogte:</item>
+			<item name="type">Type:</item>
+			<item name="size">Grootte:</item>
+			<item name="scale">Schaal:</item>
+			<item name="confirm_delete">Weet u zeker dat u dit bestand wilt verwijderen?</item>
+			<item name="no_files">Er zijn geen afbeeldingen binnen deze map gevonden.</item>
+			<item name="image">Afbeelding bestand</item>
+			<item name="bmp">BMP afbeelding</item>
+			<item name="png">PNG afbeelding</item>
+			<item name="jpg">JPEG afbeelding</item>
+			<item name="gif">GIF afbeelding</item>
+			<item name="tif">TIFF afbeelding</item>
+			<item name="editwriteaccess">Geen schrijfrechten, tijdelijke bestanden kunnen niet worden aangemaakt.</item>
+			<item name="loading">Laden van informatie...</item>
+		</group>
+
+		<group target="edit_image">
+			<item name="save_image">Afbeelding opslaan</item>
+			<item name="revert_image">Terug naar laatst opgeslagen afbeelding</item>
+			<item name="toggle_color">Verander selectie kleur</item>
+			<item name="crop_image">Afbeelding uitsnijden</item>
+			<item name="resize_image">Formaat van afbeelding aanpassen</item>
+			<item name="please_wait">Afbeelding aan het bewerken, een moment geduld...</item>
+			<item name="constrain">Verfijn proporties</item>
+			<item name="left">l:</item>
+			<item name="top">t:</item>
+			<item name="width">b:</item>
+			<item name="height">h:</item>
+			<item name="error_selection">Gebruik de selectie functie om een gedeelte bij te snijden.</item>
+			<item name="error_resize">U moet een hoogte en breedte specificeren als u het formaat van de afbeelding aan wilt passen.</item>
+			<item name="filename">Bestandsnaam:</item>
+		</group>
+
+		<group target="preview">
+			<item name="title">Bekijken</item>
+			<item name="prev">Afbeelding bekijken</item>	
+			<item name="next">Volgende afbeelding</item>
+			<item name="first">Eerste afbeelding</item>
+			<item name="last">Laatste afbeelding</item>
+			<item name="keyboard_next">Toetsenbord sneltoets: SPACE,N,RIGHTARROW,PAGE DOWN</item>	
+			<item name="keyboard_prev">Toetsenbord sneltoets: P,LEFTARROW,PAGE UP</item>	
+		</group>
+	</language>
+</language-pack>

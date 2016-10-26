@@ -1,0 +1,438 @@
+/* Image Manager */
+/* core stuff */
+/* ########################################################## */
+
+body {
+	background:#fff; 
+	color:#000;
+	margin:0 0;
+	padding:0;
+	font:70% arial, helvetica, sans-serif;
+	text-align:center;
+}
+
+td {
+	font-size: 11px;
+}
+
+img	{
+	behavior:expression(PNG.fix(this));
+	border: 0;
+}
+
+hr {
+	clear:both; 
+	border:0; 
+	color:#e5e5e5; 
+	background-color:#e5e5e5; 
+	height:1px; 
+}
+
+div {
+	font-size:11px;
+}
+
+/* Lists */
+
+ul {
+	margin:0; 
+	padding:0; 
+	list-style:none;
+}
+
+ul li {
+	margin:0; 
+	padding:0; 
+}
+
+
+/* Layout */
+
+#center	{
+	width:auto; 
+	max-width:1200px; 
+	margin:0 auto; 
+	text-align:left;
+}
+
+/* Links */
+
+a				{background:transparent; }
+a:link 			{color:#000; }
+a:visited 		{color:#000; }
+a:visited:hover {color:#000; }
+a:hover 		{color:#000; }
+a:active 		{color:#000; }
+
+
+#thearea {
+	position:relative;
+}
+
+#secondarea {
+	position:absolute;
+	left:200px;
+}
+
+/* Page navigation */
+/* ########################################################## */
+
+.pagenav {
+	float: left;
+	color: #484848;
+	display: none;
+	line-height: 16px;
+	height: 16px;
+	z-index:1;
+}
+
+* html .pagenav {/* double margin ie6 bug fix */
+	display:inline;
+}
+
+.pagenav a, .pagenav a:visited	{
+	font-weight:bold;
+	color:#484848;
+	text-decoration:none;
+}
+
+.pagenav a:hover {
+	color:#2e4e8c;
+}
+
+.pagenav select	{
+	margin:0 2px;
+}
+
+.pagenav * {float:left; display:block}
+.pagenav a {outline:0 }
+.pagenav .prev {background:url('../img/left.gif') no-repeat left; width:20px; height:16px; text-decoration:none; behavior:expression(PNG.fix(this));}
+.pagenav .next {background:url('../img/right.gif') no-repeat right; width:20px; height:16px; text-decoration:none; behavior:expression(PNG.fix(this));}
+.pagenav input {padding:0; width:20px; text-align:center; font-size:10px; margin:0 4px 0 4px }
+.pagenav .disabled {opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50); cursor:default}
+
+#progress {
+	background: url('../img/loading.gif') no-repeat;
+	padding-left: 20px;
+}
+
+/* View mode */
+/* ########################################################## */
+
+.viewmode {
+	float:right;
+	margin:0 25px 0 0;
+	display:inline;
+	height: 25px;
+	color:#484848;
+	z-index:1;
+	white-space:nowrap;
+}
+
+.viewmode .desc	{
+	float:left;
+	margin:3px 4px 0 0; 
+}
+
+.viewmode a img {
+	margin-bottom:-5px;
+	opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50);
+}
+
+.viewmode a.listactive img {
+	opacity:1; -ms-filter:'alpha(opacity=100)'; filter:alpha(opacity=100);
+}
+
+.viewmode a.listactive {
+	font-weight:bold;
+}
+
+#viewcontainer #filelist {
+	position:relative;
+}
+
+/* List container */
+
+#listcontainer {
+	position:relative;
+}
+
+* html #listcontainer {/* double margin ie6 bug fix */
+	display:inline;
+}
+
+/* Left side folders */
+/* ########################################################## */
+
+#folders {
+	position:absolute;
+	top:0;
+	left:2px;
+	margin:0;
+	width:192px;
+	background:url(../img/folder-middle-bg.png) bottom left;
+	z-index:1;
+}
+
+#folders h2	{
+	margin:0;
+	padding:20px 10px 10px 10px;
+	background:url(../img/folder-top-bg.png) top left;
+	font-size:100%;
+	color:#7791c4;
+}
+
+#folders h3	{
+	margin:10px 2px 0 2px;
+	padding:10px 8px 10px 8px;
+	font-size:100%;
+	color:#7791c4;
+	border-top:1px solid #9ab0d7;
+}
+
+#folders a {
+	text-decoration:none;
+	behavior:expression(PNG.fix(this));
+}
+
+#folders .categories {
+	margin:0 6px 0 10px;
+}
+
+#folders .categories li a {
+	background:url(../img/icons/category-closed.png) no-repeat; 
+	padding:2px 2px 0 24px; 
+	display:block; 
+	min-height:16px; 
+}
+
+#folders .categories li.current a {
+	background:url(../img/icons/category-open.png) no-repeat; 
+	font-weight:bold;
+}
+
+#folders .special {
+	margin:5px 6px 0 10px;
+}
+
+#folders .special li a {
+	padding: 2px 2px 0 24px;
+	display: block;
+	min-height: 16px; 
+	height: 16px;
+	line-height: 16px; 
+}
+
+#folders .folders {
+	margin:0 6px 0 10px;
+}
+
+#folders div {
+	background:url(../img/folder-bottom-bg.png) no-repeat bottom left;
+}
+
+#folder_list {
+	padding:0 0 20px 0;
+}
+
+#folders .folders li a {
+	background:url(../img/folder.png) no-repeat; 
+	padding:2px 2px 0 24px; 
+	display:block; 
+	min-height:16px;
+}
+
+#folders .folders li.parent a {
+	background:url(../img/icons/up.png) no-repeat;
+}
+
+#folders .folders li.current a {
+	background:url(../img/icons/folders-open.png) no-repeat;
+	font-weight:bold;
+}
+
+#folders .preview {
+	margin:0 0 4px 10px;
+}
+
+#folders .previewact {
+	padding:0 0 20px 10px;
+}
+
+#folders a:hover {
+	color:#2e4e8c;
+}
+
+#folders .folders li.progress {
+	background: url('../img/loading.gif') no-repeat;
+	height: 16px;
+	line-height: 16px;
+	padding-left: 20px;
+}
+
+.folder .name, .parent .name {
+	font-weight:bold;
+}
+
+
+/* ########################################################## */
+
+#toolbar.caption span.caption {
+	display: inline;
+}
+
+#toolbar a {outline:0 }
+
+/* Validation classes */
+
+label.msg {
+	display:none;
+}
+
+label.invalid {
+	color:#aa0000;
+	display:inline;
+}
+
+input.invalid {
+	background-color:#d63232;
+}
+
+div label.invalid {
+	display:block;
+}
+
+/* Dialog facts */
+
+#facts {
+	height:30px;
+}
+
+/* Tiny Mce styles */
+#navigation,
+#createdir,
+#createdoc,
+#imagemanager,
+#facts{display:none !important;}
+
+#folders,
+#folders div.panel,
+#topwrap{
+	background:none !important;
+}
+#topnav {
+	background:url(../img/bg-dialog-header.png) repeat-x !important;
+	height:70px !important;
+}
+#folders h3{
+	border-top: none !important;
+	margin-top:0 !important;
+}
+#refresh{
+	float:right !important;
+	margin-top:8px !important;
+}
+#refresh a {
+	color:#a2bdce !important;
+	line-height:20px !important;
+}
+#refresh a:hover{background:none !important;text-decoration:underline !important;}
+.toolbar .icons {
+	margin: 18px 0 0 !important;
+	float:none !important;
+	overflow:hidden !important;
+}
+#upload {float:left !important;}
+#upload a{padding:0 !important;}
+#upload a img{display:block;}
+#topwrap{margin-left:23px !important;}
+#desc-text{
+	font:bold 11px Tahoma, Arial, Helvetica, sans-serif !important;
+	color:#666 !important;
+	margin-left:35px !important;
+	margin-top:8px;
+	float:left !important;
+}
+.dialog .top{
+	background:url(../img/bg-dialog-header.png) repeat-x !important;
+}
+.dialog .upload {
+	background:url(../img/icon-image.png) no-repeat 0 50% !important;
+	overflow:hidden;
+}
+.dialog .upload .desc{
+	float:right;
+	font:bold 11px Tahoma, Arial, Helvetica, sans-serif;
+	width:178px; 
+}
+.dialog .upload .desc span{color:#666;}
+.dialog .headline {padding: 13px 0 12px 60px !important;}
+/* upload-button */
+#uploadarea .upload-button,
+#uploadstart{
+	background:url(../img/btn-upload-images.png) no-repeat !important;
+	height:33px !important;
+	width:144px !important;
+	padding:0 !important;
+	text-indent:-9999px;
+	overflow:hidden;
+	display:block;
+	float:left;
+	margin-right:5px !important;
+}
+#uploadarea .cancel{
+	background:url(../img/btn-cancel.png) no-repeat !important;
+	height:33px !important;
+	width:77px !important;
+	padding:0 !important;
+	text-indent:-9999px;
+	overflow:hidden;
+}
+
+#viewcontainer {padding-left:10px !important;}
+/* navigation filter */
+.navigation.filter{
+	position:absolute;
+	right:180px;
+	top:20px;
+}
+.navigation.filter input{
+	background:url(../img/bg-filter-input.png) no-repeat;
+	width:167px !important;
+	height:24px !important;
+	padding:3px 10px !important;
+	border:none !important;
+	font:12px Arial, Helvetica, sans-serif;
+}
+.navigation.filter label{
+	float:left;
+	line-height:30px;
+	font-size:13px;
+	color:#0b4e6b;
+	font-weight:bold;
+	margin-right:10px;
+}
+.toolbar div.filter {
+	padding-right: 20px !important;
+	width: 242px !important;
+}
+/* .details */
+.details{background:none !important;}
+.details .wrap2{background:none !important;}
+.thumbnail{
+	background:none !important;
+}
+.thumbnail .wrap{
+	border:1px solid #e5e5e5 !important;
+	background:none !important;
+}
+.menu {
+	background:#ecebe7 !important;
+	opacity:1 !important;
+	-moz-opacity:1 !important;
+	border:none !important;
+	-moz-box-shadow:1px 1px 3px #666;
+	-webkit-box-shadow:1px 1px 3px #666;
+	box-shadow:1px 1px 3px #666;
+}
+.act {bottom: -1px !important;}

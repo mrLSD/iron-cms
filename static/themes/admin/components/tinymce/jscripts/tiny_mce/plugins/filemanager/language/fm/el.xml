@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-7"?>
+<language-pack>
+	<header>
+		<author>Dimitris Giannitsaros / MediSign SA</author>
+		<version minor="1" major="0" releasedate="2006-08-02" />
+		<description>
+			This is the Greek language pack for the MCFileManager.
+		</description>
+	</header>
+
+	<language code="el" title="Greek" dir="ltr">
+		<group target="common">
+			<item name="exe">Εκτελέσιμο αρχείο</item>
+			<item name="image">Αρχείο εικόνας</item>
+			<item name="archive">Συμπιεσμένο αρχείο</item>
+			<item name="html">Αρχείο HTML ή Script</item>
+			<item name="movie">Αρχείο βίντεο</item>
+			<item name="sound">Αρχείο ήχου</item>
+			<item name="swf">Αρχείο Flash</item>
+			<item name="powerpoint">Αρχείο Powerpoint</item>
+			<item name="document">Έγγραφο</item>
+			<item name="word">Αρχείο Office</item>
+			<item name="pdf">Αρχείο Adobe acrobat</item>
+			<item name="excel">Αρχείο Excel</item>
+			<item name="txt">Αρχείο κειμένου</item>
+			<item name="xml">Αρχείο XML</item>
+		</group>
+
+		<group target="frameset">
+			<item name="title">Περιηγητής Αρχείων Moxiecode</item>
+		</group>
+
+		<group target="filelist">
+			<item name="title">Περιηγητής Αρχείων Moxiecode</item>
+			<item name="filename">Όνομα</item>
+			<item name="size">Μέγεθος</item>
+			<item name="modified">Ημ. τροποποίησης</item>
+			<item name="confirm_cut">Θέλετε σίγουρα να κάνετε αποκοπή/μετακίνηση των επιλεγμένων αρχείων;</item>
+			<item name="confirm_copy">Θέλετε σίγουρα να κάνετε αντιγραφή των επιλεγμένων αρχείων;</item>
+			<item name="confirm_paste">Θέλετε σίγουρα να κάνετε επικόλληση των αρχείων;</item>
+			<item name="confirm_delete">Θέλετε σίγουρα να σβήσετε τα επιλεγμένα αρχεία;</item>
+			<item name="confirm_unzip">Θέλετε σίγουρα να αποσυμπιέσετε τα επιλεγμένα αρχεία;\nΑν το μέγεθος των αρχείων είναι πολύ μεγάλο, θα πάρει κάποια ώρα.</item>
+			<item name="zip_removed">Τα ακόλουθα αρχεία σβήστηκαν γιατί δεν ήταν αρχεία zip.</item>
+			<item name="createdir">Δημιουργία φακέλου</item>
+			<item name="createdoc">Δημιουργία αρχείου</item>
+			<item name="refresh">Ανανέωση</item>
+			<item name="upload">Upload νέου αρχείου</item>
+			<item name="download">Download επιλεγμένου αρχείου</item>
+			<item name="props">Ιδιότητες αρχείου/φακέλου</item>
+			<item name="cut">Αποκοπή επιλεγμένων αρχείων/φακέλων</item>
+			<item name="copy">Αντιγραφή επιλεγμένων αρχείων/φακέλων</item>
+			<item name="paste">Επικόλληση αρχείων/φακέλων</item>
+			<item name="delete">Διαγραφή επιλεγμένων αρχείων/φακέλων</item>
+			<item name="unzip">Αποσυμπίεση επιλεγμένου αρχείου</item>
+			<item name="zip">Συμπίεση επιλεγμένων αρχείων/φακέλων</item>
+			<item name="imagemanager">Αλλαγή στον Διαχειριστή Εικόνων</item>
+			<item name="dir">Φάκελος</item>
+			<item name="parent_dir">Πατρικός φάκελος</item>
+			<item name="toggle_all">Αντιστροφή όλων</item>
+			<item name="error_exists">Λάθος: Το αρχείο/φάκελος {path} υπάρχει.</item>
+			<item name="error_delete_failed">Λάθος: Δεν έχετε αρκετά δικαιώματα ώστε να σβήσετε αρχεία/φακέλους.</item>
+			<item name="error_directory_not_empty">Λάθος: Ο φάκελος {path} δε μπορεί να σβηστεί, δεν είναι άδειος.</item>
+		</group>
+
+		<group target="preview">
+			<item name="title">Πληροφορίες αρχείου / φακέλου</item>
+			<item name="directory_information">Πληροφορίες φακέλου</item>
+			<item name="file_information">Πληροφορίες αρχείου</item>
+			<item name="creationdate">Ημ. δημιουργίας:</item>
+			<item name="modificationdate">Ημ. τροποποίησης:</item>
+			<item name="access">Δικαιώματα:</item>
+			<item name="directory">Φάκελος:</item>
+			<item name="subdirectories">Υποφάκελοι:</item>
+			<item name="files">Αρχεία:</item>
+			<item name="total_file_size">Μέγεθος αρχείων:</item>
+			<item name="filename">Όνομα αρχείου:</item>
+			<item name="file_size">Μέγεθος αρχείου:</item>
+			<item name="file_description">Περιγραφή αρχείου:</item>
+			<item name="preview">Προεπισκόπηση</item>
+			<item name="no_preview">Προεπισκόπηση μη διαθέσιμη.</item>
+			<item name="button_select">Επιλογή</item>
+			<item name="button_view">Εμφάνιση</item>
+			<item name="readable">Αναγνώσιμο</item>
+			<item name="not_readable">Μη αναγνώσιμο</item>
+			<item name="writable">Εγγράψιμο</item>
+			<item name="not_writable">Μη εγγράψιμο</item>
+		</group>
+
+		<group target="fileprops">
+			<item name="title">Ιδιότητες αρχείου / φακέλου</item>
+			<item name="description">Ιδιότητες αρχείου / φακέλου</item>
+			<item name="properties_on">Ιδιότητες σε:</item>
+			<item name="name">Όνομα:</item>
+			<item name="button_save">Αποθήκευση</item>
+			<item name="button_cancel">Ακύρωση</item>
+			<item name="error_exists">Λάθος: Υπάρχει ήδη αρχείο/φάκελος με το ίδιο όνομα.</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">Δημιουργία φακέλου</item>
+			<item name="description">Δώστε όνομα για τον φάκελο που θέλετε να δημιουργήσετε.</item>
+			<item name="template">Πρότυπο:</item>
+			<item name="select_template">-- Επιλέξτε πρότυπο --</item>
+			<item name="directory_name">Όνομα φακέλου:</item>
+			<item name="create_in">Δημιουργία στο:</item>
+			<item name="button_create">Δημιουργία</item>
+			<item name="button_cancel">Ακύρωση</item>
+			<item name="error_missing_name">Λάθος: Πρέπει να δώσετε όνομα.</item>
+			<item name="error_invalid_template_selection">Λάθος: Πρέπει να επιλέξετε πρότυπο.</item>
+			<item name="error_template_not_found">Λάθος: Το επιλέγμένο πρότυπο δε βρέθηκε.</item>
+			<item name="error_invalid_name">Λάθος: Το όνομα του φακέλου δεν είναι αποδεκτό.\\nΠεριλαμβάνει άκυρους χαρακτήρες όπως: :;</item>
+			<item name="error_exists">Λάθος: Υπάρχει φάκελος με αυτό το όνομα.</item>
+		</group>
+
+		<group target="createdoc">
+			<item name="title">Δημιουργία αρχείου</item>
+			<item name="description">Συμπληρώστε τη φόρμα για να δημιουργήσετε ένα νέο έγγραφο από πρότυπο.</item>
+			<item name="template">Πρότυπο:</item>
+			<item name="select_template">-- Επιλέξτε πρότυπο--</item>
+			<item name="required_filename">Πρέπει να δώσετε όνομα.</item>
+			<item name="filename">Όνομα:</item>
+			<item name="create_in">Δημιουργία στο:</item>
+			<item name="button_create">Δημιουργία</item>
+			<item name="button_cancel">Ακύρωση</item>
+			<item name="error_missing_document_name">Λάθος: Πρέπει να δώσετε όνομα.</item>
+			<item name="error_missing_template_selection">Λάθος: Πρέπει να επιλέξετε πρότυπο.</item>
+			<item name="error_missing_template">Λάθος: Το επιλέγμένο πρότυπο δε βρέθηκε.</item>
+			<item name="error_invalid_file_name">Λάθος: Το όνομα του αρχείου δεν είναι αποδεκτό.\\nΠεριλαμβάνει άκυρους χαρακτήρες όπως: ;.</item>
+			<item name="error_exists">Λάθος: Υπάρχει αρχείο με αυτό το όνομα.</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">Upload</item>
+			<item name="description">Χρησιμοποιείστε τη φόρμα για να κάνετε upload αρχείων.</item>
+			<item name="upload_in">Upload στο:</item>
+			<item name="valid_extensions">Επιτρεπτές επεκτάσεις:</item>
+			<item name="max_upload_size">Μέγιστο μέγεθος:</item>
+			<item name="file_to_upload">Αρχείο για upload:</item>
+			<item name="as_file_name">Με όνομα:</item>
+			<item name="required_filename">Πρέπει να δώσετε το όνομα του αρχείου που θα κάνετε upload.</item>
+			<item name="button_upload">Upload</item>
+			<item name="button_add_upload">Κι άλλο αρχείο</item>
+			<item name="button_cancel">Ακύρωση</item>
+			<item name="error_exists">Λάθος: Το αρχείο υπάρχει ήδη.</item>
+			<item name="error_to_large">Λάθος: Το αρχείο είναι πολύ μεγάλο.</item>
+			<item name="remove">Remove</item>
+		</group>
+
+		<group target="unzip">
+			<item name="title">Επισκόπηση αποσυμπίεσης</item>
+			<item name="description">Μια επισκόπηση των αρχείων zip που επιλέξατε.</item>
+			<item name="zipfile_name">Όνομα zip:</item>
+			<item name="current_folder">Τρέχων φάκελος:</item>
+			<item name="overwrite_files">Επικάλυψη αρχείων:</item>
+			<item name="name">Όνομα</item>
+			<item name="size">Μέγεθος</item>
+			<item name="csize">CSize</item>
+			<item name="exists">Υπάρχει</item>
+			<item name="status">Κατάσταση</item>
+			<item name="created">Δημιουργήθηκε</item>
+			<item name="button_unzip">Αποσυμπίεση</item>
+			<item name="button_cancel">Ακύρωση</item>
+			<item name="button_back">Πίσω</item>
+			<item name="button_close">Κλείσιμο</item>
+			<item name="Accepted">Αποδεχθείς</item>
+			<item name="Denied">Μη αποδεχθείς</item>
+			<item name="Passed">Επιτυχημένο</item>
+			<item name="Failed">Αποτυχημένο</item>
+			<item name="Yes">Ναι</item>
+			<item name="No">Όχι</item>
+		</group>
+
+		<group target="zip">
+			<item name="title">Δημιουργία zip</item>
+			<item name="description">Δώστε το όνομα του αρχείου zip που θέλετε να δημιουργήσετε.</item>
+			<item name="created_in">Το zip θα δημιουργηθεί στο:</item>
+			<item name="name">Όνομα:</item>
+			<item name="required_filename">Πρέπει να δώσετε όνομα.</item>
+			<item name="button_create">Δημιουργία</item>
+			<item name="button_cancel">Ακύρωση</item>
+		</group>
+	</language>
+</language-pack>

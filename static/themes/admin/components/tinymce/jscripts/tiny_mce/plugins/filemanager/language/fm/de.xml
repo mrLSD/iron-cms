@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+	<header>
+		<author>Moxiecode Systems AB / Translated by Markus Vetten</author>
+		<version minor="1" major="0" releasedate="2005-11-05" />
+		<description>
+			This is the german language pack for the MCFileManager.
+		</description>
+	</header>
+
+	<language code="de" title="Deutsch" dir="ltr">
+        <group target="error">
+            <item name="tofile_exists">Die Datei existiert bereits.</item>
+            <item name="no_from_file">Die Ausgangsdatei existiert nicht.</item>
+            <item name="demo">Diese Option steht in der DEMO-Version nicht zur Verfügung.</item>
+            <item name="invalid_filename">Der Dateiname ist ungültig.</item>
+            <item name="no_write_access">Es besteht kein Schreibzugriff auf die Datei/das Verzeichnis.</item>
+            <item name="copy_failed">Der Kopiervorgang ist fehlgeschlagen.</item>
+            <item name="move_failed">Der Verschiebungsvorgang ist fehlgeschlagen.</item>
+            <item name="template_missing">Die Ausgabeschablone konnte nicht gefunden werden.</item>
+            <item name="createdoc_failed">Die Datei konnte nicht erstellt werden.</item>
+            <item name="no_access">Sie haben nicht die nötigen Zugriffsrechte, um diese Aktion durchzuführen.</item>
+            <item name="file_exists">Diese Datei existiert bereits.</item>
+            <item name="upload_failed">Der Hochladevorgang ist fehlgeschlagen, bitte prüfen Sie die Schreibberechtigungen.</item>
+            <item name="error_to_large">Die maximale Dateigröße wurde überschritten.</item>
+            <item name="file_not_exists">Diese Datei existiert nicht.</item>
+            <item name="delete_failed">Der Löschvorgang ist fehlgeschlagen.</item>
+            <item name="folder_exists">Dieses Verzeichnis existiert bereits.</item>
+            <item name="no_filesystem">Es konnte kein Dateisystem ermittelt werden.</item>
+            <item name="createdir_failed">Das Verzeichnis konnte nicht erstellt werden.</item>
+            <item name="createzip_failed">Die ZIP-Datei konnte nicht erstellt werden.</item>
+            <item name="rename_failed">Die Datei konnte nicht umbenannt werden.</item>
+        </group>
+
+        <group target="message">
+            <item name="zip_success">Die ZIP-Datei wurde erstellt.</item>
+            <item name="copy_success">Der Kopiervorgang war erfolgreich.</item>
+            <item name="move_success">Der Verschiebungsvorgang war erfolgreich.</item>
+            <item name="createdoc_success">Die Datei wurde erstellt.</item>
+            <item name="delete_success">Der Löschvorgang war erfolgreich.</item>
+            <item name="directory_ok">Das Verzeichnis wurde erstellt.</item>
+            <item name="keepalive">Ihre derzeitige Sitzung ist dabei auszulaufen.</item>
+            <item name="upload_ok">Der Hochladevorgang war erfolgreich.</item>
+            <item name="confirm_cut">Sind Sie sicher, dass Sie die ausgewählten Dateien ausschneiden möchten?</item>
+            <item name="confirm_copy">Sind Sie sicher, dass Sie die ausgewählten Dateien kopieren möchten?</item>
+            <item name="confirm_paste">Sind Sie sicher, dass Sie die zuvor ausgeschnittenen bzw. kopierten Dateien hier einfügen möchten?</item>
+            <item name="confirm_delete">Sind Sie sicher, dass Sie die ausgewählten Dateien löschen möchten?</item>
+            <item name="insert">Rufe Dateiinformationen ab, bitte warten...</item>
+            <item name="paste_in_progress">Verschiebungsvorgang läuft, bitte warten...</item>
+        </group>
+
+        <group target="common">
+            <item name="createdir">Verzeichnis erstellen</item>
+            <item name="createfile">Neue Datei</item>
+            <item name="help">Hilfe</item>
+            <item name="refresh">Aktualisieren</item>
+            <item name="upload">Hochladen</item>
+            <item name="directory">Ausgewähltes Verzeichnis</item>
+            <item name="imagemanager">Bilderverwaltung</item>
+            <item name="title">Dateiverwaltung</item>
+            <item name="alert_ok">Ok</item>
+            <item name="confirm_yes">Ja</item>
+            <item name="confirm_no">Nein</item>
+        </group>
+
+        <group target="button">
+            <item name="create">Erstellen</item>
+        </group>
+
+        <group target="panel">
+            <item name="categories">Kategorien</item>
+            <item name="preview">Vorschau</item>
+            <item name="favorites">Favoriten</item>
+            <item name="history">Verlauf</item>
+        </group>
+
+        <group target="actions">
+            <item name="insert">Einfügen</item>
+            <item name="download">Herunterladen</item>
+            <item name="rename">Umbenennen</item>
+            <item name="cut">Ausschneiden</item>
+            <item name="copy">Kopieren</item>
+            <item name="paste">Einfügen</item>
+            <item name="deleteit">Löschen</item>
+            <item name="zip">zu ZIP-Archiv hinzufügen</item>
+            <item name="view">Ansehen</item>
+            <item name="select_all">alle auswählen</item>
+            <item name="unselect_all">Auswahl aufheben</item>
+            <item name="addfavorites">Als Favorit eintragen</item>
+            <item name="removefavorites">Als Favorit entfernen</item>
+        </group>
+
+        <group target="filelist">
+            <item name="filename">Name</item>
+            <item name="size">Größe</item>
+            <item name="type">Typ</item>
+            <item name="modified">Änderungsdatum</item>
+            <item name="with_selected">Operation:</item>
+            <item name="info_dirs">Verzeichnisse:</item>
+            <item name="info_files">Dateien:</item>
+            <item name="info_size">Dateigröße insgesamt:</item>
+            <item name="info_access">Zugriffsrechte:</item>
+            <item name="loading">Laden...</item>
+        </group>
+
+        <group target="createdir">
+            <item name="title">Verzeichnis erstellen</item>
+            <item name="description">Geben Sie den Namen für das Verzeichnis an, welches Sie erstellen möchten.</item>
+            <item name="template">Vorlage:</item>
+            <item name="select_template">-- Vorlage auswählen --</item>
+            <item name="directory_name">Verzeichnisname:</item>
+            <item name="create_in">erstellen in:</item>
+            <item name="progress">Erstelle Verzeichnis, bitte warten...</item>
+        </group>
+
+        <group target="createdoc">
+            <item name="title">Datei erstellen</item>
+            <item name="description">Füllen Sie das Formular aus, um eine Datei von einer Vorlage aus zu erstellen.</item>
+            <item name="template">Vorlage:</item>
+            <item name="select_template">-- Vorlage auswählen --</item>
+            <item name="name">Name</item>
+            <item name="path">Pfad</item>
+            <item name="preview">Vorschau</item>
+        </group>
+
+        <group target="upload">
+            <item name="title">Hochladen</item>
+            <item name="description">Benutzen Sie dieses Formular, um Dateien hochzuladen.</item>
+            <item name="valid_extensions">Zugelassene Dateiendungen:</item>
+            <item name="max_upload_size">Maximale Dateigröße:</item>
+            <item name="file_to_upload">Datei:</item>
+            <item name="as_file_name">Name:</item>
+            <item name="path">Pfad: </item>
+            <item name="button_upload">Hochladen</item>
+            <item name="browse">Datei hinzufügen</item>
+            <item name="progress">Lade Datei hoch, bitte warten...</item>
+        </group>
+
+        <group target="createzip">
+            <item name="title">Archiv erstellen</item>
+            <item name="description">Geben Sie den Namen des Archivs an, das Sie erstellen möchten.</item>
+            <item name="name">Name:</item>
+            <item name="path">Pfad:</item>
+        </group>
+
+        <group target="tinymce">
+            <item name="insertfile_desc">Datei einfügen</item>    
+        </group>
+    </language>
+</language-pack>

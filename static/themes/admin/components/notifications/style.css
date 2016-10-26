@@ -1,0 +1,41 @@
+/*** PAGE STYLING ***/
+
+.clear { clear: both; }
+.facebook { height: 24px; width: 24px; float: left; display: inline; background: url(http://cdn1.iconfinder.com/data/icons/WPZOOM_Social_Networking_Icon_Set/24/facebook.png) no-repeat; margin-right: 5px; }
+.twitter { height: 24px; width: 24px; float: left; display: inline; background: url(http://cdn1.iconfinder.com/data/icons/WPZOOM_Social_Networking_Icon_Set/24/twitter.png) no-repeat; margin-right: 5px; }
+.youtube { height: 24px; width: 24px; float: left; display: inline; background: url(http://cdn1.iconfinder.com/data/icons/WPZOOM_Social_Networking_Icon_Set/24/youtube.png) no-repeat; margin-right: 5px; }
+.linkedin { height: 24px; width: 24px; float: left; display: inline; background: url(http://cdn1.iconfinder.com/data/icons/WPZOOM_Social_Networking_Icon_Set/24/linkedin.png) no-repeat; margin-right: 5px; }
+.glare { background: url(./page_images/index_bg_glare.png) no-repeat; min-height: 343px; }
+.page { width: 600px; margin: auto; text-align: left; }
+.page .header { color: white; font-size: 28px; font-weight: bolder; text-align: center; display: block; padding-top: 30px; margin-bottom: 20px; }
+.page .content { border-radius: 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; padding: 10px; background-color: #f9f9f9; border: 1px solid #a9a9a9; }
+.page .navbar { border-radius: 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; border: 1px solid black; background-color: #CDEEFE; padding: 5px; margin-bottom: 10px; }
+.page .navbar a { float: left; display: inline; margin-right: 10px; color: #AC3434; text-decoration: none; cursor: pointer; font-weight: bolder; }
+.page .navbar a:Hover { text-decoration: underline; }
+#features { display: block; font-size: 12px; }
+#howto { display: none; font-size: 12px; }
+#howto .code { margin: 0; padding: 0; border: 1px solid #eaeaea; font-family: consolas; font-size: 12px; background-color: #d9d9d9; padding: 5px; }
+#examples { display: none; font-size: 12px; }
+#contact { display: none; font-size: 12px; }
+.footer { display: block; margin-top: 10px; border-top: 2px solid #d9d9d9; padding-top: 10px; font-size: 10px; }
+
+/*** NOTE STYLING ***/
+
+.note_container { border-radius: 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; padding: 10px; font-family: tahoma; font-size: 12px; width: 250px;-moz-box-shadow: 3px 3px 6px #000; -webkit-box-shadow: 3px 3px 6px #000;  box-shadow: 3px 3px 6px #000;}
+.note_close { height: 16px; width: 16px; background: url(./images/close.png) no-repeat; position: absolute; right: 5px; top: 0px; cursor: pointer; }
+
+.note_info { border: 1px solid #57A5CA; background-color: #C3E6F7; }
+.note_icon_info { background: url(./images/info.png) no-repeat; width: 32px; height: 32px; margin-right: 10px; }
+.note_text_info { margin-top: 2px; color: #333333; max-width: 200px; }
+
+.note_warning { border: 1px solid #E4BC0B; background-color: #F9EBAF; }
+.note_icon_warning { background: url(./images/warning.png) no-repeat; width: 32px; height: 32px; margin-right: 10px; }
+.note_text_warning { margin-top: 2px; color: #333333; max-width: 200px; }
+
+.note_confirm { border: 1px solid #5A9F2D; background-color: #CCF9AF; }
+.note_icon_confirm { background: url(./images/confirm.png) no-repeat; width: 32px; height: 32px; margin-right: 10px; }
+.note_text_confirm { margin-top: 2px; color: #333333; max-width: 200px; }
+
+.note_error { border: 1px solid #AC3434; background-color: #F7BCBC; }
+.note_icon_error { background: url(./images/error.png) no-repeat; width: 32px; height: 32px; margin-right: 10px; }
+.note_text_error { margin-top: 2px; color: #333333; max-width: 200px; }

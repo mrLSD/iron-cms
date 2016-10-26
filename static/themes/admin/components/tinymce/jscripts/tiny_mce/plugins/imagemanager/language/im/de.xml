@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+	<header>
+		<author>Moxiecode Systems AB</author>
+		<version minor="2" major="0" releasedate="2005-10-28" />
+		<description>
+			This is the German language pack for the MCImageManager.
+		</description>
+	</header>
+
+	<language code="de" title="Deutsch" dir="ltr">
+		<group target="common">
+			<item name="filemanager">Dateimanager</item>
+			<item name="createdir">Verzeichnis erstellen</item>
+			<item name="refresh">Neu laden</item>
+			<item name="upload">Datei hochladen</item>
+			<item name="error_no_access">Fehler: Keine Schreibrechte für dieses Verzeichnis.</item>
+			<item name="error_delete_failed">Fehler: Ihre Rechte reichen nicht aus, um diese Aktion durchzuführen.</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">Verzeichnis erstellen</item>
+			<item name="description">Geben Sie einen Name für das Verzeichnis ein.</item>
+			<item name="template">Vorlage:</item>
+			<item name="select_template">-- Vorlage wählen --</item>
+			<item name="directory_name">Verzeichnis:</item>
+			<item name="create_in">Erstellen in:</item>
+			<item name="button_create">Erstellen</item>
+			<item name="button_cancel">Abbrechen</item>
+			<item name="error_missing_name">Fehler: Sie müssen einen Namen für das Verzeichnis angeben.</item>
+			<item name="error_select_template">Fehler: Sie müssen eine Vorlage wählen.</item>
+			<item name="error_template_missing">Fehler: Die gewählte Vorlage konnte nicht gefunden werden.</item>
+			<item name="error_invalid_name">Fehler: Der angegebene Verzeichnisname ist ungültig.</item>
+			<item name="error_exists">Fehler: Es existiert bereits ein Verzeichnis mit diesem Namen.</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">Hochladen</item>
+			<item name="description">Benutzen Sie das Formular, um neue Dateien hochzuladen.</item>
+			<item name="upload_in">Speichern in:</item>
+			<item name="valid_extensions">Gültige Dateitypen:</item>
+			<item name="max_upload_size">Max. Dateigröße:</item>
+			<item name="file_to_upload">Datei:</item>
+			<item name="as_file_name">Speichern als:</item>
+			<item name="required_filename">Sie müssen einen Dateinamen angeben.</item>
+			<item name="button_upload">Hochladen</item>
+			<item name="button_add_upload">Weitere Datei hochladen</item>
+			<item name="button_cancel">Abbrechen</item>
+			<item name="error_exists">Fehler: Es existiert bereits eine Datei mit diesem Namen.</item>
+			<item name="error_to_large">Fehler: Die Datei ist zu gross.</item>
+			<item name="remove">Entfernen</item>
+		</group>
+
+		<group target="images">
+			<item name="title">Image Manager</item>
+			<item name="subtitle">Image Manager</item>
+			<item name="select_directory">Verzeichnis wählen:</item>
+			<item name="width">Breite:</item>
+			<item name="height">Höhe:</item>
+			<item name="type">Typ:</item>
+			<item name="size">Größe:</item>
+			<item name="scale">Skalierung:</item>
+			<item name="confirm_delete">Diese Datei wirklich löschen?</item>
+			<item name="no_files">In diesem Verzeichnis sind keine Bilder.</item>
+			<item name="image">Bild</item>
+			<item name="bmp">BMP Bild</item>
+			<item name="png">PNG Bild</item>
+			<item name="jpg">JPEG Bild</item>
+			<item name="gif">GIF Bild</item>
+			<item name="tif">TIFF Bild</item>
+			<item name="editwriteaccess">No write access, temporary files can not be created.</item>
+		</group>
+
+		<group target="edit_image">
+			<item name="save_image">Bild speichern</item>
+			<item name="revert_image">Neu laden</item>
+			<item name="toggle_color">Rahmenfarbe ändern</item>
+			<item name="crop_image">Bild zurechtschneiden</item>
+			<item name="resize_image">Größe ändern</item>
+			<item name="please_wait">Bild wird bearbeitet, Bitte warten...</item>
+			<item name="constrain">Proportionen beibehalten</item>
+			<item name="left">l:</item>
+			<item name="top">t:</item>
+			<item name="width">w:</item>
+			<item name="height">h:</item>
+			<item name="error_selection">Use the selection tool to select an area to crop.</item>
+			<item name="error_resize">You must insert a width and height in order to resize the image.</item>
+		</group>
+
+		<group target="preview">
+			<item name="title">Vorschau</item>
+			<item name="prev">zurück</item>	
+			<item name="next">vor</item>	
+			<item name="keyboard_next">Tastatur Kürzel: SPACE,N,RIGHTARROW,PAGE DOWN</item>	
+			<item name="keyboard_prev">Tastatur Kürzel: P,LEFTARROW,PAGE UP</item>	
+		</group>
+	</language>
+</language-pack>

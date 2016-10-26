@@ -12,6 +12,8 @@ pub fn main_handler(_: &mut Request) -> RenderResult {
     Render::new("admin/pages/index", default_param())
 }
 
-pub fn create_handler(_: &mut Request) -> RenderResult {
+pub fn create_handler(req: &mut Request) -> RenderResult {
+    use params::Params;
+    println!("{:?}", req.get_ref::<Params>());
     Render::new("admin/pages/create", default_param())
 }

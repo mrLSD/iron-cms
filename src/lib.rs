@@ -8,6 +8,10 @@ extern crate mount;
 extern crate time;
 #[macro_use]
 extern crate maplit;
+extern crate params;
+extern crate urlencoded;
+extern crate bodyparser;
+extern crate persistent;
 
 pub mod middleware;
 

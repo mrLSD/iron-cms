@@ -12,12 +12,6 @@
 /// * `link` - css link helper
 /// * `script` - js  link helper
 ///
-/// ## How to use
-/// ```
-/// // Add Template renderer and views path
-/// let paths = vec!["./views/"];
-/// chain.link_after(iron_cms::middleware::template_render(paths));
-/// ```
 /// it's included paths ./views/**/*
 use iron::prelude::*;
 use iron::status;

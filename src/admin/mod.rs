@@ -11,6 +11,7 @@ pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes.get("/admin/pages.html", pages::main_handler, "admin_pages_main");
     routes.get("/admin/pages/create.html", pages::create_handler, "admin_pages_create");
     routes.get("/admin/login.html", admin_login_handler, "admin_login");
+    routes.post("/admin/pages/create.html", pages::create_handler, "admin_pages_create");
     routes
 }
 

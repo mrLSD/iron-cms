@@ -16,6 +16,7 @@ $ target/release/iron-cms
 * Rust 1.12+
   
 #### Some useful command:
+* **install Rust:** `make install`
 * **run:** `make`
 * **build:** `make build`
 * **release build:** `make release`

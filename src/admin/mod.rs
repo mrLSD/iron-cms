@@ -1,10 +1,6 @@
 use router::Router;
 use iron::prelude::*;
-use time;
 pub use super::middleware::*;
-
-mod main;
-mod pages;
 
 pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes.get("/admin.html", main::main_handler, "admin_main");
@@ -14,6 +10,8 @@ pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes.post("/admin/pages/create.html", pages::create_handler, "admin_pages_create");
     routes
 }
+
+use time;
 
 fn admin_login_handler(_: &mut Request) -> RenderResult {
     let time = time::now();

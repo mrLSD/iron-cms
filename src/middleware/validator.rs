@@ -1,7 +1,8 @@
-use rustc_serialize::json::{self, Json, ToJson};
+pub use rustc_serialize::json::{self, Json, ToJson};
 use params::Value;
 use super::render::BaseDataMap;
 
+//
 #[derive(RustcDecodable, Debug)]
 pub struct Validator<T> {
     pub requiered: Option<bool>,
@@ -108,5 +109,18 @@ impl ErrorValidator {
                 self.errors_count = Some(count + 1);
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn new_test() {
+        let val_req = Validator::<String>::new(btreemap! {
+            "requiered".to_string() => true.to_json(),
+        });
+        assert_eq!(val_req.requiered, Some(true));
+        assert!(val_req.errors.is_none());
     }
 }

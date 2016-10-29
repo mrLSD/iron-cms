@@ -15,4 +15,8 @@ maplit = "*"
 handlebars = "*"
 params = "*"
 
+[[bin]]
+name = "main"
+doc = false
+
 [features]

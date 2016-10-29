@@ -1,7 +1,5 @@
 use iron::prelude::*;
-//use std::collections::BTreeMap;
-use rustc_serialize::json::{ToJson};
-use super::{Render, BaseDataMap, RenderResult};
+use super::*;
 
 fn default_param() -> BaseDataMap {
     btreemap! {
@@ -9,6 +7,6 @@ fn default_param() -> BaseDataMap {
     }
 }
 
-pub fn main_handler(_: &mut Request) -> RenderResult {
+pub fn get_main(_: &mut Request) -> RenderResult {
     Render::new("admin/main/index", default_param())
 }

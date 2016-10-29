@@ -29,6 +29,13 @@ impl ValidateResults {
         }
         if errors.len() > 0 { Some(errors) } else { None }
     }
+
+    pub fn get_values(&self) /*-> BaseDataMap*/ {
+        let &ValidateResults(ref results) = self;
+        for &ValidateResult(ref value, _) in results {
+            println!("Val: {:?}", value);
+        }
+    }
 }
 
 impl<T> Validator<T> {

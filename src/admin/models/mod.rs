@@ -1,3 +1,3 @@
-pub use super::{Validator, ValidateResult, VRes, Tr};
+pub use super::{Validator, ValidateResult, ValidateResults};
 
 pub mod pages;

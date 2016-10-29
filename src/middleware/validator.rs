@@ -12,16 +12,22 @@ pub struct Validator<T> {
     errors: Option<ErrorValidator>,
 }
 
+#[derive(Debug)]
 pub struct ValidateResult(BaseDataMap, ErrorValidator);
-pub type VRes = Vec<ValidateResult>;
+#[derive(Debug)]
+pub struct ValidateResults(pub Vec<ValidateResult>);
+pub type ErrorsResult = Option<Vec<ErrorValidator>>;
 
-pub trait Tr {
-    fn get_errors(&self);
-}
-
-impl<T> Tr for Vec<T> {
-    fn get_errors(&self) {
-        println!("get_errors");
+impl ValidateResults {
+    pub fn get_errors(&self) -> ErrorsResult {
+        let &ValidateResults(ref results) = self;
+        let mut errors = vec!();
+        for &ValidateResult(_, ref err) in results {
+            if err.errors_count.is_some() {
+                errors.push(err.to_owned());
+            }
+        }
+        if errors.len() > 0 { Some(errors) } else { None }
     }
 }
 

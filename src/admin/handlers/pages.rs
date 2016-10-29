@@ -18,20 +18,9 @@ pub fn get_create(_: &mut Request) -> RenderResult {
 pub fn post_create(req: &mut Request) -> RenderResult {
     use params::{Params};
     let values = itry!(req.get_ref::<Params>());
-    models::pages::validate(values).get_errors();
-//
-//    let _vld2 = btreemap! {
-//        "requiered".to_string() => true.to_json(),
-//        "field".to_string() => "name".to_json(),
-//    };
-//    let json_obj: Json = Json::Object(_vld2);
-//    let json_str: String = json_obj.to_string();
-//    let _decoded: Validator<String> = json::decode(&json_str).unwrap();
-//    if let Err(err) = _decoded.validate(val.find(&["name"])) {
-//        println!("res: {:?}", err.errors);
-//    }
-//    if let Err(err) = _decoded.validate(val.find(&["age"])) {
-//        println!("res: {:?}", err.errors);
-//    }
+    let validate = models::pages::validate(values);
+    if let Some(err) = validate.get_errors() {
+        println!("Validation Errors: {:?}", err);
+    }
     Render::new("admin/pages/create", default_param())
 }

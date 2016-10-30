@@ -2,6 +2,7 @@ use router::Router;
 pub use super::middleware::*;
 
 mod handlers;
+mod models;
 
 pub fn add_routes(routes: &mut Router) -> &mut Router {
     routes.get("/admin.html", handlers::main::get_main, "admin_main");

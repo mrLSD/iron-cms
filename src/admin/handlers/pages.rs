@@ -11,12 +11,12 @@ pub fn get_main(_: &mut Request) -> RenderResult {
     Render::new("admin/pages/index", default_param())
 }
 
-pub fn get_create(req: &mut Request) -> RenderResult {
+pub fn get_create(_: &mut Request) -> RenderResult {
     Render::new("admin/pages/create", default_param())
 }
 
 pub fn post_create(req: &mut Request) -> RenderResult {
-    use params::{Params, Value};
+    use params::{Params};
     let _val = itry!(req.get_ref::<Params>());
 //
 //    let _vld2 = btreemap! {

@@ -1,5 +1,6 @@
 use rustc_serialize::json::{self, Json, ToJson};
 use params::Value;
+use super::render::BaseDataMap;
 
 #[derive(RustcDecodable, Debug)]
 pub struct Validator<T> {
@@ -8,28 +9,57 @@ pub struct Validator<T> {
     pub min: Option<u32>,
     pub max: Option<u32>,
     pub dafault: Option<T>,
-    pub field: String,
-    errors: ErrorValidator,
+    errors: Option<ErrorValidator>,
+}
+
+pub struct ValidateResult(BaseDataMap, ErrorValidator);
+pub type VRes = Vec<ValidateResult>;
+
+pub trait Tr {
+    fn get_errors(&self);
+}
+
+impl<T> Tr for Vec<T> {
+    fn get_errors(&self) {
+        println!("get_errors");
+    }
 }
 
 impl<T> Validator<T> {
-    pub fn validate(&mut self, value: Option<&Value>) -> Result<(), ErrorValidator> {
-        // Init Errors
-        self.errors = ErrorValidator::new(&self.field);
-        self.requiered(value);
-
-        if self.errors.errors_count.is_some() {
-            Err(self.errors.to_owned())
-        } else {
-            Ok(())
-        }
+    pub fn new(validator_rules: BaseDataMap) -> Validator<String> {
+        let json_obj: Json = Json::Object(validator_rules);
+        let json_str: String = json_obj.to_string();
+        json::decode(&json_str).unwrap()
     }
 
+    pub fn validate(&mut self, field: String, value: Option<&Value>) -> ValidateResult {
+        // Init Errors
+        self.errors = Some(ErrorValidator::new(&field));
+
+        // Invoke validators
+        self.requiered(value);
+
+        let mut val = "".to_json();
+        if let Some(&Value::String(ref name)) = value {
+            val = name.to_json();
+        }
+        let mut err = ErrorValidator::new(&field);
+        if let Some(ref err_results) = self.errors {
+            err = err_results.to_owned();
+        }
+        ValidateResult(btreemap! {
+            field.to_owned() => val.to_json()
+        }, err)
+    }
+
+    /// Requered validator
     fn requiered(&mut self, value: Option<&Value>) {
         if self.requiered.is_some() {
             if value.is_none() {
-                let msg = format!("Field requiered: {}", self.field);
-                self.errors.add(msg);
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field requiered: {}", error.field);
+                    error.add(msg);
+                }
             }
         }
     }

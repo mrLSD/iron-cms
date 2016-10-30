@@ -17,7 +17,8 @@ pub fn get_create(_: &mut Request) -> RenderResult {
 
 pub fn post_create(req: &mut Request) -> RenderResult {
     use params::{Params};
-    let _val = itry!(req.get_ref::<Params>());
+    let values = itry!(req.get_ref::<Params>());
+    models::pages::validate(values).get_errors();
 //
 //    let _vld2 = btreemap! {
 //        "requiered".to_string() => true.to_json(),

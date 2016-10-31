@@ -36,7 +36,6 @@ use time::Duration;
 /// extern crate iron;
 /// extern crate iron_cms;
 /// use iron::{Iron, Chain};
-///
 /// fn main() {
 ///    // Add routers
 ///    let mut chain = Chain::new(iron_cms::routes());
@@ -45,8 +44,8 @@ use time::Duration;
 ///    chain.link_after(iron_cms::middleware::template_render(paths));
 ///    // Add error-404 handler
 ///    chain.link_after(iron_cms::middleware::Error404);
-///    // Start application
-///    Iron::new(chain).http("localhost:3000").unwrap();
+///    // Start applocation and other actions
+///    // Iron::new(chain).http("localhost:3000").unwrap();
 /// }
 /// ```
 pub fn routes() -> Mount {

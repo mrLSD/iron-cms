@@ -7,6 +7,7 @@ fn default_param() -> BaseDataMap {
     }
 }
 
+
 pub fn get_main(_: &mut Request) -> RenderResult {
     Render::new("admin/pages/index", default_param())
 }
@@ -22,6 +23,7 @@ pub fn post_create(req: &mut Request) -> RenderResult {
     if let Some(err) = validate.get_errors() {
         println!("Validation Errors: {:?}", err);
     }
-    validate.get_values();
+    models::pages::init(validate.get_values());
+
     Render::new("admin/pages/create", default_param())
 }

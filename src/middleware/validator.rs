@@ -1,6 +1,8 @@
 pub use rustc_serialize::json::{self, Json, ToJson};
+pub use rustc_serialize::Decodable;
 use params::Value;
 use super::render::BaseDataMap;
+use std::collections::BTreeMap;
 
 //
 #[derive(RustcDecodable, Debug)]
@@ -20,6 +22,7 @@ pub struct ValidateResults(pub Vec<ValidateResult>);
 pub type ErrorsResult = Option<Vec<ErrorValidator>>;
 
 impl ValidateResults {
+    /// Get Validation Errors result
     pub fn get_errors(&self) -> ErrorsResult {
         let &ValidateResults(ref results) = self;
         let mut errors = vec!();
@@ -31,16 +34,19 @@ impl ValidateResults {
         if errors.len() > 0 { Some(errors) } else { None }
     }
 
-    pub fn get_values(&self) /*-> BaseDataMap*/ {
+    /// Get Validation Values result
+    pub fn get_values(&self) -> BaseDataMap {
         let &ValidateResults(ref results) = self;
-        for &ValidateResult(ref value, _) in results {
-            println!("Val: {:?}", value);
+        let mut values: BaseDataMap = BTreeMap::new();
+        for &ValidateResult(ref val, _) in results {
+            values.append(&mut val.clone());
         }
+        values
     }
 }
 
 impl<T> Validator<T> {
-    pub fn new(validator_rules: BaseDataMap) -> Validator<String> {
+    pub fn new<J: Decodable>(validator_rules: BaseDataMap) -> Validator<J> {
         let json_obj: Json = Json::Object(validator_rules);
         let json_str: String = json_obj.to_string();
         json::decode(&json_str).unwrap()

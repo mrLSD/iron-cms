@@ -1,3 +1,11 @@
+//! # What is Validator
+//! It useful for Form and Model validation.
+//! Implementation for Validation via BTreeMap structure.
+//! It consist basic validations rule, validatior, and
+//! validation Result and validation Errors.
+//!
+//! ## How to use
+//! Most common examples you can find at src/admin/models/*
 pub use rustc_serialize::json::{self, Json, ToJson};
 pub use rustc_serialize::json::DecoderError::*;
 pub use rustc_serialize::Decodable;
@@ -6,24 +14,30 @@ use super::render::{BaseDataMap, BaseDataMapDecoder};
 use std::collections::BTreeMap;
 use std::string::String;
 
-/// Base Validator strict
+/// Base Validator struct
 #[derive(RustcDecodable, Debug)]
 pub struct Validator<T> {
+    /// Type of validator
+    /// For example: string, bool, i64 etc.
     pub vtype: String,
     pub requiered: Option<bool>,
-    pub empty: Option<bool>,
     pub min: Option<u32>,
     pub max: Option<u32>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
 
+/// Validation result enum.
+/// Consist Values and Errors
 #[derive(Debug)]
 pub struct ValidateResult(BaseDataMap, ErrorValidator);
+/// Array of Validatopn Results for all validatior
 #[derive(Debug)]
 pub struct ValidateResults(pub Vec<ValidateResult>);
+// Error result aggregator
 pub type ErrorsResult = Option<Vec<ErrorValidator>>;
 
+/// Validation results methods
 impl ValidateResults {
     /// Get Validation Errors result
     pub fn get_errors(&self) -> ErrorsResult {
@@ -48,6 +62,8 @@ impl ValidateResults {
     }
 }
 
+/// Validator methods
+/// It depends from various additional **traits**.
 impl<T: FromValue + ToJson + Decodable> Validator<T> {
     /// Init Validation rule
     pub fn new(validator_rules: BaseDataMap) -> Validator<T> {

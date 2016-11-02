@@ -3,7 +3,7 @@
 # @author Evgeny Ukhanov <mrlsd@ya.ru>
 #
 
-.PHONY: run, build, release, install, docker-build, test
+.PHONY: run, build, release, install, docker-build, test, doc
 
 default: run
 
@@ -33,8 +33,12 @@ docker-build:
 	@echo Start building Docker image...
 	@docker build -t mrlsd/iron-cms:latest .
 
-
 test:
 	@echo Run tests...
 	@cargo test
+	@echo Done.
+
+doc:
+	@echo Build documentation...
+	@cargo doc --no-deps
 	@echo Done.

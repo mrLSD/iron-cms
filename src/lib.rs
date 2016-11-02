@@ -1,5 +1,9 @@
 //! # Iron CMS
 //! CMS based on Iron Framework for **Rust**.
+//! ```
+//! #[macro_use]
+//! extern crate maplit;
+//! ```
 #[macro_use]
 extern crate iron;
 extern crate router;

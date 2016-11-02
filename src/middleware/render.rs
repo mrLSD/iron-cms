@@ -38,6 +38,11 @@ pub trait BaseDataMapDecoder {
     fn decode<J: Decodable>(&self) -> J;
 }
 
+/// Omplementation for Jscond decoding
+/// from BaseDataMap that implemented Decodable trait
+/// to specific generic type.
+/// It useful for struct init via BaseDataMap data.
+/// For Example - models.
 impl BaseDataMapDecoder for BaseDataMap {
     /// Json decoder for BaseDataMap
     fn decode<J: Decodable>(&self) -> J {
@@ -65,7 +70,8 @@ impl BaseDataMapDecoder for BaseDataMap {
 /// basic usage:
 /// `Render::new("my/template/path", ())``
 impl Render {
-    pub fn new<T: ToJson>(name: &str, data: T) -> IronResult<Response> {
+    /// Render Template file with status 200
+    pub fn new<T: ToJson>(name: &str, data: T) -> RenderResult {
         let mut resp = Response::new();
         resp.set_mut(Template::new(name, data)).set_mut(status::Ok);
         Ok(resp)
@@ -81,7 +87,7 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
     // Add helpers to Handlebars
     hregistry.register_helper("link", Box::new(link_helper));
     hregistry.register_helper("script", Box::new(script_helper));
-    hregistry.register_helper("active", Box::new(active_page));
+    hregistry.register_helper("active", Box::new(active_page_helper));
 
     // Our instance HandlebarsEngine depended of Handlebars
     let mut template = HandlebarsEngine::from(hregistry);
@@ -134,7 +140,11 @@ fn script_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext
     Ok(())
 }
 
-fn active_page(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+/// Active helper.
+/// It checking is value same with exacted value
+/// usege: `{{#active "pages" module }}{{/active}}`
+/// It should pre-init value at Handler!
+fn active_page_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
     let exact_page = try!(h.param(0)
             .and_then(|v| v.value().as_string())
             .ok_or(RenderError::new("|> active_page - param 1 with string type is required")));

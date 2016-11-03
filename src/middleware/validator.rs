@@ -5,7 +5,7 @@ use super::render::BaseDataMap;
 use std::collections::BTreeMap;
 use std::string::String;
 
-//
+/// Base Validator strict
 #[derive(RustcDecodable, Debug)]
 pub struct Validator<T> {
     pub vtype: String,
@@ -13,7 +13,7 @@ pub struct Validator<T> {
     pub empty: Option<bool>,
     pub min: Option<u32>,
     pub max: Option<u32>,
-    pub dafault: Option<T>,
+    pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
 
@@ -51,6 +51,7 @@ impl<T: FromValue + ToJson> Validator<T> {
     pub fn new(validator_rules: BaseDataMap) -> Validator<String> {
         let json_obj: Json = Json::Object(validator_rules);
         let json_str: String = json_obj.to_string();
+        println!("{}", json_str);
         json::decode(&json_str).unwrap()
     }
 
@@ -71,11 +72,13 @@ impl<T: FromValue + ToJson> Validator<T> {
                 "".to_json()
             }
         };
+        //println!("{:?}", json_value);
 
         let mut err = ErrorValidator::new(&field);
         if let Some(ref err_results) = self.errors {
             err = err_results.to_owned();
         }
+        println!("==");
         ValidateResult(btreemap! {
             field.to_owned() => json_value
         }, err)
@@ -83,13 +86,31 @@ impl<T: FromValue + ToJson> Validator<T> {
 
     /// Requered validator
     fn requiered(&mut self, value: Option<&Value>) {
-        if self.requiered.is_some() {
-            if value.is_none() {
-                if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field requiered: {}", error.field);
-                    error.add(msg);
-                }
+        if self.requiered.is_some() && value.is_none() {
+            if let Some(ref mut error) = self.errors {
+                let msg = format!("Field requiered: {}", error.field);
+                error.add(msg);
             }
+        }
+    }
+
+    /// Devault value validator
+    fn default(&mut self, value: Option<&Value>) {
+        if let Some(ref default_value) = self.default {
+            //value.is_none()
+            //value = Some(&Value::I64(default_value));
+        }
+    }
+
+    fn to_value(&self, json_value: Option<Json>) -> Option<Value> {
+        match json_value {
+            Some(Json::I64(value)) => Some(Value::I64(value)),
+            Some(Json::U64(value)) => Some(Value::U64(value)),
+            Some(Json::F64(value)) => Some(Value::F64(value)),
+            Some(Json::String( ref value)) => Some(Value::String(value.clone())),
+            Some(Json::Boolean(value)) => Some(Value::Boolean(value)),
+            Some(Json::Null) => Some(Value::Null),
+            _ => None,
         }
     }
 

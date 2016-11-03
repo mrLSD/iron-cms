@@ -91,7 +91,18 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
 
     /// Requered validator
     fn requiered(&mut self, value: &Option<Value>) {
-        if self.requiered.is_some() && value.is_none() {
+        if self.requiered.is_some() {
+            if value.is_some() {
+                let check_value = match *value {
+                    Some(Value::String(ref value)) => {
+                        !value.trim().is_empty()
+                    },
+                    _ => true
+                };
+                if check_value {
+                    return ()
+                }
+            }
             if let Some(ref mut error) = self.errors {
                 let msg = format!("Field requiered: {}", error.field);
                 error.add(msg);
@@ -112,7 +123,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
 
     /// Convert value based ot specific type to Value
     pub fn to_value(&self, json_value: Json) -> Option<Value> {
-        match json_value.to_json() {
+        match json_value {
             Json::I64(value) => Some(Value::I64(value)),
             Json::U64(value) => Some(Value::U64(value)),
             Json::F64(value) => Some(Value::F64(value)),
@@ -219,7 +230,17 @@ mod test {
         assert_eq!(val_req.requiered, Some(true));
 
         // Test for non-panic
-        let val_req = Validator::<bool>::new(btreemap! {
+        Validator::<bool>::new(btreemap! {
+            "default".to_string() => false.to_json(),
+            "vtype".to_string() => "bool".to_json(),
+        });
+    }
+
+    #[test]
+    #[should_panic]
+    fn new_with_wrong_type_test() {
+        // It should be: Validator::<bool>
+        Validator::<String>::new(btreemap! {
             "default".to_string() => false.to_json(),
             "vtype".to_string() => "bool".to_json(),
         });

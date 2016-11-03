@@ -65,7 +65,7 @@ impl<T: FromValue + ToJson> Validator<T> {
             Some(ref json_value) => json_value.to_owned(),
             None => {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field requiered: {}", error.field);
+                    let msg = format!("Field wroтп type: {}", error.field);
                     error.add(msg);
                 }
                 "".to_json()
@@ -112,62 +112,32 @@ impl<T: FromValue + ToJson> Validator<T> {
                 if let Some(val) = <String as FromValue>::from_value(&val) {
                     Some(Json::String(val))
                 } else {
+                    None
+                }
+            },
+            "u8" | "u16" | "u32" | "u64" | "usize" => {
+                if let Some(val) = <u64 as FromValue>::from_value(&val) {
+                    Some(Json::U64(val))
+                } else {
+                    None
+                }
+            },
+            "i8" | "i16" | "i32" | "i64" | "isize" => {
+                if let Some(val) = <i64 as FromValue>::from_value(&val) {
+                    Some(Json::I64(val))
+                } else {
+                    None
+                }
+            },
+            "f32" | "f64" => {
+                if let Some(val) = <f64 as FromValue>::from_value(&val) {
+                    Some(Json::F64(val))
+                } else {
                     return None;
                 }
-//                let val = <String as FromValue>::from_value(&val).unwrap();
-//                Some(Json::String(val))
             },
             _ => None,
         }
-
-//        let ok_value: Value = match self.vtype.as_ref() {
-//            "u8" | "u16" | "u32" | "u64" => {
-//                if let Some(val) = <T as FromValue>::from_value(&val) {
-//                    Value::U64(val)
-//                } else {
-//                    return None;
-//                }
-//            },
-//            "u16" => <u16 as FromValue>::from_value(&val),
-//            "u32" => <u32 as FromValue>::from_value(&val),
-//            "u64" => <u64 as FromValue>::from_value(&val),
-//            "usize" => <usize as FromValue>::from_value(&val),
-//            "i8"  => <u8  as FromValue>::from_value(&val),
-//            "i16" => <u16 as FromValue>::from_value(&val),
-//            "i32" => <u32 as FromValue>::from_value(&val),
-//            "i64" => <u64 as FromValue>::from_value(&val),
-//            "isize" => <usize as FromValue>::from_value(&val),
-//            "f32" => <f32 as FromValue>::from_value(&val),
-//            "f64" => <f64 as FromValue>::from_value(&val),
-//            "string" => <String as FromValue>::from_value(&val),
-//            "bool" => {
-//                if let Some(val) = <bool as FromValue>::from_value(&val) {
-//                    Value::Boolean(val)
-//                } else {
-//                    return None;
-//                }
-//            },
-//            _ => return None,
-//        };
-//        println!("===| {:?}", ok_value);
-
-//        if self.vtype == "string" {
-//            println!("===| {:?}", self.vtype);
-//            let _n1 = Value::from_value(&val);
-//            println!("===| {:?}", _n1);
-//            if let Some(&Value::String(ref name)) = value {
-//                Value::Null => f.write_str("null"),
-//                Value::Boolean(value) => value.fmt(f),
-//                Value::I64(value) => value.fmt(f),
-//                Value::U64(value) => value.fmt(f),
-//                Value::F64(value) => value.fmt(f),
-//                Value::String( ref value) => value.fmt(f),
-//                Value::File( ref value) => value.fmt(f),
-//                Value::Array( ref value) => value.fmt(f),
-//                Value::Map( ref value) => value.fmt(f),
-//            }
-//        }
-//        None
     }
 }
 

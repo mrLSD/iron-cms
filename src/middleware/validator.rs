@@ -1,4 +1,5 @@
 pub use rustc_serialize::json::{self, Json, ToJson};
+pub use rustc_serialize::json::DecoderError::*;
 pub use rustc_serialize::Decodable;
 use params::{Value, FromValue};
 use super::render::BaseDataMap;
@@ -47,12 +48,27 @@ impl ValidateResults {
     }
 }
 
-impl<T: FromValue + ToJson> Validator<T> {
-    pub fn new(validator_rules: BaseDataMap) -> Validator<String> {
+impl<T: FromValue + ToJson + Decodable> Validator<T> {
+    pub fn new(validator_rules: BaseDataMap) -> Validator<T> {
         let json_obj: Json = Json::Object(validator_rules);
         let json_str: String = json_obj.to_string();
         println!("{}", json_str);
-        json::decode(&json_str).unwrap()
+        match json::decode(&json_str) {
+            Ok(decoded) => decoded,
+            Err(err) => {
+                let msg = match err {
+                    ParseError(_) => "JSON parse error",
+                    ExpectedError(_, _) => "Validation field expected (not declared)",
+                    MissingFieldError(_) => "Validation field missing",
+                    _ => "Other error",
+                };
+                panic!("\
+              \n\n |> Validator::new error: {:?}\
+                \n |> Validation fields: {:?}\
+                \n |> Message: {}\
+                \n |> At source code: => ", err, json_obj, msg);
+            }
+        }
     }
 
     pub fn validate(&mut self, field: String, value: Option<&Value>) -> ValidateResult {
@@ -72,7 +88,6 @@ impl<T: FromValue + ToJson> Validator<T> {
                 "".to_json()
             }
         };
-        //println!("{:?}", json_value);
 
         let mut err = ErrorValidator::new(&field);
         if let Some(ref err_results) = self.errors {

@@ -22,6 +22,7 @@ pub fn validate(values: &Map) -> ValidateResults {
 }
 
 pub fn init(values: BaseDataMap) {
+    println!("{:?}", values);
 /*
     let _r = btreemap! {
         "title".to_string() => "pages".to_json(),

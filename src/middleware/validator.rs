@@ -52,7 +52,6 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
     pub fn new(validator_rules: BaseDataMap) -> Validator<T> {
         let json_obj: Json = Json::Object(validator_rules);
         let json_str: String = json_obj.to_string();
-        println!("{}", json_str);
         match json::decode(&json_str) {
             Ok(decoded) => decoded,
             Err(err) => {
@@ -82,8 +81,10 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             Some(ref json_value) => json_value.to_owned(),
             None => {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field wroтп type: {}", error.field);
-                    error.add(msg);
+                    if value.is_some() {
+                        let msg = format!("Field wrong type: {}", error.field);
+                        error.add(msg);
+                    }
                 }
                 "".to_json()
             }
@@ -93,7 +94,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         if let Some(ref err_results) = self.errors {
             err = err_results.to_owned();
         }
-        println!("==");
+
         ValidateResult(btreemap! {
             field.to_owned() => json_value
         }, err)
@@ -110,23 +111,72 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
     }
 
     /// Devault value validator
-    fn default(&mut self, value: Option<&Value>) {
+    fn default(&mut self, mut value: Option<&Value>) -> Option<Value> {
         if let Some(ref default_value) = self.default {
-            //value.is_none()
-            //value = Some(&Value::I64(default_value));
+            if value.is_none() {
+//                match default_value.to_json() {
+//                    Json::I64(ref value) => {
+//                        let val = Some(Value::I64(value.to_owned()));
+//                        val
+//                    },
+//                    Json::U64(value) => Some(Value::U64(value)),
+//                    Json::F64(value) => Some(Value::F64(value)),
+//                    Json::String( ref value) => Some(Value::String(value.clone())),
+//                    Json::Boolean(value) => Some(Value::Boolean(value)),
+//                    Json::Null => Some(Value::Null),
+//                    _ => None,
+//                }
+            }
         }
+        None
     }
 
-    fn to_value(&self, json_value: Option<Json>) -> Option<Value> {
-        match json_value {
-            Some(Json::I64(value)) => Some(Value::I64(value)),
-            Some(Json::U64(value)) => Some(Value::U64(value)),
-            Some(Json::F64(value)) => Some(Value::F64(value)),
-            Some(Json::String( ref value)) => Some(Value::String(value.clone())),
-            Some(Json::Boolean(value)) => Some(Value::Boolean(value)),
-            Some(Json::Null) => Some(Value::Null),
+    fn to_value(&self, val: T) -> Option<Value> {
+        match &self.vtype.as_ref() as &str {
+//            "bool" | "boolean" => {
+//                Some(Value::Boolean(val))
+//            },
+/*
+            "string" | "str" => {
+                if let Some(val) = <String as FromValue>::from_value(&val) {
+                    Some(Json::String(val))
+                } else {
+                    None
+                }
+            },
+            "u8" | "u16" | "u32" | "u64" | "usize" => {
+                if let Some(val) = <u64 as FromValue>::from_value(&val) {
+                    Some(Json::U64(val))
+                } else {
+                    None
+                }
+            },
+            "i8" | "i16" | "i32" | "i64" | "isize" => {
+                if let Some(val) = <i64 as FromValue>::from_value(&val) {
+                    Some(Json::I64(val))
+                } else {
+                    None
+                }
+            },
+            "f32" | "f64" => {
+                if let Some(val) = <f64 as FromValue>::from_value(&val) {
+                    Some(Json::F64(val))
+                } else {
+                    return None;
+                }
+            },
+*/
             _ => None,
         }
+//        match json_value {
+//            Some(Json::I64(value)) => Some(Value::I64(value)),
+//            Some(Json::U64(value)) => Some(Value::U64(value)),
+//            Some(Json::F64(value)) => Some(Value::F64(value)),
+//            Some(Json::String( ref value)) => Some(Value::String(value.clone())),
+//            Some(Json::Boolean(value)) => Some(Value::Boolean(value)),
+//            Some(Json::Null) => Some(Value::Null),
+//            _ => None,
+//        }
     }
 
     fn type_cast(&self, value: Option<&Value>) -> Option<Json> {
@@ -220,6 +270,11 @@ mod test {
             "vtype".to_string() => "bool".to_json(),
         });
         assert_eq!(val_req.requiered, Some(true));
-        assert!(val_req.errors.is_none());
+
+        let val_req = Validator::<String>::new(btreemap! {
+            "default".to_string() => false.to_json(),
+            "vtype".to_string() => "bool".to_json(),
+        });
+        //assert_eq!(val_req.default, Some(false));
     }
 }

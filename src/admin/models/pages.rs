@@ -3,7 +3,7 @@ use params::{Map};
 use super::*;
 
 #[derive(RustcDecodable, Debug)]
-struct Pages {
+pub struct Pages {
     pub title: String,
     pub published: bool,
 }
@@ -21,35 +21,6 @@ pub fn validate(values: &Map) -> ValidateResults {
     ))
 }
 
-pub fn init(values: BaseDataMap) {
-    println!("V: {:?}", values);
-    //let p: Pages = decode(&Json::Object(values).to_string()).unwrap();
-    let p1: Pages = values.decode(&values);
-    println!("P: {:?}", p1);
-/*
-    let _r = btreemap! {
-        "title".to_string() => "pages".to_json(),
-        "published".to_string() => "true".to_json(),
-    };
-    let json_obj: Json = Json::Object(_r);
-    let json_str: String = json_obj.to_string();
-    if let Some(res) = json_obj.find("published") {
-        println!("{:?}", res.as_boolean());
-        if let Some(r) = res.as_string() {
-            println!("{:?}", r.parse::<bool>());
-        }
-    }
-    let _model: Pages = decode(&json_str).unwrap();
-
-    println!("json: {:?}", _model);
-
-    let json_obj: Json = Json::Object(values);
-    let json_str: String = json_obj.to_string();
-    println!("json: {}", json_str);
-    if let Err(err) = decode::<Pages>(&json_str) {
-        println!("Err: {:?}", err);
-    }
-*/
-    //let _model: Pages = decode(&json_str).unwrap();
-    //println!("model: {:?}", _model);
+pub fn init(values: BaseDataMap) -> Pages {
+    values.decode()
 }

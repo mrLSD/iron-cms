@@ -51,7 +51,7 @@ impl ValidateResults {
 impl<T: FromValue + ToJson + Decodable> Validator<T> {
     /// Init Validation rule
     pub fn new(validator_rules: BaseDataMap) -> Validator<T> {
-        validator_rules.decode(&validator_rules)
+        validator_rules.decode()
     }
 
     /// Main validor for all validations rules
@@ -111,7 +111,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
     }
 
     /// Convert value based ot specific type to Value
-    fn to_value(&self, json_value: Json) -> Option<Value> {
+    pub fn to_value(&self, json_value: Json) -> Option<Value> {
         match json_value.to_json() {
             Json::I64(value) => Some(Value::I64(value)),
             Json::U64(value) => Some(Value::U64(value)),
@@ -211,16 +211,17 @@ mod test {
     use super::*;
     #[test]
     fn new_test() {
+        // Test for requiered equal
         let val_req = Validator::<String>::new(btreemap! {
             "requiered".to_string() => true.to_json(),
             "vtype".to_string() => "bool".to_json(),
         });
         assert_eq!(val_req.requiered, Some(true));
 
+        // Test for non-panic
         let val_req = Validator::<bool>::new(btreemap! {
             "default".to_string() => false.to_json(),
             "vtype".to_string() => "bool".to_json(),
         });
-        //assert_eq!(val_req.default, Some(false));
     }
 }

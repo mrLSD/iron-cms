@@ -35,13 +35,13 @@ pub struct Render {
 
 /// BaseDataMap Json decoder trait
 pub trait BaseDataMapDecoder {
-    fn decode<J: Decodable>(&self, data: &BaseDataMap) -> J;
+    fn decode<J: Decodable>(&self) -> J;
 }
 
 impl BaseDataMapDecoder for BaseDataMap {
     /// Json decoder for BaseDataMap
-    fn decode<J: Decodable>(&self, data: &BaseDataMap) -> J {
-        let json_obj: Json = Json::Object(data.to_owned());
+    fn decode<J: Decodable>(&self) -> J {
+        let json_obj: Json = Json::Object(self.to_owned());
         match json::decode(&json_obj.to_string()) {
             Ok(decoded) => decoded,
             Err(err) => {

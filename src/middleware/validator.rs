@@ -2,7 +2,7 @@ pub use rustc_serialize::json::{self, Json, ToJson};
 pub use rustc_serialize::json::DecoderError::*;
 pub use rustc_serialize::Decodable;
 use params::{Value, FromValue};
-use super::render::BaseDataMap;
+use super::render::{BaseDataMap, BaseDataMapDecoder};
 use std::collections::BTreeMap;
 use std::string::String;
 
@@ -49,27 +49,12 @@ impl ValidateResults {
 }
 
 impl<T: FromValue + ToJson + Decodable> Validator<T> {
+    /// Init Validation rule
     pub fn new(validator_rules: BaseDataMap) -> Validator<T> {
-        let json_obj: Json = Json::Object(validator_rules);
-        let json_str: String = json_obj.to_string();
-        match json::decode(&json_str) {
-            Ok(decoded) => decoded,
-            Err(err) => {
-                let msg = match err {
-                    ParseError(_) => "JSON parse error",
-                    ExpectedError(_, _) => "Validation field expected (not declared)",
-                    MissingFieldError(_) => "Validation field missing",
-                    _ => "Other error",
-                };
-                panic!("\
-              \n\n |> Validator::new error: {:?}\
-                \n |> Validation fields: {:?}\
-                \n |> Message: {}\
-                \n |> At source code: => ", err, json_obj, msg);
-            }
-        }
+        validator_rules.decode(&validator_rules)
     }
 
+    /// Main validor for all validations rules
     pub fn validate(&mut self, field: String, value: Option<&Value>) -> ValidateResult {
         let mut value: Option<Value> = if let Some(val) = value {
             Some(val.to_owned())
@@ -138,8 +123,10 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         }
     }
 
+    // Type cast for Value.
+    // Returned as Json
     fn type_cast(&self, value: &Option<Value>) -> Option<Json> {
-        let mut val: Value;
+        let val: Value;
         if let Some(name) = value.as_ref() {
             val = name.to_owned();
         } else {

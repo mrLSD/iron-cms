@@ -15,14 +15,17 @@ pub fn validate(values: &Map) -> ValidateResults {
             "vtype".to_string() => "string".to_json(),
         }).validate("title".to_string(), values.find(&["title"])),
         Validator::<bool>::new(btreemap! {
-            "default".to_string() => true.to_json(),
+            "default".to_string() => false.to_json(),
             "vtype".to_string() => "bool".to_json(),
         }).validate("published".to_string(), values.find(&["published"])),
     ))
 }
 
 pub fn init(values: BaseDataMap) {
-    println!("{:?}", values);
+    println!("V: {:?}", values);
+    //let p: Pages = decode(&Json::Object(values).to_string()).unwrap();
+    let p1: Pages = values.decode(&values);
+    println!("P: {:?}", p1);
 /*
     let _r = btreemap! {
         "title".to_string() => "pages".to_json(),

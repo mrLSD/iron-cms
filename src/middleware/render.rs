@@ -19,7 +19,9 @@ use hbs::{HandlebarsEngine, DirectorySource};
 use handlebars::{Handlebars, RenderError, RenderContext, Helper, Context};
 use std::error::Error;
 use std::collections::BTreeMap;
-use rustc_serialize::json::{Json, ToJson};
+use rustc_serialize::json::{self, Json, ToJson};
+use rustc_serialize::json::DecoderError::*;
+use rustc_serialize::Decodable;
 use hbs::{Template};
 
 /// Alias for Basic Data struct
@@ -29,6 +31,34 @@ pub type RenderResult = IronResult<Response>;
 /// Templфte Render strшct
 pub struct Render {
     pub data : BaseDataMap
+}
+
+/// BaseDataMap Json decoder trait
+pub trait BaseDataMapDecoder {
+    fn decode<J: Decodable>(&self, data: &BaseDataMap) -> J;
+}
+
+impl BaseDataMapDecoder for BaseDataMap {
+    /// Json decoder for BaseDataMap
+    fn decode<J: Decodable>(&self, data: &BaseDataMap) -> J {
+        let json_obj: Json = Json::Object(data.to_owned());
+        match json::decode(&json_obj.to_string()) {
+            Ok(decoded) => decoded,
+            Err(err) => {
+                let msg = match err {
+                    ParseError(_) => "JSON parse error",
+                    ExpectedError(_, _) => "Validation field expected (not declared)",
+                    MissingFieldError(_) => "Validation field missing",
+                    _ => "Other error",
+                };
+                panic!("\
+              \n\n |> Validator::new error: {:?}\
+                \n |> Validation fields: {:?}\
+                \n |> Message: {}\
+                \n |> At source code: => ", err, json_obj, msg);
+            }
+        }
+    }
 }
 
 /// Basic render with StatusOK tempalte name and data

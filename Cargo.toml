@@ -1,7 +1,11 @@
 [package]
 name = "iron-cms"
-version = "0.2.10"
+version = "0.2.11"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
+
+[build-dependencies]
+syntex = { version = "0.44.0", optional = true }
+diesel_codegen_syntex = { version = "0.8.0", features = ["postgres"], optional = true }
 
 [dependencies]
 iron = "0.4.0"
@@ -14,9 +18,13 @@ mount = "*"
 maplit = "*"
 handlebars = "*"
 params = "*"
+diesel = "0.8.1"
+diesel_codegen = { version = "0.8.1", features = ["postgres"], optional = true }
+dotenv = "0.8.0"
 
 [[bin]]
-name = "main"
+name = "iron-cms"
 doc = false
 
 [features]
+default = ["syntex", "diesel_codegen_syntex"]

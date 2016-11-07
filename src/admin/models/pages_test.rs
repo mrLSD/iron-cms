@@ -8,7 +8,7 @@ mod pages_test {
     fn validate_title_test() {
         // Test valid result
         let mut map = Map::new();
-        map.assign("title", Value::String("Test Title".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test Title".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
 
@@ -29,13 +29,13 @@ mod pages_test {
     fn validate_published_test() {
         let mut map = Map::new();
         // Should setrequired field
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::Boolean(true)).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::String("on".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
@@ -81,7 +81,7 @@ mod pages_test {
     fn validate_published_default_test() {
         let mut map = Map::new();
         // Should setrequired field
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
 

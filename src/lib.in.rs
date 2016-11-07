@@ -1,2 +1,2 @@
 pub mod schema;
-pub mod models;
+pub mod pages_model;

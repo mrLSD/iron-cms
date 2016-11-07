@@ -17,6 +17,12 @@ extern crate time;
 extern crate maplit;
 extern crate params;
 
+#[macro_use]
+extern crate diesel;
+extern crate dotenv;
+
+include!(concat!(env!("OUT_DIR"), "/lib.rs"));
+
 /// Base middleware for CMS
 pub mod middleware;
 

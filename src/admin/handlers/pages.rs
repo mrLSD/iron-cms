@@ -16,6 +16,11 @@ pub fn get_create(_: &mut Request) -> RenderResult {
     Render::new("admin/pages/create", default_param())
 }
 
+pub fn get_show(_: &mut Request) -> RenderResult {
+    models::pages::show();
+    Render::new("admin/pages/create", default_param())
+}
+
 pub fn post_create(req: &mut Request) -> RenderResult {
     use params::{Params};
     let values = itry!(req.get_ref::<Params>());

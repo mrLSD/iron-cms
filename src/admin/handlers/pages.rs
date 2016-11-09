@@ -27,9 +27,10 @@ pub fn post_create(req: &mut Request) -> RenderResult {
     let validate = models::pages::validate(values);
     if let Some(err) = validate.get_errors() {
         println!("Validation Errors: {:?}", err);
+    } else {
+        println!("Creating...");
+        models::pages::create(validate.get_values());
     }
-    let model = models::pages::init(validate.get_values());
-    println!("{:?}", model);
 
     Render::new("admin/pages/create", default_param())
 }

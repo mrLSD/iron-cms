@@ -10,7 +10,8 @@ pub struct Page {
 
 #[derive(Insertable)]
 #[table_name="pages"]
-pub struct NewPost<'a> {
-    pub title: &'a str,
+pub struct NewPage {
+    pub title: String,
+    pub body: String,
     pub published: bool,
 }

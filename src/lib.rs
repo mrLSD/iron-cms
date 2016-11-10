@@ -19,9 +19,9 @@ extern crate params;
 
 #[macro_use]
 extern crate diesel;
-extern crate dotenv;
-
-include!(concat!(env!("OUT_DIR"), "/lib.rs"));
+extern crate iron_diesel_middleware;
+extern crate r2d2;
+extern crate r2d2_diesel;
 
 /// Base middleware for CMS
 pub mod middleware;
@@ -38,6 +38,7 @@ use mount::Mount;
 use std::path::Path;
 #[cfg(feature = "cache")]
 use time::Duration;
+use iron_diesel_middleware::{DieselMiddleware};
 
 /// Routes aggregator.
 /// It accumulate all posible routes for CMS.
@@ -76,4 +77,8 @@ pub fn routes() -> Mount {
         .mount("/", routes)
         .mount("/assets/", Static::new(Path::new("static")));
     mount
+}
+
+pub fn db(connection_url: &str) -> DieselMiddleware {
+    DieselMiddleware::new(connection_url).unwrap()
 }

@@ -1,19 +1,53 @@
-//use rustc_serialize::json::{ToJson};
 use params::{Map};
 use super::*;
-use pages_model::*;
 
 use diesel::prelude::*;
-use diesel::pg::PgConnection;
-use dotenv::dotenv;
 use diesel;
-use std::env;
+use diesel::result::Error;
+use r2d2;
+use r2d2_diesel;
+use diesel::pg::PgConnection;
+type ConnectionPool = r2d2::PooledConnection<r2d2_diesel::ConnectionManager<PgConnection>>;
 
 #[derive(RustcDecodable, Debug)]
 pub struct Pages {
     pub title: String,
     pub body: String,
     pub published: bool,
+}
+
+pub struct PagesTable {
+    pub id: i32,
+    pub title: String,
+    pub body: String,
+    pub published: bool,
+}
+
+table! {
+    tbl_pages {
+        id -> Integer,
+        title ->  Varchar,
+        body -> Text,
+        published -> Bool,
+    }
+}
+
+Insertable! {
+    (tbl_pages)
+    struct Pages {
+        title: String,
+        body: String,
+        published: bool,
+    }
+}
+
+Queryable! {
+    struct PagesTable {
+        id: i32,
+        title: String,
+        body: String,
+        published: bool,
+    }
 }
 
 pub fn validate(values: &Map) -> ValidateResults {
@@ -34,51 +68,19 @@ pub fn validate(values: &Map) -> ValidateResults {
 }
 
 pub fn init(values: BaseDataMap) -> Pages {
-    println!("INIT");
     values.decode()
 }
 
-fn establish_connection() -> PgConnection {
-    dotenv().ok();
-
-    let database_url = env::var("DATABASE_URL")
-        .expect("DATABASE_URL must be set");
-    PgConnection::establish(&database_url)
-        .expect(&format!("Error connecting to {}", database_url))
+// Create new Page
+pub fn create(conn: &ConnectionPool, values: BaseDataMap) -> Result<usize, Error> {
+    let new_page: Pages = self::init(values);
+    diesel::insert(&new_page).into(tbl_pages::table).execute(&**conn)
 }
 
-pub fn create(values: BaseDataMap) -> Page {
-    use schema::pages;
-
-    let page = self::init(values);
-
-    let new_page = NewPage {
-        title: page.title,
-        body: page.body,
-        published: page.published,
-    };
-
-    let connection = establish_connection();
-    diesel::insert(&new_page).into(pages::table)
-        .get_result(&connection)
-        .expect("Error saving new post")
-}
-
-pub fn show() {
-    use schema::pages::dsl::*;
-    use pages_model::*;
-
-    let connection = establish_connection();
-    let results = pages
+// List pages
+pub fn list(conn: &ConnectionPool) -> Vec<PagesTable> {
+    tbl_pages::table
         .limit(5)
-        .load::<Page>(&connection)
-        .expect("Error loading page");
-
-    println!("Displaying {} pages", results.len());
-    for post in results {
-        println!("{}", post.title);
-        println!("-----------\n");
-        println!("{}", post.body);
-    }
-
+        .load::<PagesTable>(&**conn)
+        .expect("Error loading page")
 }

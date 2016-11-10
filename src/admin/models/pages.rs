@@ -3,11 +3,6 @@ use super::*;
 
 use diesel::prelude::*;
 use diesel;
-use diesel::result::Error;
-use r2d2;
-use r2d2_diesel;
-use diesel::pg::PgConnection;
-type ConnectionPool = r2d2::PooledConnection<r2d2_diesel::ConnectionManager<PgConnection>>;
 
 #[derive(RustcDecodable, Debug)]
 pub struct Pages {
@@ -26,7 +21,7 @@ pub struct PagesTable {
 table! {
     tbl_pages {
         id -> Integer,
-        title ->  Varchar,
+        title -> Varchar,
         body -> Text,
         published -> Bool,
     }
@@ -72,7 +67,7 @@ pub fn init(values: BaseDataMap) -> Pages {
 }
 
 // Create new Page
-pub fn create(conn: &ConnectionPool, values: BaseDataMap) -> Result<usize, Error> {
+pub fn create(conn: &ConnectionPool, values: BaseDataMap) -> InsertResult {
     let new_page: Pages = self::init(values);
     diesel::insert(&new_page).into(tbl_pages::table).execute(&**conn)
 }

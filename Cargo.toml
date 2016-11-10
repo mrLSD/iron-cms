@@ -1,6 +1,6 @@
 [package]
 name = "iron-cms"
-version = "0.2.12"
+version = "0.2.13"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
 
 [dependencies]
@@ -19,7 +19,7 @@ r2d2 = "*"
 r2d2-diesel = "*"
 
 [dependencies.iron_diesel_middleware]
-git = "https://github.com/darayus/iron-diesel-middleware"
+git = "https://github.com/iron-cms/iron-diesel-middleware"
 
 [[bin]]
 name = "iron-cms"

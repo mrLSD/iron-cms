@@ -1,9 +1,5 @@
 //! # Iron CMS
 //! CMS based on Iron Framework for **Rust**.
-//! ```
-//! #[macro_use]
-//! extern crate maplit;
-//! ```
 #[macro_use]
 extern crate iron;
 extern crate router;
@@ -38,7 +34,6 @@ use mount::Mount;
 use std::path::Path;
 #[cfg(feature = "cache")]
 use time::Duration;
-use iron_diesel_middleware::{DieselMiddleware};
 
 /// Routes aggregator.
 /// It accumulate all posible routes for CMS.
@@ -69,16 +64,9 @@ pub fn routes() -> Mount {
 
     // Add static router
     let mut mount = Mount::new();
-//    mount
-//        .mount("/", routes)
-//        .mount("/assets/", Static::new(Path::new("static"))
-//            .cache(Duration::days(30)));
     mount
         .mount("/", routes)
         .mount("/assets/", Static::new(Path::new("static")));
+//      .cache(Duration::days(30)));
     mount
-}
-
-pub fn db(connection_url: &str) -> DieselMiddleware {
-    DieselMiddleware::new(connection_url).unwrap()
 }

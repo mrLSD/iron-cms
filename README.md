@@ -17,13 +17,14 @@ $ target/release/iron-cms
 ```
 
 #### Requirements:
-* Rust 1.12+
+* Rust 1.13+
   
 #### Some useful command:
 * **install Rust:** `make install`
 * **run:** `make`
 * **build:** `make build`
 * **release build:** `make release`
+* **test:** `make test`
 
 
 ####License: MIT

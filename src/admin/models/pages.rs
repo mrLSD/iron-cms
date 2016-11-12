@@ -55,7 +55,7 @@ pub fn validate(values: &Map) -> ValidateResults {
         Validator::<String>::new(btreemap! {
             "requiered".to_string() => true.to_json(),
             "default".to_string() => "".to_json(),
-            "vtype".to_string() => "string".to_json(),
+            "vtype".to_string() => "array".to_json(),
         }).validate("body1".to_string(), values.find(&["Contents", "section"])),
 
         Validator::<bool>::new(btreemap! {

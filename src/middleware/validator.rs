@@ -160,6 +160,13 @@ println!("{:?}", value);
             return None
         }
         match &self.vtype.as_ref() as &str {
+            "array" | "vec" => {
+                if let Some(val) = <Vec<String> as FromValue>::from_value(&val) {
+                    Some(val.to_json())
+                } else {
+                    None
+                }
+            },
             "bool" | "boolean" => {
                 if let Some(val) = <bool as FromValue>::from_value(&val) {
                     Some(Json::Boolean(val))

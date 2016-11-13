@@ -14,13 +14,13 @@ mod pages_test {
 
         // test unvalid result
         let mut map = Map::new();
-        map.assign("title", Value::String("".into())).unwrap();
+        map.assign("pages[title]", Value::String("".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_some());
 
         // test unvalid result
         let mut map = Map::new();
-        map.assign("title", Value::String("  ".into())).unwrap();
+        map.assign("pages[title]", Value::String("  ".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_some());
     }
@@ -41,37 +41,37 @@ mod pages_test {
         assert!(validator.get_errors().is_none());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::String("off".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::I64(1)).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::I64(0)).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_none());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::String("test".into())).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_some());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::I64(-1)).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_some());
 
         let mut map = Map::new();
-        map.assign("title", Value::String("Test".into())).unwrap();
+        map.assign("pages[title]", Value::String("Test".into())).unwrap();
         map.assign("published", Value::I64(2)).unwrap();
         let validator = validate(&map);
         assert!(validator.get_errors().is_some());
@@ -93,15 +93,15 @@ mod pages_test {
     #[should_panic]
     fn wrong_type_test() {
         let mut map = Map::new();
-        //map.assign("title", Value::String("Test Title".into())).unwrap();
-        map.assign("title", Value::Boolean(true)).unwrap();
+        //map.assign("pages[title]", Value::String("Test Title".into())).unwrap();
+        map.assign("pages[title]", Value::Boolean(true)).unwrap();
 
         // Weong type declaration
         let validator = ValidateResults(vec!(
             Validator::<bool>::new(btreemap! {
                 "requiered".to_string() => true.to_json(),
                 "vtype".to_string() => "bool".to_json(),
-            }).validate("title".to_string(), map.find(&["title"])),
+            }).validate("title".to_string(), map.find(&["pages", "title"])),
         ));
         // Should paniced
         assert!(validator.get_errors().is_none());

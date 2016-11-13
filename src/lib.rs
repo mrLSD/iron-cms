@@ -1,20 +1,17 @@
 //! # Iron CMS
 //! CMS based on Iron Framework for **Rust**.
-#[macro_use]
-extern crate iron;
-extern crate router;
+#[macro_use] extern crate iron;
+#[macro_use] extern crate router;
+#[macro_use] extern crate maplit;
+#[macro_use] extern crate diesel;
 extern crate handlebars_iron as hbs;
 extern crate handlebars;
 extern crate rustc_serialize;
 extern crate staticfile;
 extern crate mount;
 extern crate time;
-#[macro_use]
-extern crate maplit;
 extern crate params;
 
-#[macro_use]
-extern crate diesel;
 extern crate iron_diesel_middleware;
 extern crate r2d2;
 extern crate r2d2_diesel;

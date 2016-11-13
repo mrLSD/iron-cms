@@ -81,7 +81,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         // Invoke validators
         self.requiered(&value);
         value = self.default(&value);
-
+println!("{:?}", value);
         let json_value: Json = match self.type_cast(&value) {
             Some(ref json_value) => json_value.to_owned(),
             None => {

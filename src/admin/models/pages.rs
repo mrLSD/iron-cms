@@ -50,11 +50,14 @@ pub fn validate(values: &Map) -> ValidateResults {
         Validator::<String>::new(btreemap! {
             "requiered".to_string() => true.to_json(),
             "vtype".to_string() => "string".to_json(),
-        }).validate("title".to_string(), values.find(&["title"])),
+        }).validate("title".to_string(), values.find(&["pages", "title"])),
+
         Validator::<String>::new(btreemap! {
+            "requiered".to_string() => true.to_json(),
             "default".to_string() => "".to_json(),
             "vtype".to_string() => "string".to_json(),
-        }).validate("body".to_string(), values.find(&["body"])),
+        }).validate("body1".to_string(), values.find(&["Contents", "section"])),
+
         Validator::<bool>::new(btreemap! {
             "default".to_string() => false.to_json(),
             "vtype".to_string() => "bool".to_json(),

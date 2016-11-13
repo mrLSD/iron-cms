@@ -1,7 +1,26 @@
 {{#partial content}}
 {{> admin/pages/_form.js }}
 <div class="page-title">
+{{#partial cnt1}}
+    <h2>{{#ifeq result[0].field 123}}
+    ===
+        {{#if result[0].field}}+++{{/if}}
+        {{#if result[2].field}} 0000 {{/if}}
+    ~~~
+    {{else}}
+        +-+-+
+    {{/ifeq}}</h2>
+    {{#if result[0].field }}
+    <h2>{{result[0].field}}</h2>
+    {{/if}}
+{{/partial}}
+
+    {{#block cnt1}}{{/block}}
     <a href="/admin/pages.html" class="go-back">go back</a>
+
+    {{#each result}}
+    <h2>{{@index}} {{field}} {{errors}} {{values.title}}</h2>
+    {{/each}}
     <h2>Page <span>Add new</span></h2>
 </div>
 <div class="content-box">

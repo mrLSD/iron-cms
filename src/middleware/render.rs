@@ -88,6 +88,7 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
     hregistry.register_helper("link", Box::new(link_helper));
     hregistry.register_helper("script", Box::new(script_helper));
     hregistry.register_helper("active", Box::new(active_page_helper));
+    hregistry.register_helper("ifeq", Box::new(ifeq_helper));
 
     // Our instance HandlebarsEngine depended of Handlebars
     let mut template = HandlebarsEngine::from(hregistry);
@@ -156,5 +157,30 @@ fn active_page_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderCo
         active = "active".to_owned();
     }
     try!(rc.writer.write(active.into_bytes().as_ref()));
+    Ok(())
+}
+
+fn ifeq_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+    use handlebars::Renderable;
+
+
+    let value = try!(h.param(0)
+            .and_then(|v| Some(v.value()) )
+            .ok_or(RenderError::new("|> ifeq_helper - param 1 with string type is required")));
+    let eq_field = try!(h.param(1)
+            .and_then(|v| Some(v.value()) )
+            .ok_or(RenderError::new("|> ifeq_helper - param 2 with string type is required")));
+
+    let is_true = value == eq_field;
+
+    if is_true {
+        if let Some(tpl) = h.template() {
+            tpl.render(ctx, hbs, rc)?;
+        }
+    } else {
+        if let Some(tpl) = h.inverse() {
+            tpl.render(ctx, hbs, rc)?;
+        }
+    }
     Ok(())
 }

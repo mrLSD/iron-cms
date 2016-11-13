@@ -2,7 +2,11 @@
 {{> admin/pages/_form.js }}
 <div class="page-title">
 {{#partial cnt1}}
-    <h2>{{#ifeq result[0].field 123}}
+    <h2>{{#ifeq 123 123}}
+        {{active (active "pages+" module) module}}
+        True
+        {{/ifeq}}</h2>
+    <h2>{{#ifeq result[0].field 323}}
     ===
         {{#if result[0].field}}+++{{/if}}
         {{#if result[2].field}} 0000 {{/if}}

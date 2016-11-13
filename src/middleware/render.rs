@@ -23,6 +23,7 @@ use rustc_serialize::json::{self, Json, ToJson};
 use rustc_serialize::json::DecoderError::*;
 use rustc_serialize::Decodable;
 use hbs::{Template};
+use handlebars::Renderable;
 
 /// Alias for Basic Data struct
 pub type BaseDataMap = BTreeMap<String, Json>;
@@ -89,6 +90,7 @@ pub fn template_render(paths: Vec<&str>) -> HandlebarsEngine {
     hregistry.register_helper("script", Box::new(script_helper));
     hregistry.register_helper("active", Box::new(active_page_helper));
     hregistry.register_helper("ifeq", Box::new(ifeq_helper));
+    hregistry.register_helper("ifgt", Box::new(ifgt_helper));
 
     // Our instance HandlebarsEngine depended of Handlebars
     let mut template = HandlebarsEngine::from(hregistry);
@@ -146,6 +148,7 @@ fn script_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext
 /// usege: `{{#active "pages" module }}{{/active}}`
 /// It should pre-init value at Handler!
 fn active_page_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+    println!("ACTIVE=> {:?} {:?}\n", h.param(0), h.param(1));
     let exact_page = try!(h.param(0)
             .and_then(|v| v.value().as_string())
             .ok_or(RenderError::new("|> active_page - param 1 with string type is required")));
@@ -161,15 +164,13 @@ fn active_page_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderCo
 }
 
 fn ifeq_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-    use handlebars::Renderable;
-
-
     let value = try!(h.param(0)
             .and_then(|v| Some(v.value()) )
-            .ok_or(RenderError::new("|> ifeq_helper - param 1 with string type is required")));
+            .ok_or(RenderError::new("|> ifeq_helper - param 1 with is required")));
     let eq_field = try!(h.param(1)
             .and_then(|v| Some(v.value()) )
-            .ok_or(RenderError::new("|> ifeq_helper - param 2 with string type is required")));
+            .ok_or(RenderError::new("|> ifeq_helper - param 2 with is required")));
+    println!("==> {:?}\n\n", h.param(0));
 
     let is_true = value == eq_field;
 
@@ -182,5 +183,20 @@ fn ifeq_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderConte
             tpl.render(ctx, hbs, rc)?;
         }
     }
+    Ok(())
+}
+
+fn ifgt_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+    let value = try!(h.param(0)
+            .and_then(|v| Some(v.value()) )
+             .ok_or(RenderError::new("|> ifgt_helper - param 1 withis required")));
+    let eq_field = try!(h.param(1)
+            .and_then(|v| Some(v.value()) )
+            .ok_or(RenderError::new("|> ifgt_helper - param 2 with is required")));
+    println!("IFGT==> {:?}\n\n", value);
+    let mut active = "5 23".to_owned();
+    try!(rc.writer.write(active.into_bytes().as_ref()));
+    println!("IFGT==>>> {:?}\n\n", value);
+
     Ok(())
 }

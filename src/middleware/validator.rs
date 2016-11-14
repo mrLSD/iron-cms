@@ -65,17 +65,11 @@ impl ValidateResults {
 /// Convert Validation Results to Json
 impl ToJson for ValidateResults {
     fn to_json(&self) -> Json {
-        let mut data = BTreeMap::new();
+        let mut data: Vec<Json> = vec!();
         let &ValidateResults(ref results) = self;
+        let mut i = 0;
         for &ValidateResult(ref val, ref err) in results {
-            println!("\n\tERR_CNT: {:?}", err.field.to_json());
             let mut d = BTreeMap::new();
-            // Set `errors_count` attribute
-            if let Some(count) = err.errors_count {
-                d.insert("errors_count".to_string(), count.to_json());
-            } else {
-                d.insert("errors_count".to_string(), 0.to_json());
-            }
             // Set `field` attribute
             d.insert("field".to_string(), err.field.to_json());
             // Set `errors` attribute
@@ -83,10 +77,12 @@ impl ToJson for ValidateResults {
             // Set `values` attribute
             d.insert("values".to_string(), val.to_json());
 
-            data.append(&mut d);
+            data.push(d.to_json());
+
+            //data.append(&mut d);
+            i = i + 1;
         }
-        println!("{:?}", data);
-        Json::Object(data)
+        Json::Array(data)
     }
 }
 

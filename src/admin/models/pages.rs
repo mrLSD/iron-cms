@@ -7,7 +7,6 @@ use diesel;
 #[derive(RustcDecodable, Debug)]
 pub struct Pages {
     pub title: String,
-    pub body: String,
     pub published: bool,
 }
 
@@ -31,7 +30,6 @@ Insertable! {
     (tbl_pages)
     struct Pages {
         title: String,
-        body: String,
         published: bool,
     }
 }
@@ -72,6 +70,7 @@ pub fn init(values: BaseDataMap) -> Pages {
 // Create new Page
 pub fn create(conn: &ConnectionPool, values: BaseDataMap) -> InsertResult {
     let new_page: Pages = self::init(values);
+    println!("{:?}", new_page);
     diesel::insert(&new_page).into(tbl_pages::table).execute(&**conn)
 }
 

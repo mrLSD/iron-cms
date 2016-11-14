@@ -30,7 +30,7 @@ pub fn post_create(req: &mut Request) -> RenderResult {
     let values = itry!(req.get::<Params>());
     let validate = models::pages::validate(&values);
     if let Some(err) = validate.get_errors() {
-        println!("Validation Errors: {:?}", err);
+        println!("Validation Errors: {:?}\n\n {:?}", err, validate.to_json());
     } else {
         itry!(models::pages::create(&conn, validate.get_values()));
         return Ok(Response::with((status::Found, Redirect(url_for!(req, "admin_pages_main")))))

@@ -62,6 +62,34 @@ impl ValidateResults {
     }
 }
 
+/// Convert Validation Results to Json
+impl ToJson for ValidateResults {
+    fn to_json(&self) -> Json {
+        let mut data = BTreeMap::new();
+        let &ValidateResults(ref results) = self;
+        for &ValidateResult(ref val, ref err) in results {
+            println!("\n\tERR_CNT: {:?}", err.field.to_json());
+            let mut d = BTreeMap::new();
+            // Set `errors_count` attribute
+            if let Some(count) = err.errors_count {
+                d.insert("errors_count".to_string(), count.to_json());
+            } else {
+                d.insert("errors_count".to_string(), 0.to_json());
+            }
+            // Set `field` attribute
+            d.insert("field".to_string(), err.field.to_json());
+            // Set `errors` attribute
+            d.insert("errors".to_string(), err.errors.to_json());
+            // Set `values` attribute
+            d.insert("values".to_string(), val.to_json());
+
+            data.append(&mut d);
+        }
+        println!("{:?}", data);
+        Json::Object(data)
+    }
+}
+
 /// Validator methods
 /// It depends from various additional **traits**.
 impl<T: FromValue + ToJson + Decodable> Validator<T> {

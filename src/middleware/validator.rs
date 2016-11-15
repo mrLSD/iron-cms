@@ -392,6 +392,18 @@ mod test {
             "default".to_string() => false.to_json(),
             "vtype".to_string() => "bool".to_json(),
         });
+
+        let val_def = Validator::<bool>::new(btreemap! {
+            "default".to_string() => false.to_json(),
+            "vtype".to_string() => "bool".to_json(),
+        });
+        assert_eq!(val_def.default, Some(false));
+
+        let val_def = Validator::<i32>::new(btreemap! {
+            "default".to_string() => 100i32.to_json(),
+            "vtype".to_string() => "bool".to_json(),
+        });
+        assert_eq!(val_def.default, Some(100i32));
     }
 
     #[test]

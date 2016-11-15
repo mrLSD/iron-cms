@@ -25,6 +25,8 @@ use rustc_serialize::Decodable;
 use hbs::{Template};
 use handlebars::Renderable;
 
+const DEBUG_RENDER: bool = true;
+
 /// Alias for Basic Data struct
 pub type BaseDataMap = BTreeMap<String, Json>;
 /// Alias for basic Iron Response Result
@@ -187,16 +189,20 @@ fn ifeq_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderConte
 }
 
 fn ifgt_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+    let mut active = "".to_owned();;
     let value = try!(h.param(0)
             .and_then(|v| Some(v.value()) )
              .ok_or(RenderError::new("|> ifgt_helper - param 1 withis required")));
-    let eq_field = try!(h.param(1)
-            .and_then(|v| Some(v.value()) )
+    if DEBUG_RENDER {
+        let eq_field = try!(h.param(1)
+            .and_then(|v| Some(v.value()))
             .ok_or(RenderError::new("|> ifgt_helper - param 2 with is required")));
-    println!("IFGT==> {:?}\n\n", value);
-    let mut active = "5 23".to_owned();
+        println!("IFGT==> {:?}\n\n", value);
+        active = "5 23".to_owned();
+        println!("IFGT==>>> {:?}\n\n", value);
+        let (_, _, _) = (eq_field, hbs, ctx);
+    }
     try!(rc.writer.write(active.into_bytes().as_ref()));
-    println!("IFGT==>>> {:?}\n\n", value);
 
     Ok(())
 }

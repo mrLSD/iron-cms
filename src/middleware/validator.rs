@@ -22,7 +22,7 @@ pub struct Validator<T> {
     pub vtype: String,
     pub requiered: Option<bool>,
     pub not_empty: Option<bool>,
-    pub min: Option<u64>,
+    pub min: Option<i64>,
     pub max: Option<u64>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
@@ -107,6 +107,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.requiered(&value);
         self.not_empty(&value);
         self.max(&value);
+        self.min(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -210,6 +211,50 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field can't be max then: {}", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Min value validator
+    /// Multitype
+    fn min(&mut self, value: &Option<Value>) {
+        if self.min.is_some() && value.is_some() {
+            let mut requiered_value: i64 = 0;
+            if let Some(min) = self.min {
+                if let Some(max) = self.max {
+                    if min >= max as i64 {
+                        if let Some(ref mut error) = self.errors {
+                            let msg = format!("Validation rule {} can't be greater or equal max rule: {}", min, max);
+                            error.add(msg);
+                        }
+                        return ()
+                    }
+                }
+                requiered_value = min;
+            }
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    value.chars().count() as i64 >= requiered_value
+                },
+                Some(Value::U64(value)) => {
+                    value as i64>= requiered_value
+                },
+                Some(Value::I64(value)) => {
+                    value >= requiered_value
+                },
+                Some(Value::F64(value)) => {
+                    value as i64 >= requiered_value
+                },
+                Some(Value::Boolean(value)) => {
+                    value as i64 >= requiered_value
+                },
+                _ => false
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} can't be min then: {}", error.field, requiered_value);
                     error.add(msg);
                 }
             }

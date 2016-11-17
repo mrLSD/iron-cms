@@ -22,8 +22,8 @@ pub struct Validator<T> {
     pub vtype: String,
     pub requiered: Option<bool>,
     pub not_empty: Option<bool>,
-    pub min: Option<u32>,
-    pub max: Option<u32>,
+    pub min: Option<u64>,
+    pub max: Option<u64>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -106,6 +106,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         // Invoke validators
         self.requiered(&value);
         self.not_empty(&value);
+        self.max(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -154,22 +155,62 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
 
     /// Not Empty validator
     fn not_empty(&mut self, value: &Option<Value>) {
-        if self.not_empty.is_some() {
-            // We apply validarot onlu if values is set
-            // Requered validator analize if value was set
-            if value.is_some() {
-                let is_empty = match *value {
-                    // We check only strings
-                    Some(Value::String(ref value)) => {
-                        value.trim().is_empty()
-                    },
-                    _ => false
-                };
-                if is_empty {
+        // We apply validarot onlu if values is set
+        // Requered validator analize if value was set
+        if self.not_empty.is_some() && value.is_some() {
+            let is_empty = match *value {
+                // We check only strings
+                Some(Value::String(ref value)) => {
+                    value.trim().is_empty()
+                },
+                _ => false
+            };
+            if is_empty {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field can't be empty: {}", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Max value validator
+    /// Multitype
+    fn max(&mut self, value: &Option<Value>) {
+        if self.max.is_some() && value.is_some() {
+            let mut requiered_value: u64 = 0;
+            if let Some(max) = self.max {
+                if max == 0 {
                     if let Some(ref mut error) = self.errors {
-                        let msg = format!("Field can't be empty: {}", error.field);
+                        let msg = format!("Validation value can't be equal: {}", max);
                         error.add(msg);
                     }
+                    return ()
+                }
+                requiered_value = max;
+            }
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    value.chars().count() as u64 <= requiered_value
+                },
+                Some(Value::U64(value)) => {
+                    value <= requiered_value
+                },
+                Some(Value::I64(value)) => {
+                    value as u64 <= requiered_value
+                },
+                Some(Value::F64(value)) => {
+                    value as u64 <= requiered_value
+                },
+                Some(Value::Boolean(value)) => {
+                    value as u64 <= requiered_value
+                },
+                _ => false
+            };
+            if is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field can't be max then: {}", error.field);
+                    error.add(msg);
                 }
             }
         }

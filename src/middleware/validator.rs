@@ -208,9 +208,9 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                 },
                 _ => false
             };
-            if is_valid {
+            if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field can't be max then: {}", error.field);
+                    let msg = format!("Field {} can't be min then: {}", error.field, requiered_value);
                     error.add(msg);
                 }
             }

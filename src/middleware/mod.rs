@@ -6,3 +6,5 @@ mod error404;
 mod render;
 mod validator;
 mod db;
+
+mod validator_test;

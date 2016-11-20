@@ -27,7 +27,7 @@ mod test {
 
         let val_def = Validator::<i32>::new(btreemap! {
             "default".to_string() => 100i32.to_json(),
-            "vtype".to_string() => "bool".to_json(),
+            "vtype".to_string() => "i32".to_json(),
         });
         assert_eq!(val_def.default, Some(100i32));
     }
@@ -240,6 +240,112 @@ mod test {
                 "max".to_string() => 16.to_json(),
                 "vtype".to_string() => "string".to_json(),
             }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+    }
+
+    #[test]
+    /// Test validator: min
+    fn min_validator_test() {
+        // Field is set as valid
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 4.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is set as valid
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 0.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is set as valid - UTF8
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test Тест délice".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 16.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is not set
+        let values = Map::new();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 10.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is set as not valid
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 5.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Field is set as not valid
+        let mut values = Map::new();
+        values.assign("temperature", Value::I64(-20)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "min".to_string() => (-10).to_json(),
+                "vtype".to_string() => "i64".to_json(),
+            }).validate("temperature".to_string(), values.find(&["temperature"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "min".to_string() => (-20).to_json(),
+                "vtype".to_string() => "i64".to_json(),
+            }).validate("temperature".to_string(), values.find(&["temperature"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Test max + min, whare max <= min
+        let mut values = Map::new();
+        values.assign("temperature", Value::I64(10)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "max".to_string() => 5.to_json(),
+                "min".to_string() => 10.to_json(),
+                "vtype".to_string() => "i64".to_json(),
+            }).validate("temperature".to_string(), values.find(&["temperature"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Test max + min, whare max > min
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "max".to_string() => 20.to_json(),
+                "min".to_string() => 10.to_json(),
+                "vtype".to_string() => "i64".to_json(),
+            }).validate("temperature".to_string(), values.find(&["temperature"])),
         ));
         assert!(validator.get_errors().is_none());
     }

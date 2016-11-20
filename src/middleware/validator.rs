@@ -294,6 +294,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         } else {
             return None
         }
+
         match &self.vtype.as_ref() as &str {
             "array" | "vec" => {
                 if let Some(val) = <Vec<String> as FromValue>::from_value(&val) {
@@ -306,7 +307,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                 if let Some(val) = <bool as FromValue>::from_value(&val) {
                     Some(Json::Boolean(val))
                 } else {
-                    return None;
+                    None
                 }
             },
             "string" | "str" => {
@@ -334,7 +335,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                 if let Some(val) = <f64 as FromValue>::from_value(&val) {
                     Some(Json::F64(val))
                 } else {
-                    return None;
+                    None
                 }
             },
             _ => None,

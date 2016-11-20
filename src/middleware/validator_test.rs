@@ -192,4 +192,55 @@ mod test {
         ));
         assert!(validator.get_errors().is_none());
     }
+
+    #[test]
+    /// Test validator: max
+    fn max_validator_test() {
+        // Field is set as valid
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "max".to_string() => 10.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is set as not valid
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "max".to_string() => 3.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Field is set as valid - UTF8
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test Тест délice".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "max".to_string() => 16.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is not set
+        let values = Map::new();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "max".to_string() => 16.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+    }
 }

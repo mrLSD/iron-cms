@@ -349,4 +349,33 @@ mod test {
         ));
         assert!(validator.get_errors().is_none());
     }
+
+    #[test]
+    /// Test validator: min - type test
+    fn min_validator_type_test() {
+        // Invalid value type
+        let mut values = Map::new();
+        values.assign("temperature", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 0.to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("temperature".to_string(), values.find(&["temperature"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Valid value and type
+        let mut values = Map::new();
+        values.assign("temperature", Value::F64(5.1)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "min".to_string() => 0.to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("temperature".to_string(), values.find(&["temperature"])),
+        ));
+        assert!(validator.get_errors().is_none());
+    }
+
 }

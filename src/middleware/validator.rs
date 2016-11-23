@@ -1,11 +1,38 @@
-//! # What is Validator
-//! It useful for Form and Model validation.
-//! Implementation for Validation via BTreeMap structure.
-//! It consist basic validations rule, validatior, and
-//! validation Result and validation Errors.
-//!
-//! ## How to use
-//! Most common examples you can find at src/admin/models/*
+/// # What is Validator
+/// It useful for Form and Model validation.
+/// Implementation for Validation via BTreeMap structure.
+/// It consist basic validations rule, validatior, and
+/// validation Result and validation Errors.
+///
+/// ## How to use
+/// Most common examples you can find at src/admin/models/*
+/// ```ignore
+/// fn validate(values: &Map) -> ValidateResults {
+///    ValidateResults(vec!(
+///        // Validator declaration
+///        // `::<String>::` meen Generic type for Default value
+///        Validator::<String>::new(btreemap! {
+///            // Validator type
+///            "requiered".to_string() => true.to_json(),
+///            // Value type (from POST/GET/.. request)
+///            // We'll get validation error if value type wrong.
+///            // It is requiered field for validations rule
+///            "vtype".to_string() => "string".to_json(),
+///        }).validate("title".to_string(), values.find(&["pages", "title"])),
+///
+///        // Validator declaration
+///        // `::<bool>::` meen Generic type for Default value
+///        // and it should be same type as default value
+///        Validator::<bool>::new(btreemap! {
+///            // Validator type declaration should be same
+///            // as default value type
+///            "default".to_string() => false.to_json(),
+///            "vtype".to_string() => "bool".to_json(),
+///        }).validate("published".to_string(), values.find(&["published"])),
+///    ))
+/// }
+/// ```
+
 pub use rustc_serialize::json::{self, Json, ToJson};
 pub use rustc_serialize::json::DecoderError::*;
 pub use rustc_serialize::Decodable;

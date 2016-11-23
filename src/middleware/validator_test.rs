@@ -153,4 +153,43 @@ mod test {
         assert!(validator.get_errors().is_none());
         assert_eq!(validator.get_values()["title"], "Default text".to_json());
     }
+
+    #[test]
+    /// Test validator: not_empty
+    fn not_empty_validator_test() {
+        // Field is set
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("Test".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "not_empty".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Field is empty
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::String("".into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "not_empty".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Field is not set
+        let values = Map::new();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "not_empty".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+    }
 }

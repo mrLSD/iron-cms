@@ -1,6 +1,6 @@
 [package]
 name = "iron-cms"
-version = "0.2.22"
+version = "0.2.23"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
 
 [dependencies]
@@ -17,6 +17,7 @@ params = "*"
 diesel = "0.8.1"
 r2d2 = "*"
 r2d2-diesel = "*"
+regex = "0.1"
 
 [dependencies.iron_diesel_middleware]
 git = "https://github.com/iron-cms/iron-diesel-middleware"

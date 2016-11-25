@@ -41,6 +41,7 @@ use params::{Value, FromValue};
 use super::render::{BaseDataMap, BaseDataMapDecoder};
 use std::collections::BTreeMap;
 use std::string::String;
+use regex::Regex;
 
 /// Base Validator struct
 #[derive(RustcDecodable, Debug)]
@@ -52,6 +53,9 @@ pub struct Validator<T> {
     pub not_empty: Option<bool>,
     pub min: Option<i64>,
     pub max: Option<u64>,
+    pub email: Option<bool>,
+//    pub url: Option<bool>,
+//    pub regex: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -136,6 +140,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.not_empty(&value);
         self.max(&value);
         self.min(&value);
+        self.email(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -283,6 +288,25 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} can't be min then: {}", error.field, requiered_value);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// E-mail validator
+    fn email(&mut self, value: &Option<Value>) {
+        if self.email.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid e-mail address", error.field);
                     error.add(msg);
                 }
             }

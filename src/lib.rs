@@ -15,6 +15,7 @@ extern crate params;
 extern crate iron_diesel_middleware;
 extern crate r2d2;
 extern crate r2d2_diesel;
+extern crate regex;
 
 /// Base middleware for CMS
 pub mod middleware;

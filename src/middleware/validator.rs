@@ -21,6 +21,7 @@ pub struct Validator<T> {
     /// For example: string, bool, i64 etc.
     pub vtype: String,
     pub requiered: Option<bool>,
+    pub not_empty: Option<bool>,
     pub min: Option<u32>,
     pub max: Option<u32>,
     pub default: Option<T>,
@@ -104,8 +105,9 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
 
         // Invoke validators
         self.requiered(&value);
+        self.not_empty(&value);
         value = self.default(&value);
-println!("{:?}", value);
+
         let json_value: Json = match self.type_cast(&value) {
             Some(ref json_value) => json_value.to_owned(),
             None => {
@@ -146,6 +148,29 @@ println!("{:?}", value);
             if let Some(ref mut error) = self.errors {
                 let msg = format!("Field requiered: {}", error.field);
                 error.add(msg);
+            }
+        }
+    }
+
+    /// Not Empty validator
+    fn not_empty(&mut self, value: &Option<Value>) {
+        if self.not_empty.is_some() {
+            // We apply validarot onlu if values is set
+            // Requered validator analize if value was set
+            if value.is_some() {
+                let is_empty = match *value {
+                    // We check only strings
+                    Some(Value::String(ref value)) => {
+                        value.trim().is_empty()
+                    },
+                    _ => false
+                };
+                if is_empty {
+                    if let Some(ref mut error) = self.errors {
+                        let msg = format!("Field can't be empty: {}", error.field);
+                        error.add(msg);
+                    }
+                }
             }
         }
     }

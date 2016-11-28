@@ -54,7 +54,7 @@ pub struct Validator<T> {
     pub min: Option<i64>,
     pub max: Option<u64>,
     pub email: Option<bool>,
-//    pub url: Option<bool>,
+    pub url: Option<bool>,
 //    pub regex: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
@@ -141,6 +141,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.max(&value);
         self.min(&value);
         self.email(&value);
+        self.url(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -307,6 +308,27 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} is not valid e-mail address", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// URL validator
+    /// Algorithm: https://mathiasbynens.be/demo/url-regex
+    /// Author of algorithm: @imme_emosol
+    fn url(&mut self, value: &Option<Value>) {
+        if self.url.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"\A(?i)(https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?\z").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid URL", error.field);
                     error.add(msg);
                 }
             }

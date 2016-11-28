@@ -502,4 +502,100 @@ mod test {
         assert!(validator.get_errors().is_none());
     }
 
+    #[test]
+    /// Test validator: url
+    fn url_validator_test() {
+        //===========================================
+        // Valid URLS
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://www.google.com").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://www.google.com/").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://foo.com/blah_blah").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://foo.com/blah_blah.json").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://foo.com/blah_blah/").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://foo.com/blah_blah_(wikipedia)").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://foo.com/blah_blah_(wikipedia)_(again)").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("http://www.example.com/wpstyle/?p=364").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[url]", Value::String(("https://www.example.com/foo/?bar=baz&inga=42&quux").into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "url".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_url".to_string(), values.find(&["user", "url"])),
+        ));
+        assert!(validator.get_errors().is_none());
+    }
+
 }

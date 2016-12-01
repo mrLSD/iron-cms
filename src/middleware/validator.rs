@@ -59,6 +59,7 @@ pub struct Validator<T> {
     pub ssn: Option<bool>,
     pub longitude: Option<bool>,
     pub latitude: Option<bool>,
+    pub asciiprintable: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -149,6 +150,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.ssn(&value);
         self.longitude(&value);
         self.latitude(&value);
+        self.asciiprintable(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -417,6 +419,28 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} is not valid Latitude", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Printable ASCII
+    /// This validates that a string value contains only
+    /// printable ASCII characters.
+    /// NOTE: if the string is blank, this validates as true.
+    fn asciiprintable(&mut self, value: &Option<Value>) {
+        if self.asciiprintable.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[\x20-\x7E]*$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid ASII printable", error.field);
                     error.add(msg);
                 }
             }

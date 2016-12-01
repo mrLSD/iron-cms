@@ -57,6 +57,7 @@ pub struct Validator<T> {
     pub url: Option<bool>,
     pub regexp: Option<String>,
     pub ssn: Option<bool>,
+    pub longitude: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -145,6 +146,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.url(&value);
         self.regexp(&value);
         self.ssn(&value);
+        self.longitude(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -360,7 +362,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         }
     }
 
-    /// SSN expression value validator
+    /// SSN expression validator
     /// SSN: Social Security Number
     fn ssn(&mut self, value: &Option<Value>) {
         if self.ssn.is_some() && value.is_some() {
@@ -375,6 +377,26 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} is not valid SSN", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+
+    /// longitude validator
+    fn longitude(&mut self, value: &Option<Value>) {
+        if self.longitude.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid Longitude", error.field);
                     error.add(msg);
                 }
             }

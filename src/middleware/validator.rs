@@ -61,6 +61,7 @@ pub struct Validator<T> {
     pub latitude: Option<bool>,
     pub ascii: Option<bool>,
     pub asciiprintable: Option<bool>,
+    pub uuid: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -151,8 +152,9 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.ssn(&value);
         self.longitude(&value);
         self.latitude(&value);
-        self.asciiprintable(&value);
         self.ascii(&value);
+        self.asciiprintable(&value);
+        self.uuid(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -471,6 +473,25 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         }
     }
 
+    /// UUID validator
+    /// UUID: Universally Unique Identifier
+    fn uuid(&mut self, value: &Option<Value>) {
+        if self.uuid.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid UUID", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
 
     /// Default value validator
     /// Validate by type and default field

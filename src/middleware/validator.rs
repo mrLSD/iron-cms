@@ -59,6 +59,7 @@ pub struct Validator<T> {
     pub ssn: Option<bool>,
     pub longitude: Option<bool>,
     pub latitude: Option<bool>,
+    pub ascii: Option<bool>,
     pub asciiprintable: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
@@ -151,6 +152,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.longitude(&value);
         self.latitude(&value);
         self.asciiprintable(&value);
+        self.ascii(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -440,12 +442,35 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             };
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field {} is not valid ASII printable", error.field);
+                    let msg = format!("Field {} is not valid ASCII printable", error.field);
                     error.add(msg);
                 }
             }
         }
     }
+
+    /// Printable ASCII
+    /// This validates that a string value contains only ASCII
+    /// characters (including not printable).
+    /// NOTE: if the string is blank, this validates as true.
+    fn ascii(&mut self, value: &Option<Value>) {
+        if self.ascii.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[\x00-\x7F]*$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid ASCII", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
 
     /// Default value validator
     /// Validate by type and default field

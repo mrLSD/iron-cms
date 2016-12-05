@@ -489,7 +489,6 @@ mod test {
         ));
         assert!(validator.get_errors().is_some());
 
-
         // Value is not set
         let values = Map::new();
 
@@ -608,6 +607,45 @@ mod test {
             ));
             assert!(validator.get_errors().is_some());
         }
+    }
+
+    #[test]
+    /// Test validator: regexp
+    fn regexp_validator_test() {
+        // Valid value
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "regexp".to_string() => r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z".to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Valid is not set
+        let values = Map::new();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "regexp".to_string() => r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z".to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Not valid value
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com.").into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "regexp".to_string() => r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z".to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_some());
     }
 
 }

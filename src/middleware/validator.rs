@@ -62,6 +62,7 @@ pub struct Validator<T> {
     pub ascii: Option<bool>,
     pub asciiprintable: Option<bool>,
     pub uuid: Option<bool>,
+    pub uuid3: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -155,6 +156,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.ascii(&value);
         self.asciiprintable(&value);
         self.uuid(&value);
+        self.uuid3(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -487,6 +489,26 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} is not valid UUID", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// UUID v3 validator
+    /// UUID v3: Universally Unique Identifier version 3
+    fn uuid3(&mut self, value: &Option<Value>) {
+        if self.uuid3.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[0-9a-f]{8}-[0-9a-f]{4}-3[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid UUID v3", error.field);
                     error.add(msg);
                 }
             }

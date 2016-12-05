@@ -64,6 +64,7 @@ pub struct Validator<T> {
     pub uuid: Option<bool>,
     pub uuid3: Option<bool>,
     pub uuid4: Option<bool>,
+    pub uuid5: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -159,6 +160,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.uuid(&value);
         self.uuid3(&value);
         self.uuid4(&value);
+        self.uuid5(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -536,6 +538,27 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             }
         }
     }
+
+    /// UUID v5 validator
+    /// UUID v5: Universally Unique Identifier version 5
+    fn uuid5(&mut self, value: &Option<Value>) {
+        if self.uuid5.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid UUID v5", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
 
     /// Default value validator
     /// Validate by type and default field

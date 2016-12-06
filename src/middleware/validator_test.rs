@@ -6,12 +6,12 @@ mod test {
     #[test]
     /// Test Validator::new method
     fn new_test() {
-        // Test for requiered equal
+        // Test for required equal
         let val_req = Validator::<String>::new(btreemap! {
-            "requiered".to_string() => true.to_json(),
+            "required".to_string() => true.to_json(),
             "vtype".to_string() => "bool".to_json(),
         });
-        assert_eq!(val_req.requiered, Some(true));
+        assert_eq!(val_req.required, Some(true));
 
         // Test for non-panic
         Validator::<bool>::new(btreemap! {
@@ -51,7 +51,7 @@ mod test {
 
         let validator = ValidateResults(vec!(
             Validator::<String>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "string".to_json(),
             }).validate("title".to_string(), values.find(&["pages", "title"])),
             Validator::<bool>::new(btreemap! {
@@ -63,15 +63,15 @@ mod test {
     }
 
     #[test]
-    /// Test validator: requiered
-    fn requiered_validator_test() {
+    /// Test validator: required
+    fn required_validator_test() {
         // Field is set
         let mut values = Map::new();
         values.assign("pages[title]", Value::String("Test".into())).unwrap();
 
         let validator = ValidateResults(vec!(
             Validator::<String>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "string".to_json(),
             }).validate("title".to_string(), values.find(&["pages", "title"])),
         ));
@@ -82,7 +82,7 @@ mod test {
 
         let validator = ValidateResults(vec!(
             Validator::<String>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "string".to_json(),
             }).validate("title".to_string(), values.find(&["pages", "title"])),
         ));
@@ -94,7 +94,7 @@ mod test {
 
         let validator = ValidateResults(vec!(
             Validator::<String>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "string".to_json(),
             }).validate("title".to_string(), values.find(&["pages", "title"])),
         ));
@@ -106,7 +106,7 @@ mod test {
 
         let validator = ValidateResults(vec!(
             Validator::<i64>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "i64".to_json(),
             }).validate("man_age".to_string(), values.find(&["age"])),
         ));
@@ -118,7 +118,7 @@ mod test {
 
         let validator = ValidateResults(vec!(
             Validator::<i64>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "i64".to_json(),
             }).validate("man_age".to_string(), values.find(&["age"])),
         ));

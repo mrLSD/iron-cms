@@ -99,7 +99,7 @@ mod pages_test {
         // Weong type declaration
         let validator = ValidateResults(vec!(
             Validator::<bool>::new(btreemap! {
-                "requiered".to_string() => true.to_json(),
+                "required".to_string() => true.to_json(),
                 "vtype".to_string() => "bool".to_json(),
             }).validate("title".to_string(), map.find(&["pages", "title"])),
         ));

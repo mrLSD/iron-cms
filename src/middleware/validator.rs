@@ -14,10 +14,10 @@
 //!        // `::<String>::` meen Generic type for Default value
 //!        Validator::<String>::new(btreemap! {
 //!            // Validator type
-//!            "requiered".to_string() => true.to_json(),
+//!            "required".to_string() => true.to_json(),
 //!            // Value type (from POST/GET/.. request)
 //!            // We'll get validation error if value type wrong.
-//!            // It is requiered field for validations rule
+//!            // It is required field for validations rule
 //!            "vtype".to_string() => "string".to_json(),
 //!        }).validate("title".to_string(), values.find(&["pages", "title"])),
 //!
@@ -49,7 +49,7 @@ pub struct Validator<T> {
     /// Type of validator
     /// For example: string, bool, i64 etc.
     pub vtype: String,
-    pub requiered: Option<bool>,
+    pub required: Option<bool>,
     pub not_empty: Option<bool>,
     pub min: Option<i64>,
     pub max: Option<u64>,
@@ -136,7 +136,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.errors = Some(ErrorValidator::new(&field));
 
         // Invoke validators
-        self.requiered(&value);
+        self.required(&value);
         self.not_empty(&value);
         self.max(&value);
         self.min(&value);
@@ -168,8 +168,8 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
     }
 
     /// Requered validator
-    fn requiered(&mut self, value: &Option<Value>) {
-        if self.requiered.is_some() {
+    fn required(&mut self, value: &Option<Value>) {
+        if self.required.is_some() {
             if value.is_some() {
                 let check_value = match *value {
                     Some(Value::String(ref value)) => {
@@ -182,7 +182,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                 }
             }
             if let Some(ref mut error) = self.errors {
-                let msg = format!("Field requiered: {}", error.field);
+                let msg = format!("Field required: {}", error.field);
                 error.add(msg);
             }
         }
@@ -213,7 +213,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
     /// Multitype
     fn max(&mut self, value: &Option<Value>) {
         if self.max.is_some() && value.is_some() {
-            let mut requiered_value: u64 = 0;
+            let mut required_value: u64 = 0;
             if let Some(max) = self.max {
                 if max == 0 {
                     if let Some(ref mut error) = self.errors {
@@ -222,29 +222,29 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                     }
                     return ()
                 }
-                requiered_value = max;
+                required_value = max;
             }
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    value.chars().count() as u64 <= requiered_value
+                    value.chars().count() as u64 <= required_value
                 },
                 Some(Value::U64(value)) => {
-                    value <= requiered_value
+                    value <= required_value
                 },
                 Some(Value::I64(value)) => {
-                    value as u64 <= requiered_value
+                    value as u64 <= required_value
                 },
                 Some(Value::F64(value)) => {
-                    value as u64 <= requiered_value
+                    value as u64 <= required_value
                 },
                 Some(Value::Boolean(value)) => {
-                    value as u64 <= requiered_value
+                    value as u64 <= required_value
                 },
                 _ => false
             };
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field {} can't be min then: {}", error.field, requiered_value);
+                    let msg = format!("Field {} can't be min then: {}", error.field, required_value);
                     error.add(msg);
                 }
             }
@@ -255,7 +255,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
     /// Multitype
     fn min(&mut self, value: &Option<Value>) {
         if self.min.is_some() && value.is_some() {
-            let mut requiered_value: i64 = 0;
+            let mut required_value: i64 = 0;
             if let Some(min) = self.min {
                 if let Some(max) = self.max {
                     if min >= max as i64 {
@@ -266,29 +266,29 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                         return ()
                     }
                 }
-                requiered_value = min;
+                required_value = min;
             }
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    value.chars().count() as i64 >= requiered_value
+                    value.chars().count() as i64 >= required_value
                 },
                 Some(Value::U64(value)) => {
-                    value as i64>= requiered_value
+                    value as i64>= required_value
                 },
                 Some(Value::I64(value)) => {
-                    value >= requiered_value
+                    value >= required_value
                 },
                 Some(Value::F64(value)) => {
-                    value as i64 >= requiered_value
+                    value as i64 >= required_value
                 },
                 Some(Value::Boolean(value)) => {
-                    value as i64 >= requiered_value
+                    value as i64 >= required_value
                 },
                 _ => false
             };
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field {} can't be min then: {}", error.field, requiered_value);
+                    let msg = format!("Field {} can't be min then: {}", error.field, required_value);
                     error.add(msg);
                 }
             }

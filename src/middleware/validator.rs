@@ -42,10 +42,11 @@ use super::render::{BaseDataMap, BaseDataMapDecoder};
 use std::collections::BTreeMap;
 use std::string::String;
 use regex::Regex;
+use std::fmt::Display;
 
 /// Base Validator struct
 #[derive(RustcDecodable, Debug)]
-pub struct Validator<T> {
+pub struct Validator<T: Display> {
     /// Type of validator
     /// For example: string, bool, i64 etc.
     pub vtype: String,
@@ -66,6 +67,7 @@ pub struct Validator<T> {
     pub uuid3: Option<bool>,
     pub uuid4: Option<bool>,
     pub uuid5: Option<bool>,
+    pub eq: Option<T>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -131,7 +133,7 @@ impl ToJson for ValidateResults {
 
 /// Validator methods
 /// It depends from various additional **traits**.
-impl<T: FromValue + ToJson + Decodable> Validator<T> {
+impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// Init Validation rule
     pub fn new(validator_rules: BaseDataMap) -> Validator<T> {
         validator_rules.decode()
@@ -163,6 +165,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.uuid3(&value);
         self.uuid4(&value);
         self.uuid5(&value);
+        self.eq(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -365,6 +368,27 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
                         // For strings
                         msg = format!("Field {} value should be equal length: {}", error.field, required_value);
                     }
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Equals value validator
+    /// Multitype
+    /// For strings & numbers, eq will ensure that the
+    /// value is equal to the parameter given.
+    fn eq(&mut self, value: &Option<Value>) {
+        if value.is_some() {
+            let required_value = if let Some(ref required_value) = self.eq {
+                required_value
+            } else {
+                return ()
+            };
+            let is_valid = self.compare(&value, &required_value.to_json());
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} value should be equal: {}", error.field, required_value);
                     error.add(msg);
                 }
             }
@@ -638,6 +662,29 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             Json::Boolean(value) => Some(Value::Boolean(value)),
             Json::Null => Some(Value::Null),
             _ => None,
+        }
+    }
+
+    /// Comapre vaules as Json types
+    /// Return boolean if values compared
+    fn compare(&self, value: &Option<Value>, required_value: &Json) -> bool {
+        match *value {
+            Some(Value::String(ref value)) => {
+                value.to_json() == *required_value
+            },
+            Some(Value::U64(value)) => {
+                value.to_json() == *required_value
+            },
+            Some(Value::I64(value)) => {
+                value.to_json() == *required_value
+            },
+            Some(Value::F64(value)) => {
+                value.to_json() == *required_value
+            },
+            Some(Value::Boolean(value)) => {
+                value.to_json() == *required_value
+            },
+            _ => false
         }
     }
 

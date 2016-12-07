@@ -55,7 +55,7 @@ pub struct Validator<T> {
     pub max: Option<u64>,
     pub email: Option<bool>,
     pub url: Option<bool>,
-//    pub regex: Option<bool>,
+    pub regexp: Option<String>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -142,6 +142,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.min(&value);
         self.email(&value);
         self.url(&value);
+        self.regexp(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -329,6 +330,28 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} is not valid URL", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Regular expression value validator
+    fn regexp(&mut self, value: &Option<Value>) {
+        if value.is_none() {
+            return
+        }
+        if let Some(ref regexp) = self.regexp {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(regexp).unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} is not valid regexp rules", error.field);
                     error.add(msg);
                 }
             }

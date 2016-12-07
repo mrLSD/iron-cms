@@ -53,6 +53,7 @@ pub struct Validator<T> {
     pub not_empty: Option<bool>,
     pub min: Option<i64>,
     pub max: Option<u64>,
+    pub len: Option<u64>,
     pub email: Option<bool>,
     pub url: Option<bool>,
     pub regexp: Option<String>,
@@ -149,6 +150,7 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
         self.not_empty(&value);
         self.max(&value);
         self.min(&value);
+        self.len(&value);
         self.email(&value);
         self.url(&value);
         self.regexp(&value);
@@ -308,6 +310,61 @@ impl<T: FromValue + ToJson + Decodable> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} can't be min then: {}", error.field, required_value);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Length value validator
+    /// Multitype
+    /// For numbers and bool, length will ensure that
+    /// the value is equal to the parameter given.
+    /// For strings, it checks that the string length
+    /// is exactly that number of characters.
+    fn len(&mut self, value: &Option<Value>) {
+        if self.len.is_some() && value.is_some() {
+            let mut required_value: u64 = 0;
+            if let Some(len) = self.len {
+                if len == 0 {
+                    if let Some(ref mut error) = self.errors {
+                        let msg = format!("Validation value can't be equal: {}", len);
+                        error.add(msg);
+                    }
+                    return ()
+                }
+                required_value = len;
+            }
+            let mut numeric = true;
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    numeric = false;
+                    value.chars().count() as u64 == required_value
+                },
+                Some(Value::U64(value)) => {
+                    value == required_value
+                },
+                Some(Value::I64(value)) => {
+                    value as u64 == required_value
+                },
+                Some(Value::F64(value)) => {
+                    value as u64 == required_value
+                },
+                Some(Value::Boolean(value)) => {
+                    value as u64 == required_value
+                },
+                _ => false
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg;
+                    if numeric {
+                        // For numbers
+                        msg = format!("Field {} value should be equal: {}", error.field, required_value);
+                    } else {
+                        // For strings
+                        msg = format!("Field {} value should be equal length: {}", error.field, required_value);
+                    }
                     error.add(msg);
                 }
             }

@@ -171,8 +171,10 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         let json_value: Json = match self.type_cast(&value) {
             Some(ref json_value) => json_value.to_owned(),
             None => {
+                println!("TYPE_CAST");
                 if let Some(ref mut error) = self.errors {
                     if value.is_some() {
+                        println!("ERROR_ADDED");
                         let msg = format!("Field wrong type: {}", error.field);
                         error.add(msg);
                     }
@@ -735,7 +737,9 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                 }
             },
             "f32" | "f64" => {
+                println!("TYPE: {:?} {:?}", self.vtype, val);
                 if let Some(val) = <f64 as FromValue>::from_value(&val) {
+                    println!("VAL: {:?}", val);
                     Some(Json::F64(val))
                 } else {
                     None

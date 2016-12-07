@@ -55,7 +55,7 @@ impl BaseDataMapDecoder for BaseDataMap {
             Err(err) => {
                 let msg = match err {
                     ParseError(_) => "JSON parse error",
-                    ExpectedError(_, _) => "Validation field expected (not declared)",
+                    ExpectedError(_, _) => "Validation field expected (wrong type)",
                     MissingFieldError(_) => "Validation field missing",
                     _ => "Other error",
                 };

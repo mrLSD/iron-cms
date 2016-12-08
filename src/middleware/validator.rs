@@ -173,6 +173,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             None => {
                 println!("TYPE_CAST");
                 if let Some(ref mut error) = self.errors {
+                    println!("ERROR");
                     if value.is_some() {
                         println!("ERROR_ADDED");
                         let msg = format!("Field wrong type: {}", error.field);
@@ -387,7 +388,10 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             } else {
                 return ()
             };
+            //--
+            let _t: &T;
             let is_valid = self.compare(&value, &required_value.to_json());
+            println!("TOJON: {:?} {:?} {:?}", required_value.to_json(), value, is_valid);
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} value should be equal: {}", error.field, required_value);
@@ -737,9 +741,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                 }
             },
             "f32" | "f64" => {
-                println!("TYPE: {:?} {:?}", self.vtype, val);
                 if let Some(val) = <f64 as FromValue>::from_value(&val) {
-                    println!("VAL: {:?}", val);
                     Some(Json::F64(val))
                 } else {
                     None

@@ -1,5 +1,14 @@
 #[cfg(test)]
 mod test {
+//    field: &["user", "url"] // user_url
+//    error: true | false // assert
+//    type:
+//    * Validator::<String>
+//    * "vtype".to_string() => "string".to_json(),
+//    * Value::String
+//    values: vec[]
+//    validator: name
+//    validato_value: optional
     use super::super::*;
     use params::{Map, Value};
 
@@ -685,6 +694,45 @@ mod test {
             }).validate("user_email".to_string(), values.find(&["user", "email"])),
         ));
         assert!(validator.get_errors().is_some());
+
+        // Valid value- invalid type
+        let mut values = Map::new();
+        values.assign("user[email]", Value::F64(100.)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            // Type should be f64
+            Validator::<i64>::new(btreemap! {
+                "eq".to_string() => 100.to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Valid value- invalid type
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<f64>::new(btreemap! {
+                "eq".to_string() => 100.to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+
+        assert!(validator.get_errors().is_some());
+
+        // Valid value- Valid type
+        let mut values = Map::new();
+        values.assign("user[email]", Value::F64(100.3)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<f64>::new(btreemap! {
+                "eq".to_string() => (100.3).to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+
+        assert!(validator.get_errors().is_none());
     }
 
 }

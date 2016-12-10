@@ -12,6 +12,42 @@ mod test {
     use super::super::*;
     use params::{Map, Value};
 
+    macro_rules! test {
+        ($func:ident = $body:expr) => {
+            #[test]
+            fn $func() {
+                $body
+            }
+        };
+    }
+
+    macro_rules! validate {
+        //($validator:ident $eq:expr => $( $t:ident $val:expr ),+ ) => {
+        ($validator:ident $eq:expr => $($t:ident $val:expr),+ ) => {
+            $(
+                let validator_type = stringify!($t).to_lowercase();
+                let mut value = $val;
+                if validator_type == "string" {
+                    value = value.into()
+                }
+                let mut values = Map::new();
+                values.assign("some[field]", Value::F64(value)).unwrap();
+
+                let validator = ValidateResults(vec!(
+                    Validator::<$t>::new(btreemap! {
+                        stringify!($validator).to_string() => ($eq).to_json(),
+                        "vtype".to_string() => validator_type.to_json(),
+                    }).validate("some_field".to_string(), values.find(&["some", "field"])),
+                ));
+                assert!(validator.get_errors().is_none());
+            ),+
+        }
+    }
+
+    test!(new_test_macros = {
+        validate!(eq 100.3 => f64 100.3);
+    });
+
     #[test]
     /// Test Validator::new method
     fn new_test() {

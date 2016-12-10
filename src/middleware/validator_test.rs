@@ -1,17 +1,21 @@
 #[cfg(test)]
 mod test {
-//    field: &["user", "url"] // user_url
-//    error: true | false // assert
-//    type:
-//    * Validator::<String>
-//    * "vtype".to_string() => "string".to_json(),
-//    * Value::String
-//    values: vec[]
-//    validator: name
-//    validato_value: optional
     use super::super::*;
     use params::{Map, Value};
 
+    // Convert Json to Value
+    fn to_value(json_value: Json) -> Value {
+        match json_value {
+            Json::I64(value) => Value::I64(value),
+            Json::U64(value) => Value::U64(value),
+            Json::F64(value) => Value::F64(value),
+            Json::String( ref value) => Value::String(value.clone()),
+            Json::Boolean(value) => Value::Boolean(value),
+            _ => Value::Null,
+        }
+    }
+
+    /// Basic test function
     macro_rules! test {
         ($func:ident = $body:expr) => {
             #[test]
@@ -21,9 +25,27 @@ mod test {
         };
     }
 
+    /// Validator test macros
     macro_rules! validate {
-        //($validator:ident $eq:expr => $( $t:ident $val:expr ),+ ) => {
-        ($validator:ident $eq:expr => $($t:ident $val:expr),+ ) => {
+        // Test empty value for validator
+        ($validator:ident [$assert:expr] $eq:expr => $t:ident) => {
+            let validator_type = stringify!($t).to_lowercase();
+            let values = Map::new();
+
+            let validator = ValidateResults(vec!(
+                Validator::<$t>::new(btreemap! {
+                    stringify!($validator).to_string() => ($eq).to_json(),
+                    "vtype".to_string() => validator_type.to_json(),
+                }).validate("some_field".to_string(), values.find(&["some", "field"])),
+            ));
+            if $assert {
+                assert!(validator.get_errors().is_some());
+            } else {
+                assert!(validator.get_errors().is_none());
+            }
+        };
+        // Test validator and multiple values
+        ($validator:ident [$assert:expr] $eq:expr => $($t:ident $val:expr),+ ) => {
             $(
                 let validator_type = stringify!($t).to_lowercase();
                 let mut value = $val;
@@ -31,7 +53,7 @@ mod test {
                     value = value.into()
                 }
                 let mut values = Map::new();
-                values.assign("some[field]", Value::F64(value)).unwrap();
+                values.assign("some[field]", to_value(value.to_json())).unwrap();
 
                 let validator = ValidateResults(vec!(
                     Validator::<$t>::new(btreemap! {
@@ -39,13 +61,18 @@ mod test {
                         "vtype".to_string() => validator_type.to_json(),
                     }).validate("some_field".to_string(), values.find(&["some", "field"])),
                 ));
-                assert!(validator.get_errors().is_none());
-            ),+
+                if $assert {
+                    assert!(validator.get_errors().is_some());
+                } else {
+                    assert!(validator.get_errors().is_none());
+                }
+            )+
         }
     }
 
     test!(new_test_macros = {
-        validate!(eq 100.3 => f64 100.3);
+        validate!(eq [false] 100.3 => f64);
+        validate!(eq [false] 100.3 => f64 100.3, f64 100.3);
     });
 
     #[test]

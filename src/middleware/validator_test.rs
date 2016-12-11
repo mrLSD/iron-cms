@@ -70,7 +70,8 @@ mod test {
         }
     }
 
-    test!(new_test_macros = {
+    /// Test "test macros"
+    test!(test_macros = {
         validate!(eq [false] 100.3 => f64);
         validate!(eq [false] 100.3 => f64 100.3, f64 100.3);
     });
@@ -134,55 +135,16 @@ mod test {
         assert!(validator.get_errors().is_none());
     }
 
-    #[test]
     /// Test validator: required
-    fn required_validator_test() {
+    test!(required_validator_test = {
         // Field is set
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "required".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(required [false] true => String "Test");
         // Field is not set
-        let values = Map::new();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "required".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Field is not empty
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "required".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
+        validate!(required [true] true => String);
+        // Field is empty
+        validate!(required [true] true => String "");
         // Field with int type
-        let mut values = Map::new();
-        values.assign("age", Value::I64(23)).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<i64>::new(btreemap! {
-                "required".to_string() => true.to_json(),
-                "vtype".to_string() => "i64".to_json(),
-            }).validate("man_age".to_string(), values.find(&["age"])),
-        ));
-        assert!(validator.get_errors().is_none());
+        validate!(required [false] true => i64 23);
 
         // Field with wrong type
         let mut values = Map::new();
@@ -195,12 +157,13 @@ mod test {
             }).validate("man_age".to_string(), values.find(&["age"])),
         ));
         assert!(validator.get_errors().is_some());
-    }
+    });
 
-    #[test]
     /// Test validator: default
-    fn default_validator_test() {
+    test!(default_validator_test = {
         // Field is set
+        validate!(default [false] "Default text" => String "Test");
+
         let mut values = Map::new();
         values.assign("pages[title]", Value::String("Test".into())).unwrap();
 
@@ -224,179 +187,50 @@ mod test {
         ));
         assert!(validator.get_errors().is_none());
         assert_eq!(validator.get_values()["title"], "Default text".to_json());
-    }
+    });
 
-    #[test]
     /// Test validator: not_empty
-    fn not_empty_validator_test() {
+    test!(not_empty_validator_test = {
         // Field is set
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "not_empty".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(not_empty [false] true => String "Test");
         // Field is empty
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "not_empty".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
+        validate!(not_empty [true] true => String "");
         // Field is not set
-        let values = Map::new();
+        validate!(not_empty [false] true => String);
+    });
 
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "not_empty".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-    }
-
-    #[test]
     /// Test validator: max
-    fn max_validator_test() {
+    test!(max_validator_test = {
         // Field is set as valid
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "max".to_string() => 10.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(max [false] 10 => String "Test");
         // Field is set as not valid
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "max".to_string() => 3.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
+        validate!(max [true] 3 => String "Test");
         // Field is set as valid - UTF8
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test Тест délice".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "max".to_string() => 16.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(max [false] 16 => String "Test Тест délice");
         // Field is not set
-        let values = Map::new();
+        validate!(max [false] 16 => String);
+        // Valid
+        validate!(max [false] 12 => i64 10);
+        // Not valid
+        validate!(max [true] 9 => i64 10);
+    });
 
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "max".to_string() => 16.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-    }
-
-    #[test]
     /// Test validator: min
-    fn min_validator_test() {
+    test!(min_validator_test = {
         // Field is set as valid
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "min".to_string() => 4.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(min [false] 4 => String "Test");
         // Field is set as valid
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "min".to_string() => 0.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(min [false] 0 => String "Test");
         // Field is set as valid - UTF8
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test Тест délice".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "min".to_string() => 16.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(min [false] 16 => String "Test Тест délice");
         // Field is not set
-        let values = Map::new();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "min".to_string() => 10.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(min [false] 10 => String);
         // Field is set as not valid
-        let mut values = Map::new();
-        values.assign("pages[title]", Value::String("Test".into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "min".to_string() => 5.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("title".to_string(), values.find(&["pages", "title"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Field is set as not valid
-        let mut values = Map::new();
-        values.assign("temperature", Value::I64(-20)).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<i64>::new(btreemap! {
-                "min".to_string() => (-10).to_json(),
-                "vtype".to_string() => "i64".to_json(),
-            }).validate("temperature".to_string(), values.find(&["temperature"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        let validator = ValidateResults(vec!(
-            Validator::<i64>::new(btreemap! {
-                "min".to_string() => (-20).to_json(),
-                "vtype".to_string() => "i64".to_json(),
-            }).validate("temperature".to_string(), values.find(&["temperature"])),
-        ));
-        assert!(validator.get_errors().is_none());
+        validate!(min [true] 5 => String "Test");
+        // Not valid
+        validate!(min [true] -10 => i64 -20);
+        // Valid
+        validate!(min [false] -20 => i64 -20);
 
         // Test max + min, whare max <= min
         let mut values = Map::new();
@@ -420,11 +254,10 @@ mod test {
             }).validate("temperature".to_string(), values.find(&["temperature"])),
         ));
         assert!(validator.get_errors().is_none());
-    }
+    });
 
-    #[test]
     /// Test validator: min - type test
-    fn min_validator_type_test() {
+    test!(min_validator_type_test = {
         // Invalid value type
         let mut values = Map::new();
         values.assign("temperature", Value::String("Test".into())).unwrap();
@@ -438,44 +271,15 @@ mod test {
         assert!(validator.get_errors().is_some());
 
         // Valid value and type
-        let mut values = Map::new();
-        values.assign("temperature", Value::F64(5.1)).unwrap();
+        validate!(min [false] 0 => f64 5.1);
+    });
 
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "min".to_string() => 0.to_json(),
-                "vtype".to_string() => "f64".to_json(),
-            }).validate("temperature".to_string(), values.find(&["temperature"])),
-        ));
-        assert!(validator.get_errors().is_none());
-    }
-
-    #[test]
     /// Test validator: email
-    fn email_validator_test() {
+    test!(email_validator_test = {
         // Valid value and type
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("1W.B.c-D.E_f@B-b.C.d.easD").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(email [false] true => String "1W.B.c-D.E_f@B-b.C.d.easD");
         // Valid value and type
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("the.test@google.com").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_none());
+        validate!(email [false] true => String "the.test@google.com");
 
         // Not valid value and type
         let mut values = Map::new();
@@ -490,94 +294,26 @@ mod test {
         assert!(validator.get_errors().is_some());
 
         // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("the.test.@google.com").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String((".test.@google.com").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("the.test.google.com").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("the.test@google.com.").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("the.test@googlecom").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
-        // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("the@test").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
+        let invalid_emails = vec!(
+            "http://www.google.com",
+            "the.test.@google.com",
+            ".test.@google.com",
+            "the.test.google.com",
+            "the.test@google.com.",
+            "the.test@googlecom",
+            "the@test",
+        );
+        for email in invalid_emails {
+            validate!(email [true] true => String email);
+        }
         // Value is not set
-        let values = Map::new();
+        validate!(email [false] true => String);
+    });
 
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "email".to_string() => true.to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_none());
-    }
-
-    #[test]
     /// Test validator: url
     /// Only Valid URL's
     /// Author of URL's: https://mathiasbynens.be/demo/url-regex
-    fn valid_url_validator_test() {
+    test!(valid_url_validator_test = {
         let valid_urls = vec!(
             "http://www.google.com",
             "http://www.google.com/",
@@ -619,23 +355,14 @@ mod test {
             "http://223.255.255.254"
         );
         for url in valid_urls {
-            let mut values = Map::new();
-            values.assign("user[url]", Value::String((url).into())).unwrap();
-            let validator = ValidateResults(vec!(
-                Validator::<String>::new(btreemap! {
-                    "url".to_string() => true.to_json(),
-                    "vtype".to_string() => "string".to_json(),
-                }).validate("user_url".to_string(), values.find(&["user", "url"])),
-            ));
-            assert!(validator.get_errors().is_none());
+            validate!(url [false] true => String url);
         }
-    }
+    });
 
-    #[test]
     /// Test validator: url
     /// Only Invalid URL's
     /// Author of URL's: https://mathiasbynens.be/demo/url-regex
-    fn invalid_url_validator_test() {
+    test!(invalid_url_validator_test = {
         let invalid_urls = vec!(
             "http://",
             "http:// ",
@@ -669,84 +396,34 @@ mod test {
             "http://.www.foo.bar/",
         );
         for url in invalid_urls {
-            let mut values = Map::new();
-            values.assign("user[url]", Value::String((url).into())).unwrap();
-            let validator = ValidateResults(vec!(
-                Validator::<String>::new(btreemap! {
-                    "url".to_string() => true.to_json(),
-                    "vtype".to_string() => "string".to_json(),
-                }).validate("user_url".to_string(), values.find(&["user", "url"])),
-            ));
-            assert!(validator.get_errors().is_some());
+            validate!(url [true] true => String url);
         }
-    }
+    });
 
-    #[test]
     /// Test validator: regexp
-    fn regexp_validator_test() {
+    test!(regexp_validator_test = {
+        let rule = r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z";
+        // Value is not set
+        validate!(regexp [false] rule => String);
         // Valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "regexp".to_string() => r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z".to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
-        // Valid is not set
-        let values = Map::new();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "regexp".to_string() => r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z".to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
+        validate!(regexp [false] rule => String "test@google.com");
         // Not valid value
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("test@google.com.").into())).unwrap();
+        validate!(regexp [true] rule => String "test@google.com.");
+    });
 
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "regexp".to_string() => r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z".to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-    }
-
-    #[test]
     /// Test validator: equals
-    fn eq_validator_test() {
-        // Valid values
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+    test!(eq_validator_test = {
+        let rule = "test@google.com";
+        // Value is not set
+        validate!(eq [false] rule => String);
+        // Valid value
+        validate!(eq [false] rule => String "test@google.com");
+        // Not valid value
+        validate!(eq [true] rule => String "test");
+        // Valid value- Valid type
+        validate!(eq [false] 100.3 => f64 100.3);
 
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "eq".to_string() => "test@google.com".to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_none());
-
-        // Not valid values
-        let mut values = Map::new();
-        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<String>::new(btreemap! {
-                "eq".to_string() => "test".to_json(),
-                "vtype".to_string() => "string".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-        assert!(validator.get_errors().is_some());
-
+        // Invalid value and invalid type
         let mut values = Map::new();
         values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
 
@@ -781,21 +458,7 @@ mod test {
                 "vtype".to_string() => "f64".to_json(),
             }).validate("user_email".to_string(), values.find(&["user", "email"])),
         ));
-
         assert!(validator.get_errors().is_some());
-
-        // Valid value- Valid type
-        let mut values = Map::new();
-        values.assign("user[email]", Value::F64(100.3)).unwrap();
-
-        let validator = ValidateResults(vec!(
-            Validator::<f64>::new(btreemap! {
-                "eq".to_string() => (100.3).to_json(),
-                "vtype".to_string() => "f64".to_json(),
-            }).validate("user_email".to_string(), values.find(&["user", "email"])),
-        ));
-
-        assert!(validator.get_errors().is_none());
-    }
+    });
 
 }

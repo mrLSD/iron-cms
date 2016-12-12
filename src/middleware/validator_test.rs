@@ -511,4 +511,26 @@ mod test {
         validate!(uuid3 [false] true => String);
     });
 
+    /// Test validator: uuid
+    test!(uuid_validator_test = {
+        // Invalid
+        validate!(uuid [true] true => f64 100.3);
+        validate!(uuid [true] true => String "");
+        validate!(uuid [true] true => String "test");
+        validate!(uuid [true] true => String "412452646");
+        validate!(uuid [true] true => String "934859");
+        validate!(uuid [true] true => String "xxxa987fbc9-4bed-3078-cf07-9141ba07c9f3");
+        validate!(uuid [true] true => String "a987fbc9-4bed-3078-cf07-9141ba07c9f3xxx");
+        validate!(uuid [true] true => String "a987fbc94bed3078cf079141ba07c9f3");
+        validate!(uuid [true] true => String "987fbc9-4bed-3078-cf07a-9141ba07c9f3");
+        validate!(uuid [true] true => String "aaaaaaaa-1111-1111-aaag-111111111111");
+        validate!(uuid [true] true => i64 "a987fbc9-4bed-3078-cf07-9141ba07c9f3");
+        // Valid
+        validate!(uuid [false] true => String "a987fbc9-4bed-3078-cf07-9141ba07c9f3");
+        validate!(uuid [false] true => String "a987fbc9-4bed-4078-8f07-9141ba07c9f3");
+        // Value not set
+        validate!(uuid [false] true => String);
+    });
+
+
 }

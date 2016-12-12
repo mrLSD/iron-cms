@@ -532,5 +532,24 @@ mod test {
         validate!(uuid [false] true => String);
     });
 
-
+    /// Test validator: asciiprintable
+    test!(asciiprintable_validator_test = {
+        // Invalid
+        validate!(asciiprintable [true] true => f64 100.3);
+        validate!(asciiprintable [true] true => String "ｆｏｏbar");
+        validate!(asciiprintable [true] true => String "ｘｙｚ０９８");
+        validate!(asciiprintable [true] true => String "１２３456");
+        validate!(asciiprintable [true] true => String "ｶﾀｶﾅ");
+        validate!(asciiprintable [true] true => String "newline\n");
+        validate!(asciiprintable [true] true => String "\x19test\x7F");
+        // Valid
+        validate!(asciiprintable [false] true => String "");
+        validate!(asciiprintable [false] true => String " ");
+        validate!(asciiprintable [false] true => String "foobar");
+        validate!(asciiprintable [false] true => String "0987654321");
+        validate!(asciiprintable [false] true => String "test@example.com");
+        validate!(asciiprintable [false] true => String "1234abcDEF");
+        // Value not set
+        validate!(asciiprintable [false] true => String);
+    });
 }

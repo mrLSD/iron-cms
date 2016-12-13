@@ -612,4 +612,19 @@ mod test {
         validate!(longitude [false] true => String);
     });
 
+    /// Test validator: ssn
+    test!(ssn_validator_test = {
+        // Invalid
+        validate!(ssn [true] true => String "");
+        validate!(ssn [true] true => f64 100.3);
+        validate!(ssn [true] true => String "test");
+        validate!(ssn [true] true => String "00-90-8787");
+        validate!(ssn [true] true => String "66690-76");
+        // Valid
+        validate!(ssn [false] true => String "191 60 2869");
+        validate!(ssn [false] true => String "191-60-2869");
+        // Value not set
+        validate!(ssn [false] true => String);
+    });
+
 }

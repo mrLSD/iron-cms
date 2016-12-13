@@ -1,6 +1,6 @@
 [package]
 name = "iron-cms"
-version = "0.2.46"
+version = "0.2.47"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
 
 [dependencies]

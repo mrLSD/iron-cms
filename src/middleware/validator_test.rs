@@ -593,4 +593,23 @@ mod test {
         validate!(latitude [false] true => String);
     });
 
+    /// Test validator: longitude
+    test!(longitude_validator_test = {
+        // Invalid
+        validate!(longitude [true] true => String "");
+        validate!(longitude [true] true => f64 100.3);
+        validate!(longitude [true] true => String "test");
+        validate!(longitude [true] true => String "180.1");
+        validate!(longitude [true] true => String "+382.3811");
+        validate!(longitude [true] true => String "23.11111111");
+        // Valid
+        validate!(longitude [false] true => String "-180.000");
+        validate!(longitude [false] true => String "+99.9");
+        validate!(longitude [false] true => String "+19.9");
+        validate!(longitude [false] true => String "+73.234");
+        validate!(longitude [false] true => String "23.111111");
+        // Value not set
+        validate!(longitude [false] true => String);
+    });
+
 }

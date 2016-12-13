@@ -484,7 +484,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         if self.longitude.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    let re = Regex::new(r"^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$").unwrap();
+                    let re = Regex::new(r"^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$").unwrap();
                     re.is_match(value)
                 },
                 _ => false,

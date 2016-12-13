@@ -575,4 +575,22 @@ mod test {
         validate!(ascii [false] true => String);
     });
 
+    /// Test validator: latitude
+    test!(latitude_validator_test = {
+        // Invalid
+        validate!(latitude [true] true => String "");
+        validate!(latitude [true] true => f64 100.3);
+        validate!(latitude [true] true => String "test");
+        validate!(latitude [true] true => String "+99.9");
+        validate!(latitude [true] true => f64 99.9);
+        validate!(latitude [true] true => i64 10);
+        // Valid
+        validate!(latitude [false] true => String "-90.000");
+        validate!(latitude [false] true => String "+90");
+        validate!(latitude [false] true => String "47.123123");
+        validate!(latitude [false] true => String "-47.123123");
+        // Value not set
+        validate!(latitude [false] true => String);
+    });
+
 }

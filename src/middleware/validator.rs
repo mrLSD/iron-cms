@@ -171,11 +171,8 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         let json_value: Json = match self.type_cast(&value) {
             Some(ref json_value) => json_value.to_owned(),
             None => {
-                println!("TYPE_CAST");
                 if let Some(ref mut error) = self.errors {
-                    println!("ERROR");
                     if value.is_some() {
-                        println!("ERROR_ADDED");
                         let msg = format!("Field wrong type: {}", error.field);
                         error.add(msg);
                     }
@@ -388,10 +385,8 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             } else {
                 return ()
             };
-            //--
-            let _t: &T;
+
             let is_valid = self.compare(&value, &required_value.to_json());
-            println!("TOJON: {:?} {:?} {:?}", required_value.to_json(), value, is_valid);
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} value should be equal: {}", error.field, required_value);
@@ -508,7 +503,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         if self.latitude.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    let re = Regex::new(r"^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$").unwrap();
+                    let re = Regex::new(r"^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$").unwrap();
                     re.is_match(value)
                 },
                 _ => false,

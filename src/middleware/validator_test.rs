@@ -552,4 +552,27 @@ mod test {
         // Value not set
         validate!(asciiprintable [false] true => String);
     });
+
+    /// Test validator: ascii
+    test!(ascii_validator_test = {
+        // Invalid
+        validate!(ascii [true] true => f64 100.3);
+        validate!(ascii [true] true => String "ｆｏｏbar");
+        validate!(ascii [true] true => String "ｘｙｚ０９８");
+        validate!(ascii [true] true => String "１２３456");
+        validate!(ascii [true] true => String "ｶﾀｶﾅ");
+        validate!(ascii [true] true => i64 "foobar");
+        // Valid
+        validate!(ascii [false] true => String "");
+        validate!(ascii [false] true => String " ");
+        validate!(ascii [false] true => String "foobar");
+        validate!(ascii [false] true => String "0987654321");
+        validate!(ascii [false] true => String "test@example.com");
+        validate!(ascii [false] true => String "1234abcDEF");
+        validate!(ascii [false] true => String "\x19test\x7F");
+        validate!(ascii [false] true => String "newline\n");
+        // Value not set
+        validate!(ascii [false] true => String);
+    });
+
 }

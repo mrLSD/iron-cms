@@ -42,7 +42,7 @@ use super::render::{BaseDataMap, BaseDataMapDecoder};
 use std::collections::BTreeMap;
 use std::string::String;
 use regex::Regex;
-use std::fmt::Display;
+use std::fmt::{Display};
 
 /// Base Validator struct
 #[derive(RustcDecodable, Debug)]
@@ -68,6 +68,7 @@ pub struct Validator<T: Display> {
     pub uuid4: Option<bool>,
     pub uuid5: Option<bool>,
     pub eq: Option<T>,
+    pub eq_field: Option<T>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -81,6 +82,8 @@ pub struct ValidateResult(BaseDataMap, ErrorValidator);
 pub struct ValidateResults(pub Vec<ValidateResult>);
 // Error result aggregator
 pub type ErrorsResult = Option<Vec<ErrorValidator>>;
+
+pub struct CompareValue<'a >(pub Option<&'a Value>);
 
 /// Validation results methods
 impl ValidateResults {
@@ -104,6 +107,31 @@ impl ValidateResults {
             values.append(&mut val.clone());
         }
         values
+    }
+}
+
+//--
+impl <'a> ToJson for CompareValue<'a> {
+    fn to_json(&self) -> Json {
+        let &CompareValue(ref value) = self;
+        match *value {
+            Some(&Value::String(ref value)) => {
+                value.to_json()
+            },
+            Some(&Value::U64(value)) => {
+                value.to_json()
+            },
+            Some(&Value::I64(value)) => {
+                value.to_json()
+            },
+            Some(&Value::F64(value)) => {
+                value.to_json()
+            },
+            Some(&Value::Boolean(value)) => {
+                value.to_json()
+            },
+            _ => Json::Null
+        }
     }
 }
 
@@ -166,6 +194,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.uuid4(&value);
         self.uuid5(&value);
         self.eq(&value);
+        self.eq_field(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -393,6 +422,16 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                     error.add(msg);
                 }
             }
+        }
+    }
+
+    fn eq_field(&mut self, value: &Option<Value>) {
+        if value.is_some() {
+            let required_value = if let Some(ref required_value) = self.eq_field {
+                required_value
+            } else {
+                return ()
+            };
         }
     }
 

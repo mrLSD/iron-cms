@@ -70,6 +70,7 @@ pub struct Validator<T: Display> {
     pub eq: Option<T>,
     pub eq_field: Option<T>,
     pub ne: Option<T>,
+    pub ne_field: Option<T>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -196,6 +197,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.eq(&value);
         self.eq_field(&value);
         self.ne(&value);
+        self.ne_field(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -481,6 +483,45 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} value should be not equal: {}", error.field, required_value);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Not qquals to another fiold validator
+    /// Multitype
+    fn ne_field(&mut self, value: &Option<Value>) {
+        if value.is_some() && self.ne_field.is_some()  {
+            let (required_value, is_valid) = if let Some(ref required_value) = self.ne_field {
+                let is_valid = !self.compare(&value, &required_value.to_json());
+                (required_value.to_string(), is_valid)
+            } else {
+                ("".to_string(), false)
+            };
+
+            let value_str = match *value {
+                Some(Value::String(ref value)) => {
+                    value.to_string()
+                },
+                Some(Value::U64(value)) => {
+                    value.to_string()
+                },
+                Some(Value::I64(value)) => {
+                    value.to_string()
+                },
+                Some(Value::F64(value)) => {
+                    value.to_string()
+                },
+                Some(Value::Boolean(value)) => {
+                    value.to_string()
+                },
+                _ => "".to_string()
+            };
+
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} with value {} should be not equal field value {}", error.field, value_str, required_value);
                     error.add(msg);
                 }
             }

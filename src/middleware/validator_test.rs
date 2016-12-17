@@ -627,7 +627,7 @@ mod test {
         validate!(ssn [false] true => String);
     });
 
-    /// /// Test validator: nor fields_equals
+    /// /// Test validator: fields_equals
     test!(eq_field_validator_test = {
         let mut values = Map::new();
         values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
@@ -733,6 +733,64 @@ mod test {
                 "ne".to_string() => 100.to_json(),
                 "vtype".to_string() => "f64".to_json(),
             }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_some());
+    });
+
+    /// Test validator: fields not equals
+    test!(ne_field_validator_test = {
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+        values.assign("new[email]", Value::String(("test@google.com").into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "ne_field".to_string() => CompareField(values.find(&["new", "email"])).to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+        values.assign("new[email]", Value::String(("test@google.com.").into())).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "ne_field".to_string() => CompareField(values.find(&["new", "email"])).to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("new[email]", Value::String(("test@google.com.").into())).unwrap();
+
+        // First field not set, then rool is not invoked
+        // If we want added rool invokation we should added
+        // additional validator - required
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "ne_field".to_string() => CompareField(values.find(&["new", "email"])).to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+
+        // We should added required validator for 2-d field
+        // if we want check fields equal
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "ne_field".to_string() => CompareField(values.find(&["new", "email"])).to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+            Validator::<String>::new(btreemap! {
+                "required".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("new_email".to_string(), values.find(&["new", "email"])),
         ));
         assert!(validator.get_errors().is_some());
     });

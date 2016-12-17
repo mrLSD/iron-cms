@@ -853,10 +853,10 @@ mod test {
         invalid! (alpha => String "");
         invalid! (alpha => f64 100.3);
         invalid! (alpha => String "00-90-8787");
-        invalid! (alpha => String "abc+");
-        invalid! (alpha => String "abc®");
         invalid! (alpha => String "abc123");
-        invalid! (alpha => String "123");
+        invalid! (alpha => String "abc+");
+        invalid! (alpha => String "abc123+");
+        invalid! (alpha => String "abc®");
         invalid! (alpha => String "тест");
         invalid! (alpha => String "test test");
         // Valid
@@ -866,5 +866,24 @@ mod test {
         valid! (alpha => String);
     });
 
+    /// Test validator: alphanum
+    test!(alphanum_validator_test = {
+        // Invalid
+        invalid! (alphanum => String "");
+        invalid! (alphanum => f64 100.3);
+        invalid! (alphanum => String "00-90-8787");
+        invalid! (alphanum => String "abc+");
+        invalid! (alphanum => String "abc®");
+        invalid! (alphanum => String "abc123+");
+        invalid! (alphanum => String "тест");
+        invalid! (alphanum => String "test test");
+        // Valid
+        valid! (alphanum => String  "test");
+        valid! (alphanum => String  "az");
+        valid! (alphanum => String  "123");
+        valid! (alphanum => String  "test123");
+        // Value not set
+        valid! (alphanum => String);
+    });
 
 }

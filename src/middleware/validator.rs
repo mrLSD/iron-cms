@@ -407,7 +407,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// For strings & numbers, eq will ensure that the
     /// value is equal to the parameter given.
     fn eq(&mut self, value: &Option<Value>) {
-        if value.is_some() {
+        if value.is_some() && self.eq.is_some() {
             let required_value = if let Some(ref required_value) = self.eq {
                 required_value
             } else {
@@ -425,16 +425,39 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     }
 
     fn eq_field(&mut self, value: &Option<Value>) {
-        if value.is_some() {
-            let required_value = if let Some(ref required_value) = self.eq_field {
-                required_value
+        if value.is_some() && self.eq_field.is_some()  {
+            let (required_value, is_valid) = if let Some(ref required_value) = self.eq_field {
+                let is_valid = self.compare(&value, &required_value.to_json());
+                (required_value.to_string(), is_valid)
             } else {
-                return ()
+                ("".to_string(), false)
             };
-            let is_valid = self.compare(&value, &required_value.to_json());
+
+            //let is_valid = self.compare(&value, &required_value.to_json());
+            println!("<-- {:?} {:?}", value, required_value.to_json());
+
+            let value_str = match *value {
+                Some(Value::String(ref value)) => {
+                    value.to_string()
+                },
+                Some(Value::U64(value)) => {
+                    value.to_string()
+                },
+                Some(Value::I64(value)) => {
+                    value.to_string()
+                },
+                Some(Value::F64(value)) => {
+                    value.to_string()
+                },
+                Some(Value::Boolean(value)) => {
+                    value.to_string()
+                },
+                _ => "".to_string()
+            };
+
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field {} value should be equal field value: {}", error.field, required_value);
+                    let msg = format!("Field {} with value {} should be equal field value {}", error.field, value_str, required_value);
                     error.add(msg);
                 }
             }

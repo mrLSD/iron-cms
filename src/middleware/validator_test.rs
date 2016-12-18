@@ -795,4 +795,24 @@ mod test {
         assert!(validator.get_errors().is_some());
     });
 
+    /// Test validator: alpha
+    test!(alpha_validator_test = {
+        // Invalid
+        validate!(alpha [true] true => String "");
+        validate!(alpha [true] true => f64 100.3);
+        validate!(alpha [true] true => String "00-90-8787");
+        validate!(alpha [true] true => String "abc+");
+        validate!(alpha [true] true => String "abc®");
+        validate!(alpha [true] true => String "abc123");
+        validate!(alpha [true] true => String "123");
+        validate!(alpha [true] true => String "тест");
+        validate!(alpha [true] true => String "test test");
+        // Valid
+        validate!(alpha [false] true => String "test");
+        validate!(alpha [false] true => String "az");
+        // Value not set
+        validate!(alpha [false] true => String);
+    });
+
+
 }

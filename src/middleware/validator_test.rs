@@ -70,6 +70,58 @@ mod test {
         }
     }
 
+    /// Valid macrod validator - valid asserions
+    macro_rules! valid {
+        // Valid without expression
+        ($validator:ident => $($t:ident $val:expr),+ ) => {
+            $(
+                validate! ($validator [false] true => $t $val);
+            )+
+        };
+        // Valid without expression and without value
+        ($validator:ident => $t:ident ) => {
+            validate! ($validator [false] true => $t);
+        };
+        // Valid with equal expression
+        ($validator:ident $eq:expr => $($t:ident $val:expr),+ ) => {
+            $(
+                validate!($validator [false] $eq => $t $val);
+            )+
+        };
+        // Valid with equal expression and without value
+        ($validator:ident $eq:expr => $t:ident) => {
+            $(
+                validate!($validator [false] $eq => $t);
+            )+
+        }
+    }
+
+    /// Invalid macrod validator - failed asserions
+    macro_rules! invalid {
+        // Valid without expression
+        ($validator:ident => $($t:ident $val:expr),+ ) => {
+            $(
+                validate! ($validator [true] true => $t $val);
+            )+
+        };
+        // Valid without expression and without value
+        ($validator:ident => $t:ident ) => {
+            validate! ($validator [true] true => $t);
+        };
+        // Valid with equal expression
+        ($validator:ident $eq:expr => $($t:ident $val:expr),+ ) => {
+            $(
+                validate!($validator [true] $eq => $t $val);
+            )+
+        };
+        // Valid with equal expression and without value
+        ($validator:ident $eq:expr => $t:ident) => {
+            $(
+                validate!($validator [true] $eq => $t);
+            )+
+        }
+    }
+
     /// Test "test macros"
     test!(test_macros = {
         validate!(eq [false] 100.3 => f64);
@@ -798,20 +850,20 @@ mod test {
     /// Test validator: alpha
     test!(alpha_validator_test = {
         // Invalid
-        validate!(alpha [true] true => String "");
-        validate!(alpha [true] true => f64 100.3);
-        validate!(alpha [true] true => String "00-90-8787");
-        validate!(alpha [true] true => String "abc+");
-        validate!(alpha [true] true => String "abc®");
-        validate!(alpha [true] true => String "abc123");
-        validate!(alpha [true] true => String "123");
-        validate!(alpha [true] true => String "тест");
-        validate!(alpha [true] true => String "test test");
+        invalid! (alpha => String "");
+        invalid! (alpha => f64 100.3);
+        invalid! (alpha => String "00-90-8787");
+        invalid! (alpha => String "abc+");
+        invalid! (alpha => String "abc®");
+        invalid! (alpha => String "abc123");
+        invalid! (alpha => String "123");
+        invalid! (alpha => String "тест");
+        invalid! (alpha => String "test test");
         // Valid
-        validate!(alpha [false] true => String "test");
-        validate!(alpha [false] true => String "az");
+        valid! (alpha => String  "test");
+        valid! (alpha => String  "az");
         // Value not set
-        validate!(alpha [false] true => String);
+        valid! (alpha => String);
     });
 
 

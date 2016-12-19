@@ -76,6 +76,7 @@ pub struct Validator<T: Display> {
     pub alphaunicode: Option<bool>,
     pub alphanumunicode: Option<bool>,
     pub numeric: Option<bool>,
+    pub number: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -208,6 +209,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.alphaunicode(&value);
         self.alphanumunicode(&value);
         self.numeric(&value);
+        self.number(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -628,7 +630,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// This validates that a string value contains a
     /// basic numeric value. basic excludes exponents etc...
     fn numeric(&mut self, value: &Option<Value>) {
-        if self.alphanumunicode.is_some() && value.is_some() {
+        if self.numeric.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
                     let re = Regex::new(r"^[-+]?[0-9]+(?:\.[0-9]+)?$").unwrap();
@@ -638,7 +640,29 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             };
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg = format!("Field {} should contain Numeric characters", error.field);
+                    let msg = format!("Field {} should contain Numeric characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// number validator
+    ///
+    /// This validates that a string value contains a
+    /// numbers only.
+    fn number(&mut self, value: &Option<Value>) {
+        if self.number.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[0-9]+$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain Numbers characters only", error.field);
                     error.add(msg);
                 }
             }

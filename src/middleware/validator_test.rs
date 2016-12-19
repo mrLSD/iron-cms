@@ -886,4 +886,22 @@ mod test {
         valid! (alphanum => String);
     });
 
+    /// Test validator: number
+    test!(number_validator_test = {
+        // Invalid
+        invalid! (number => String "");
+        invalid! (number => f64 100.3);
+        invalid! (number => String "00-90-8787");
+        invalid! (number => String "abc+");
+        invalid! (number => String "abc®");
+        invalid! (number => String "abc123+");
+        invalid! (number => String "тест");
+        invalid! (number => String "test test");
+        invalid! (number => String "asd123");
+        // Valid
+        valid! (number => String  "123");
+        // Value not set
+        valid! (number => String);
+    });
+
 }

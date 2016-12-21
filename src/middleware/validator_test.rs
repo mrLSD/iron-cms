@@ -966,8 +966,8 @@ mod test {
         valid! (alphanumunicode => String "123");
         valid! (alphanumunicode => String "这是一个测试字符串");
         valid! (alphanumunicode => String "\u{0031}\u{0032}\u{0033}"); // unicode 5
-        valid! (alphanumunicodealphaunicode => String "あいうえおfoobar");
-        valid! (alphanumunicodealphaunicode => String "Тестирование");
+        valid! (alphanumunicode => String "あいうえおfoobar");
+        valid! (alphanumunicode => String "Тестирование");
         valid! (alphanumunicode => String "ｶﾀｶﾅ");
         valid! (alphanumunicode => String "1234abcDE");
         // Value not set

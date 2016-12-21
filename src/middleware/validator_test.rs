@@ -929,4 +929,25 @@ mod test {
         valid! (numeric => String);
     });
 
+    /// Test validator: alphaunicode
+    test!(alphaunicode_validator_test = {
+        // Invalid
+        invalid! (alphaunicode => String "");
+        invalid! (alphaunicode => f64 100.3);
+        invalid! (alphaunicode => String "this is a test string");
+        invalid! (alphaunicode => String "123");
+        invalid! (alphaunicode => String "<>@;.-=");
+        invalid! (alphaunicode => String "ひらがな・カタカナ、．漢字");
+        invalid! (alphaunicode => String "test＠example.com");
+        invalid! (alphaunicode => String "1234abcDE");
+        // Valid
+        valid! (alphaunicode => String "test");
+        valid! (alphaunicode => String "这是一个测试字符串");
+        valid! (alphaunicode => String "あいうえおfoobar");
+        valid! (alphaunicode => String "Тестирование");
+        valid! (alphaunicode => String "ｶﾀｶﾅ");
+        // Value not set
+        valid! (alphaunicode => String);
+    });
+
 }

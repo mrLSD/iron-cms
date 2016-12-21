@@ -936,6 +936,8 @@ mod test {
         invalid! (alphaunicode => f64 100.3);
         invalid! (alphaunicode => String "this is a test string");
         invalid! (alphaunicode => String "123");
+        invalid! (alphaunicode => String "test123");
+        invalid! (alphaunicode => String "тест123");
         invalid! (alphaunicode => String "<>@;.-=");
         invalid! (alphaunicode => String "ひらがな・カタカナ、．漢字");
         invalid! (alphaunicode => String "test＠example.com");
@@ -949,5 +951,28 @@ mod test {
         // Value not set
         valid! (alphaunicode => String);
     });
+
+    /// Test validator: alphanumunicode
+    test!(alphanumunicode_validator_test = {
+        // Invalid
+        invalid! (alphanumunicode => String "");
+        invalid! (alphanumunicode => f64 100.3);
+        invalid! (alphanumunicode => String "this is a test string");
+        invalid! (alphanumunicode => String "<>@;.-=");
+        invalid! (alphanumunicode => String "ひらがな・カタカナ、．漢字");
+        invalid! (alphanumunicode => String "test＠example.com");
+        // Valid
+        valid! (alphanumunicode => String "test");
+        valid! (alphanumunicode => String "123");
+        valid! (alphanumunicode => String "这是一个测试字符串");
+        valid! (alphanumunicode => String "\u{0031}\u{0032}\u{0033}"); // unicode 5
+        valid! (alphanumunicodealphaunicode => String "あいうえおfoobar");
+        valid! (alphanumunicodealphaunicode => String "Тестирование");
+        valid! (alphanumunicode => String "ｶﾀｶﾅ");
+        valid! (alphanumunicode => String "1234abcDE");
+        // Value not set
+        valid! (alphanumunicode => String);
+    });
+
 
 }

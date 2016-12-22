@@ -75,6 +75,7 @@ pub struct Validator<T: Display> {
     pub alphanum: Option<bool>,
     pub alphaunicode: Option<bool>,
     pub alphanumunicode: Option<bool>,
+    pub numeric: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -206,6 +207,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.alphanum(&value);
         self.alphaunicode(&value);
         self.alphanumunicode(&value);
+        self.numeric(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -599,8 +601,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         }
     }
 
-
-    /// Alphanumeric Unicodevalidator
+    /// Alphanumeric Unicode validator
     ///
     /// This validates that a string value contains unicode
     /// alphanumeric characters only
@@ -616,6 +617,28 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain Unicode alpha characters and numbers", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Numeric validator
+    ///
+    /// This validates that a string value contains a
+    /// basic numeric value. basic excludes exponents etc...
+    fn numeric(&mut self, value: &Option<Value>) {
+        if self.alphanumunicode.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[-+]?[0-9]+(?:\.[0-9]+)?$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain Numeric characters", error.field);
                     error.add(msg);
                 }
             }

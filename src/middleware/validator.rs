@@ -78,6 +78,7 @@ pub struct Validator<T: Display> {
     pub numeric: Option<bool>,
     pub number: Option<bool>,
     pub hexadecimal: Option<bool>,
+    pub hexcolor: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -212,6 +213,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.numeric(&value);
         self.number(&value);
         self.hexadecimal(&value);
+        self.hexcolor(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -665,6 +667,28 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain Hexadecimal characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Hexcolor String validator
+    ///
+    /// This validates that a string value contains
+    /// a valid hex color including hashtag (#)
+    fn hexcolor(&mut self, value: &Option<Value>) {
+        if self.hexadecimal.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain Hexcolor characters only", error.field);
                     error.add(msg);
                 }
             }

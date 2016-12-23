@@ -974,5 +974,4 @@ mod test {
         valid! (alphanumunicode => String);
     });
 
-
 }

@@ -77,6 +77,7 @@ pub struct Validator<T: Display> {
     pub alphanumunicode: Option<bool>,
     pub numeric: Option<bool>,
     pub number: Option<bool>,
+    pub hexadecimal: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -210,6 +211,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.alphanumunicode(&value);
         self.numeric(&value);
         self.number(&value);
+        self.hexadecimal(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -641,6 +643,28 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain Numeric characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Hexadecimal string validator
+    ///
+    /// This validates that a string value contains
+    /// a valid hexadecimal.
+    fn hexadecimal(&mut self, value: &Option<Value>) {
+        if self.hexadecimal.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^[0-9a-fA-F]+$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain Hexadecimal characters only", error.field);
                     error.add(msg);
                 }
             }

@@ -974,4 +974,22 @@ mod test {
         valid! (alphanumunicode => String);
     });
 
+    /// Test validator: hexadecimal
+    test!(hexadecimal_validator_test = {
+        // Invalid
+        invalid! (hexadecimal => String "");
+        invalid! (hexadecimal => f64 100.3);
+        invalid! (hexadecimal => String "test");
+        invalid! (hexadecimal => String "qwe123");
+        invalid! (hexadecimal => String "Тест");
+        invalid! (hexadecimal => String "1A23c2B5eFdg");
+        // Valid
+        valid! (hexadecimal => String "acdf1234");
+        valid! (hexadecimal => String "123");
+        valid! (hexadecimal => String "1AF123BD23");
+        valid! (hexadecimal => String "1A23c2B5eFd");
+        // Value not set
+        valid! (hexadecimal => String);
+    });
+
 }

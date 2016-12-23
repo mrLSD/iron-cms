@@ -892,16 +892,41 @@ mod test {
         invalid! (number => String "");
         invalid! (number => f64 100.3);
         invalid! (number => String "00-90-8787");
+        invalid! (number => String "test");
         invalid! (number => String "abc+");
         invalid! (number => String "abc®");
         invalid! (number => String "abc123+");
         invalid! (number => String "тест");
         invalid! (number => String "test test");
         invalid! (number => String "asd123");
+        invalid! (number => String "100.20");
+        invalid! (number => String "-123");
         // Valid
         valid! (number => String  "123");
         // Value not set
         valid! (number => String);
+    });
+
+    /// Test validator: numeric
+    test!(numeric_validator_test = {
+        // Invalid
+        invalid! (numeric => String "");
+        invalid! (numeric => f64 100.3);
+        invalid! (numeric => String "00-90-8787");
+        invalid! (numeric => String "test");
+        invalid! (numeric => String "abc+");
+        invalid! (numeric => String "abc®");
+        invalid! (numeric => String "abc123+");
+        invalid! (numeric => String "тест");
+        invalid! (numeric => String "test test");
+        invalid! (numeric => String "asd123");
+        // Valid
+        valid! (numeric => String  "123");
+        valid! (numeric => String  "-123");
+        valid! (numeric => String  "123.20");
+        valid! (numeric => String  "-123.20");
+        // Value not set
+        valid! (numeric => String);
     });
 
 }

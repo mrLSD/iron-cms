@@ -678,7 +678,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// This validates that a string value contains
     /// a valid hex color including hashtag (#)
     fn hexcolor(&mut self, value: &Option<Value>) {
-        if self.hexadecimal.is_some() && value.is_some() {
+        if self.hexcolor.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
                     let re = Regex::new(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$").unwrap();

@@ -992,4 +992,27 @@ mod test {
         valid! (hexadecimal => String);
     });
 
+    /// Test validator: hexcolor
+    test!(hexcolor_validator_test = {
+        // Invalid
+        invalid! (hexcolor => String "");
+        invalid! (hexcolor => f64 100.3);
+        invalid! (hexcolor => String "test");
+        invalid! (hexcolor => String "qwe123");
+        invalid! (hexcolor => String "Тест");
+        invalid! (hexcolor => String "1A23c2B5eFdg");
+        invalid! (hexcolor => String "#c2c2g2");
+        invalid! (hexcolor => String "fff");
+        invalid! (hexcolor => String "fffFFF");
+        invalid! (hexcolor => String "#ABCDEF123");
+        invalid! (hexcolor => String "#c2c2c2c");
+        // Valid
+        valid! (hexcolor => String "#c2c2c2");
+        valid! (hexcolor => String "#fff");
+        valid! (hexcolor => String "#ffF");
+        valid! (hexcolor => String "#000");
+        // Value not set
+        valid! (hexcolor => String);
+    });
+
 }

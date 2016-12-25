@@ -79,6 +79,7 @@ pub struct Validator<T: Display> {
     pub number: Option<bool>,
     pub hexadecimal: Option<bool>,
     pub hexcolor: Option<bool>,
+    pub rgb: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -214,6 +215,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.number(&value);
         self.hexadecimal(&value);
         self.hexcolor(&value);
+        self.rgb(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -689,6 +691,27 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain Hexcolor characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// RGB String validator
+    ///
+    /// This validates that a string value contains a valid rgb color
+    fn rgb(&mut self, value: &Option<Value>) {
+        if self.rgb.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^rgb\(\s*(?:(?:0|[1-9]\d?|1\d\d?$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain RGB color characters only", error.field);
                     error.add(msg);
                 }
             }

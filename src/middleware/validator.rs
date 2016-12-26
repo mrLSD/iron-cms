@@ -704,7 +704,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         if self.rgb.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    let re = Regex::new(r"^rgb\(\s*(?:(?:0|[1-9]\d?|1\d\d?$").unwrap();
+                    let re = Regex::new(r"^rgb\(\s*(?:(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])|(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])%\s*,\s*(?:0|[1-9]\d?|1\\d\d?|2[0-4]\d|25[0-5])%\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])%)\s*\)$").unwrap();
                     re.is_match(value)
                 },
                 _ => false,

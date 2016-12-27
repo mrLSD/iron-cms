@@ -1015,4 +1015,32 @@ mod test {
         valid! (hexcolor => String);
     });
 
+    /// Test validator: rgb
+    test!(rgb_validator_test = {
+        // Invalid
+        invalid! (rgb => String "");
+        invalid! (rgb => f64 100.3);
+        invalid! (rgb => String "test");
+        invalid! (rgb => String "qwe123");
+        invalid! (rgb => String "Тест");
+        invalid! (rgb => String "1A23c2B5eFdg");
+        invalid! (rgb => String "#c2c2g2");
+        invalid! (rgb => String "fff");
+        invalid! (rgb => String "fffFFF");
+        invalid! (rgb => String "#ABCDEF123");
+        invalid! (rgb => String "#c2c2c2c");
+        invalid! (rgb => String "rgb(10%,  50%, 55)");
+        invalid! (rgb => String "rgb(10%,  50%, 55)");
+        invalid! (rgb => String "rgb(1,349,275)");
+        invalid! (rgb => String "rgb(01,31,255)");
+        invalid! (rgb => String "rgba(0,31,255)");
+        invalid! (rgb => String "rgb(255, 256, 255)");
+        // Valid
+        valid! (rgb => String "rgb(0,31,255)");
+        valid! (rgb => String "rgb(0,  31, 255)");
+        valid! (rgb => String "rgb(255, 255, 255)");
+        // Value not set
+        valid! (rgb => String);
+    });
+
 }

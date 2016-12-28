@@ -80,6 +80,7 @@ pub struct Validator<T: Display> {
     pub hexadecimal: Option<bool>,
     pub hexcolor: Option<bool>,
     pub rgb: Option<bool>,
+    pub rgba: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -216,6 +217,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.hexadecimal(&value);
         self.hexcolor(&value);
         self.rgb(&value);
+        self.rgba(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -699,7 +701,8 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
 
     /// RGB String validator
     ///
-    /// This validates that a string value contains a valid rgb color
+    /// This validates that a string value contains
+    /// a valid rgb color
     fn rgb(&mut self, value: &Option<Value>) {
         if self.rgb.is_some() && value.is_some() {
             let is_valid = match *value {
@@ -712,6 +715,28 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain RGB color characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// RGBA String validator
+    ///
+    /// This validates that a string value contains
+    /// a valid rgba color
+    fn rgba(&mut self, value: &Option<Value>) {
+        if self.rgba.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"rgba\(\s*(?:(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])|(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])%\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])%\s*,\s*(?:0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5])%)\s*,\s*(?:(?:0.[1-9]*)|[01])\s*\)$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain RGBa color characters only", error.field);
                     error.add(msg);
                 }
             }

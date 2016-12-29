@@ -1043,4 +1043,40 @@ mod test {
         valid! (rgb => String);
     });
 
+    /// Test validator: rgba
+    test!(rgba_validator_test = {
+        // Invalid
+        invalid! (rgba => String "");
+        invalid! (rgba => f64 100.3);
+        invalid! (rgba => String "test");
+        invalid! (rgba => String "qwe123");
+        invalid! (rgba => String "Тест");
+        invalid! (rgba => String "1A23c2B5eFdg");
+        invalid! (rgba => String "#c2c2g2");
+        invalid! (rgba => String "fff");
+        invalid! (rgba => String "fffFFF");
+        invalid! (rgba => String "#ABCDEF123");
+        invalid! (rgba => String "#c2c2c2c");
+        invalid! (rgba => String "rgb(1, 31, 255)");
+        invalid! (rgba => String "rgb(255, 256, 255)");
+        invalid! (rgba => String "rgb(100, 100, 100, 0.1)");
+        invalid! (rgba => String "rgba(255, 256, 255)");
+        invalid! (rgba => String "rgba(255, 256, 255, 0.1)");
+        invalid! (rgba => String "rgba(01, 100, 100, 0.1)");
+        invalid! (rgba => String "rgba(12%,55,100%,0.12)");
+        invalid! (rgba => String "rgb(1,349,275,0.5)");
+        invalid! (rgba => String "rgb(01,31,255,0.5)");
+        invalid! (rgba => String "rgba(255, 255, 255, 2)");
+        invalid! (rgba => String "rgba(255, 257, 255, 0.5)");
+        // Valid
+        valid! (rgba => String "rgba(0,31,255,0.5)");
+        valid! (rgba => String "rgba( 0, 31, 255, 0.5 )");
+        valid! (rgba => String "rgba(0,  31, 255, 0.12)");
+        valid! (rgba => String "rgba(255, 255, 255, 1)");
+        valid! (rgba => String "rgba(12%,55%,100%,0.12)");
+        valid! (rgba => String "rgba(0,  31, 255, 0)");
+        // Value not set
+        valid! (rgba => String);
+    });
+
 }

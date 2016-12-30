@@ -81,6 +81,7 @@ pub struct Validator<T: Display> {
     pub hexcolor: Option<bool>,
     pub rgb: Option<bool>,
     pub rgba: Option<bool>,
+    pub hsl: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -218,6 +219,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.hexcolor(&value);
         self.rgb(&value);
         self.rgba(&value);
+        self.hsl(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -737,6 +739,28 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain RGBa color characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// HSL String validator
+    ///
+    /// This validates that a string value contains
+    /// a valid hsl color
+    fn hsl(&mut self, value: &Option<Value>) {
+        if self.hsl.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"^hsl\(\s*(?:0|[1-9]\d?|[12]\d\d|3[0-5]\d|360)\s*,\s*(?:(?:0|[1-9]\d?|100)%)\s*,\s*(?:(?:0|[1-9]\d?|100)%)\s*\)$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain HSL color characters only", error.field);
                     error.add(msg);
                 }
             }

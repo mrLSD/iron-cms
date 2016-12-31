@@ -1035,6 +1035,7 @@ mod test {
         invalid! (rgb => String "rgb(01,31,255)");
         invalid! (rgb => String "rgba(0,31,255)");
         invalid! (rgb => String "rgb(255, 256, 255)");
+        invalid! (rgb => String "rgb(-10, 100, 200)");
         // Valid
         valid! (rgb => String "rgb(0,31,255)");
         valid! (rgb => String "rgb(0,  31, 255)");
@@ -1066,6 +1067,7 @@ mod test {
         invalid! (rgba => String "rgba(12%,55,100%,0.12)");
         invalid! (rgba => String "rgb(1,349,275,0.5)");
         invalid! (rgba => String "rgb(01,31,255,0.5)");
+        invalid! (rgba => String "rgba(-1, 31,255, 0.5)");
         invalid! (rgba => String "rgba(255, 255, 255, 2)");
         invalid! (rgba => String "rgba(255, 257, 255, 0.5)");
         // Valid
@@ -1077,6 +1079,25 @@ mod test {
         valid! (rgba => String "rgba(0,  31, 255, 0)");
         // Value not set
         valid! (rgba => String);
+    });
+
+    /// Test validator: hsl
+    test!(hsl_validator_test = {
+        // Invalid
+        invalid! (hsl => String "");
+        invalid! (hsl => f64 100.3);
+        invalid! (hsl => String "test");
+        invalid! (hsl => String "qwe123");
+        invalid! (hsl => String "Тест");
+        invalid! (hsl => String "hsl(361,100%,50%)");
+        invalid! (hsl => String "hsl(361,101%,50%)");
+        invalid! (hsl => String "hsl(361,100%,101%)");
+        invalid! (hsl => String "hsl(-10,100%,100%)");
+        // Valid
+        valid! (hsl => String "hsl(360,100%,50%)");
+        valid! (hsl => String "hsl(0,0%,0%)");
+        // Value not set
+        valid! (hsl => String);
     });
 
 }

@@ -1100,4 +1100,27 @@ mod test {
         valid! (hsl => String);
     });
 
+    /// Test validator: hsla
+    test!(hsla_validator_test = {
+        // Invalid
+        invalid! (hsla => String "");
+        invalid! (hsla => f64 100.3);
+        invalid! (hsla => String "test");
+        invalid! (hsla => String "qwe123");
+        invalid! (hsla => String "Тест");
+        invalid! (hsla => String "hsl(361,100%,50%,1)");
+        invalid! (hsla => String "hsl(361,100%,50%)");
+        invalid! (hsla => String "hsla(361,100%,50%)");
+        invalid! (hsla => String "hsla(360,101%,50%)");
+        invalid! (hsla => String "hsla(360,100%,101%)");
+        invalid! (hsla => String "hsla(-360, 100%, 100%, 1)");
+        // Valid
+        valid! (hsla => String "hsla(360,100%,100%,1)");
+        valid! (hsla => String "hsla(360, 100%, 100%, 1)");
+        valid! (hsla => String "hsla(360,100%,100%,0.5)");
+        valid! (hsla => String "hsla(0,0%,0%, 0)");
+        // Value not set
+        valid! (hsla => String);
+    });
+
 }

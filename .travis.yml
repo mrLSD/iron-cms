@@ -1,5 +1,10 @@
 language: rust
 rust:
+  - 1.8.0
+  - 1.9.0
+  - 1.10.0
+  - 1.11.0
+  - 1.12.0
   - 1.13.0
   - 1.14.0
   - stable
@@ -8,3 +13,31 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
+
+# Test coverage via codecov.io
+before_install:
+  - sudo apt-get update
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
+      - gcc
+      - binutils-dev
+after_success: |
+  wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+  tar xzf master.tar.gz &&
+  cd kcov-master &&
+  mkdir build &&
+  cd build &&
+  cmake .. &&
+  make &&
+  sudo make install &&
+  cd ../.. &&
+  rm -rf kcov-master &&
+  for file in target/debug/iron_cms-*; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+  bash <(curl -s https://codecov.io/bash) &&
+  echo "Uploaded code coverage"
+

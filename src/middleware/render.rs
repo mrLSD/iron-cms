@@ -150,7 +150,7 @@ fn script_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext
 /// usege: `{{#active "pages" module }}{{/active}}`
 /// It should pre-init value at Handler!
 fn active_page_helper(_: &Context, h: &Helper, _: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-    println!("ACTIVE=> {:?} {:?}\n", h.param(0), h.param(1));
+//    println!("ACTIVE=> {:?} {:?}\n", h.param(0), h.param(1));
     let exact_page = try!(h.param(0)
             .and_then(|v| v.value().as_string())
             .ok_or(RenderError::new("|> active_page - param 1 with string type is required")));
@@ -188,9 +188,9 @@ fn ifeq_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderConte
     Ok(())
 }
 
-fn ifgt_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
-    let mut active = "".to_owned();;
-    let value = try!(h.param(0)
+fn ifgt_helper(_ctx: &Context, _h: &Helper, _hbs: &Handlebars, rc: &mut RenderContext) -> Result<(), RenderError> {
+    let active = "".to_owned();;
+/*    let value = try!(h.param(0)
             .and_then(|v| Some(v.value()) )
              .ok_or(RenderError::new("|> ifgt_helper - param 1 withis required")));
     if DEBUG_RENDER {
@@ -201,7 +201,7 @@ fn ifgt_helper(ctx: &Context, h: &Helper, hbs: &Handlebars, rc: &mut RenderConte
         active = "5 23".to_owned();
         println!("IFGT==>>> {:?}\n\n", value);
         let (_, _, _) = (eq_field, hbs, ctx);
-    }
+    }*/
     try!(rc.writer.write(active.into_bytes().as_ref()));
 
     Ok(())

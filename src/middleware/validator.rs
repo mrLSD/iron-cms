@@ -83,6 +83,7 @@ pub struct Validator<T: Display> {
     pub rgba: Option<bool>,
     pub hsl: Option<bool>,
     pub hsla: Option<bool>,
+    pub contains: Option<String>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -222,6 +223,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.rgba(&value);
         self.hsl(&value);
         self.hsla(&value);
+        self.contains(&value);
         value = self.default(&value);
 
         let json_value: Json = match self.type_cast(&value) {
@@ -785,6 +787,31 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain HSLa color characters only", error.field);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Contains String validator
+    ///
+    /// This validates that a string value contains the
+    /// substring value.
+    fn contains(&mut self, value: &Option<Value>) {
+        if self.contains.is_some() && value.is_some() {
+            let required_value = match self.contains {
+                Some(ref val) => val,
+                _ => return (),
+            };
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    value.contains(required_value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain {} string.", error.field, required_value);
                     error.add(msg);
                 }
             }

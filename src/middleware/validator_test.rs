@@ -1123,4 +1123,19 @@ mod test {
         valid! (hsla => String);
     });
 
+    /*
+    /// Test validator: contains
+    test!(contains_validator_test = {
+        // Invalid
+        invalid! (contains => String "");
+        invalid! (contains => f64 100.3);
+        invalid! (contains => String "test");
+        invalid! (contains => String "Тест");
+        // Valid
+        //validate
+        //valid! (contains "te" => String "test");
+        // Value not set
+        valid! (contains => String);
+    });*/
+
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<uploader>
+	<view type="thumbnails" thumbsize="120"/>
+	<view type="details" sizeColumnWidth="70" nameColumnWidth="130" nameColumnLabel="file" sizeColumnLabel="size"/>
+	<fileFilter description="Photos and images (*.jpg, *.jpeg, *.gif, *.png)" extension="*.jpg; *.jpeg; *.gif; *.png"/>
+	<photo_limit number="100" caption="No more than 100 photos at a time"/>
+	<resize process="true" compression="100" maxWidth="650" maxHeight="1200" generate_thumbs="false" thumbs_max_size="120"/>
+	<upload preload="Preloading images:" upload="Uploading images to server:" prepare="Processing and image compression:" of="of" cancel="Cancel" start="Start" warning_empty_required_field="Warning! One of the required fields is empty!" confirm="Will be uploaded:"/>
+	<urls 
+skipPrefix="true"	
+urlToUpload="/admin/review/uploadphoto/" 
+urlOnUploadSuccess="/admin/review/uploadphotosuccess/" 
+urlOnUploadFail="" 
+urlUpdateFlashPlayer="" 
+useMessageBoxesAfterUpload="false" 
+messageOnUploadSuccess="Images were successfully uploaded!" 
+messageOnUploadFail="Error! Images failed to upload!" 
+jsFunctionNameOnUpload=""/>
+	<watermark for_thumb="" for_image=""/>
+	<progress_bar progress_bar_color="0x00548F" str_time_remaining="Time remaining:" str_mins="min" str_secs="sec"/>
+	<intro enabled="true">
+		<control type="addPhotosButton" x="332" y="276" width="144" height="32" label=""/>
+		<control type="Image" x="0" y="0" path="image_uploader_data/1bg.jpg"/>
+	</intro>
+	<main>
+		<switcher thumbsLabel="thumbnails" detailsLabel="details" backgroundAlphaNormal="30" backgroundAlphaActive="100" backgroundColor="0xEAEAEA" x="900" y="494"/>
+		<control type="addPhotosButton" x="408" y="488" width="161" height="32" label=""/>
+		<control type="uploadButton" x="257" y="488" width="144" height="32" label=""/>
+		<control type="Image" x="0" y="0" path="image_uploader_data/2bg.jpg"/>
+	</main>
+</uploader>

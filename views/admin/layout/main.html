@@ -1,0 +1,27 @@
+{{> admin/layout/_header }}
+	<div id="container">
+		<!-- start header -->
+		<header>
+			<h1 class="logo"><a href="/">Iron CMS</a></h1>
+			<section class="log-area">
+				<div class="section-inner">
+					<strong>Logged in as Admin</strong>
+					<a href="/admin/logout" class="btn-2"><span>Logout</span><em class="arrow"></em></a>
+				</div>
+			</section>
+			<section>
+				<div class="section-inner">
+					<a href="/" class="btn-1"><em class="view"></em><span>View Website</span></a>
+				</div>
+			</section>
+		</header>
+		<!-- end header -->
+		<div id="main" role="main">
+{{> admin/layout/_sidebar }}
+			<div id="content">
+{{~#block content}}{{/block}}
+			</div>
+		</div>
+
+	</div>
+{{> admin/layout/_footer }}

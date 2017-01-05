@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="css/attention_box.css" media="screen" rel="stylesheet" />
+		<script src="js/jquery-1.4.2.min.js"></script>
+		<script src="js/jquery-ui-1.8.1.custom.min.js"></script>
+		<script src="js/attention_box-min.js"></script>
+		<script>
+			jQuery(document).ready(function()
+			{
+				jQuery("#message1").click(function()
+				{
+					AttentionBox.showMessage("This is a the Hello World example");
+				});
+			
+				jQuery("#message2").click(function()
+				{
+					AttentionBox.showMessage('This example has a <strong style="color:red">formatted</strong> message.');
+				});
+
+				jQuery("#message3").click(function()
+				{
+					AttentionBox.showMessage('This message is modal by diming the background.',
+					{
+						modal: true
+					});
+				});
+
+				jQuery("#message4").click(function()
+				{
+					AttentionBox.showMessage('This modal message has blue background.',
+					{
+						modal: true,
+						modalcolor: "#00AAFF"
+					});
+				});
+
+				jQuery("#message5").click(function()
+				{
+					AttentionBox.showMessage('This message can have multiple buttons.',
+					{
+						buttons : 
+						[
+							{caption : "Yes" },
+							{caption : "No"   }
+						]
+					});
+				});
+
+				jQuery("#message6").click(function()
+				{
+					AttentionBox.showMessage('A message can have buttons marked as important.',
+					{
+						buttons : 
+						[
+							{ caption : "Blue" },
+							{ caption : "Red", important : true }
+						]
+					});
+				});
+
+
+				jQuery("#message7").click(function()
+				{
+					AttentionBox.showMessage('A message can has a cancel button.',
+					{
+						buttons : 
+						[
+							{ caption : "Cancel", cancel: true },
+							{ caption : "Save" }
+						],
+						callback: function(action)
+						{
+							if (action == "CANCELLED")
+							{
+								AttentionBox.showMessage('User cancelled');
+							}
+						}
+					});
+				});
+
+				jQuery("#message8").click(function()
+				{
+					AttentionBox.showMessage('This message can take user input.',
+					{
+						inputs : 
+						[
+							{caption: "Fullname"}, 
+							{caption: "Age"} 
+						]
+					});
+				});
+
+				jQuery("#message9").click(function()
+				{
+					AttentionBox.showMessage('This message has pre-populated input boxes.',
+					{
+						inputs : 
+						[
+							{caption: "Fullname", value: "Denon Studio" }, 
+							{caption: "Age", value: "12" } 
+						]
+					});
+				});
+
+				jQuery("#message10").click(function()
+				{
+					AttentionBox.showMessage('This message has required input boxes.',
+					{
+						inputs : 
+						[
+							{caption: "Fullname", value: "Denon Studio", required: true }, 
+							{caption: "Age", required: true } 
+						]
+					});
+				});
+
+				jQuery("#message11").click(function()
+				{
+					AttentionBox.showMessage('This message has error messages for input boxes.',
+					{
+						inputs : 
+						[
+							{caption: "Fullname", error: "Invalid fullname" }, 
+							{caption: "Email" },
+							{caption: "Age", error: "Invalid age" } 
+						]
+					});
+				});
+
+				jQuery("#message12").click(function()
+				{
+					AttentionBox.showMessage("This message is handled using a callback.", 
+					{ 
+						modal   : true,
+						inputs : 
+						[
+							{caption: "Fullname", value: "Denon Studio", required: true}, 
+							{caption: "Age", value: "34", required: true}, 
+							{caption: "How did you hear about us?", value: "Newspaper", required: true}
+						],
+						callback: function(action, inputs)
+						{
+							var message = "";
+
+							if (action != "CANCELLED")
+							{
+								message = "User inputs were:<br/><br/>";							
+								for (var i = 0; i < inputs.length; i++)
+									message += inputs[i].caption + " <strong>" + inputs[i].value + "</strong><br/>";
+							}
+							else
+							{
+								message = "User canceled";							
+							}
+
+							AttentionBox.showMessage(message); 
+						}
+					})
+				});
+			});
+
+		</script>
+		<style>
+			body { margin: 0px; padding: 0px; background: #D5E9ED}
+			h1, h2 {font-family: "Helvetica Neue",Arial,Helvetica,sans-serif; font-weight: normal; color: #3C3D3D; font-size: 30pt;}
+			h2 { font-size: 75%; font-size: 13pt; }
+			p {font-family: "Helvetica Neue",Arial,Helvetica,sans-serif; }
+			#wrap { margin: 0px auto; width: 700px; background: #FFF; padding: 40px; 20px 60px 20px}
+			.demos { margin-top: 20px; border-top: 1px dotted #AAA; padding:10px 0px; overflow: hidden}
+			.demos pre {width:660px; color: #000; background: #96C0E6; overflow: auto; padding: 20px; }
+			.demos button { float: right; background: #C2CD22; color: #FFF; padding: 6px; border: none; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
+		</style>
+		
+		<!--[if IE 6]>
+		<style>
+			.demos button { float: none; }		
+		</style>
+		<![endif]-->
+	</head>
+	<body>
+		<div id="wrap">
+			<h1>Attention Box</h1>
+			<p>
+				Very easy to integrate<br/>
+				Lightweight jQuery plugin<br/>
+				Smooth transitions<br/>
+				Responds to Escape key for cancelling message<br/>
+				Automatic reposition upon window resize or scroll<br/>
+				Can take user inputs<br/>
+				Can be configured to require user input<br/>
+				Can be configured to have different modal overlay colors<br/>
+				Can display error message for input boxes<br/>
+			</p>
+			<h1>Installation</h1>
+			<div class="demos">
+				<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="css/attention_box.css" media="screen" rel="stylesheet" /&gt;
+        &lt;script src="js/jquery-1.4.2.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/jquery-ui-1.8.1.custom.min.js"&gt;&lt;/script&gt;
+        &lt;script src="js/attention_box-min.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;/body&gt;
+&lt;/html&gt;	
+				</pre>
+			</div>
+			<h1>Demos</h1>
+			<div class="demos">
+				<h2>1. Basic Message</h2>
+				<pre>
+AttentionBox.showMessage("This is a the Hello World example");
+				</pre>
+				<button id="message1">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>2. Formatted Message</h2>
+				<pre>
+AttentionBox.showMessage('This example has a &lt;strong style="color:red"&gt;formatted&lt;/strong&gt; message.');
+				</pre>
+				<button id="message2">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>3. Modal Message</h2>
+				<pre>
+AttentionBox.showMessage('This message is modal by diming the background.',
+{
+    modal : true
+});
+				</pre>
+				<button id="message3">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>4. Modal Message with blue background</h2>
+				<pre>
+AttentionBox.showMessage('This modal message has blue background.',
+{
+    modal      : true,
+    modalcolor : "#0000ff"
+});
+				</pre>
+				<button id="message4">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>5. Message with multiple buttons</h2>
+				<pre>
+AttentionBox.showMessage('This message can have multiple buttons.',
+{
+    buttons : 
+    [
+        { caption : "Yes" },
+        { caption : "No"  }
+    ]
+});
+				</pre>
+				<button id="message5">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>6. Message with important button</h2>
+				<pre>
+AttentionBox.showMessage('This message can have multiple buttons.',
+{
+    buttons : 
+    [
+        { caption : "Blue" },
+        { caption : "Red", important : true }
+    ]
+});
+				</pre>
+				<button id="message6">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>7. Message with a cancel button</h2>
+				<pre>
+AttentionBox.showMessage('A message can has a cancel button.',
+{
+    buttons : 
+    [
+        { caption : "Cancel", cancel: true },
+        { caption : "Save" }
+    ]
+});
+				</pre>
+				<button id="message7">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>8. Message that takes user input</h2>
+				<pre>
+AttentionBox.showMessage('This message can take user input.',
+{
+    inputs : 
+    [
+        { caption: "Fullname" }, 
+        { caption: "Age" } 
+    ]
+});
+				</pre>
+				<button id="message8">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>9. Message with prepopulated input boxes</h2>
+				<pre>
+AttentionBox.showMessage('This message has pre-populated input boxes.',
+{
+    inputs : 
+    [
+        { caption: "Fullname", value: "Denon Studio" }, 
+        { caption: "Age", value: "12" } 
+    ]
+});
+				</pre>
+				<button id="message9">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>10. Message with required input boxes</h2>
+				<pre>
+AttentionBox.showMessage('This message has required input boxes.',
+{
+    inputs : 
+    [
+        {caption: "Fullname", value: "Denon Studio", required: true }, 
+        {caption: "Age", required: true } 
+    ]
+});
+				</pre>
+				<button id="message10">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>11. Message with error messages</h2>
+				<pre>
+AttentionBox.showMessage('This message has error messages for input boxes.',
+{
+    inputs : 
+    [
+        {caption: "Fullname", error: "Invalid fullname" }, 
+        {caption: "Email" },
+        {caption: "Age", error: "Invalid age" } 
+    ]
+});
+				</pre>
+				<button id="message11">Show Message</button>
+			</div>
+			<div class="demos">
+				<h2>12. Message with handler callback</h2>
+				<pre>
+AttentionBox.showMessage("This message is handled using a callback.", 
+{ 
+    modal  : true,
+    inputs : 
+    [
+        {caption: "Fullname", value: "Denon Studio", required: true}, 
+        {caption: "Age", value: "34", required: true}, 
+        {caption: "How did you hear about us?", value: "Newspaper", required: true}
+    ],
+    callback: function(action, inputs)
+    {
+        var message = "";
+
+        if (action != "CANCELLED")
+        {
+            message = "User inputs were:";							
+            for (var i = 0; i < inputs.length; i++)
+                message += inputs[i].caption + " &lt;strong&gt;" + inputs[i].value + "&lt;/strong&gt;&lt;br/&gt;";
+        }
+        else
+        {
+            message = "User canceled";							
+        }
+
+        AttentionBox.showMessage(message); 
+     }
+});
+				</pre>
+				<button id="message12">Show Message</button>
+			</div>
+		</div>
+    </body>
+</html>

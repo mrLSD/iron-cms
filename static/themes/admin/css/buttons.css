@@ -1,0 +1,185 @@
+*[class|="btn"]{
+	display:table;
+	border:1px solid #000;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-o-border-radius:5px;
+	background:url(../images/bg-btn-1.png) repeat-x;
+	line-height:31px;
+	height:31px;
+	color:#fff !important;
+	text-decoration:none !important;
+	text-shadow:1px 1px 0 #311d00;
+}
+*[class|="btn"]:hover{background-position:0 100%;}
+*[class|="btn"] span {
+	float:left;
+	padding:0 15px;
+}
+*[class|="btn"] em{
+	float:left;
+	width:35px;
+	height:31px;
+	text-indent:-9999px;
+	overflow:hidden;
+	background-repeat:no-repeat;
+	background-position:50% 50%;
+	margin-right:-15px;
+}
+*[class|="btn"] em.view{background-image:url(../images/icon-view.png);}
+*[class|="btn"] em.add{background:url(../images/icon-add.png) no-repeat 50% 5px;}
+*[class|="btn"] em.manage{background-image:url(../images/icon-manage.png);}
+*[class|="btn"] em.delete{background-image:url(../images/icon-delete.png);}
+*[class|="btn"] em.arrow{
+	height:23px;
+	background-image:url(../images/icon-arrow.png);
+	margin:0 0 0 -15px;
+}
+*[class|="btn"] em.login{
+	background-image:url(../images/icon-login.png);
+	margin:-2px 0 0 -15px;
+}
+/* btn-2 */
+.btn-2{
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	-o-border-radius:10px;
+	background:url(../images/bg-btn-2.png) repeat-x;
+	line-height:23px;
+	height:23px;
+	margin:3px 0 0 15px;
+}
+.btn-3{background-image:url(../images/bg-btn-3.png);}
+.btn-4{background-image:url(../images/bg-btn-6.png);}
+.btn-5{
+	background-image:url(../images/bg-btn-5.png);
+	border-color:#116800;
+}
+.btn-6{
+	background-image:url(../images/bg-btn-6.png);
+	border-color:#002777;
+	border-radius:15px;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	-o-border-radius:15px;
+	font-weight:bold;
+	font-size:12px;
+}
+/* btn-7 */
+.btn-7{
+	background-image:url(../images/bg-btn-7.png);
+	margin:0 auto;
+}
+/* btn-8 */
+.btn-8{
+	background-image:url(../images/bg-btn-9.png);
+	text-shadow:1px solid #9b9b9b;
+}
+/* btn-8 */
+.btn-9{
+	background-image:url(../images/bg-btn-4.png);
+	font-size:11px;
+	color:#444 !important;
+	line-height:23px;
+	height:23px;
+	border:1px solid #abb6c3;
+	text-shadow:none;
+	margin:15px auto;
+}
+.btn-9 em{height:23px;}
+header section *[class|="btn"]{float:left;}
+.page-title .btn-3{
+	float:right;
+	margin-top:24px;
+	margin-left:10px;
+}
+.buttons *[class|="btn"]{float:left;margin-right:5px;}
+.buttons .btn-4{float:right;}
+.buttons .btn-4:first-child {float:left;}
+.box-content .inner-area .buttons .btn-4 {float:left;}
+.box-header *[class|="btn"] {
+	float:right;
+	margin:10px 22px 0 10px;
+}
+.box-header .btn-3{margin-right:-6px;}
+.page-title-row .btn-6{float:right;}
+/* btn-minus */
+.btn-minus,
+.btn-plus{
+	text-indent:-9999px;
+	background:url(../images/icon-plus-minus-sprite.png) no-repeat;
+	width:23px;
+	height:23px;
+	padding:0;
+	border:none;
+	line-height:23px;
+	float:left;
+	margin-right:6px;
+}
+.btn-minus{margin-left:27px;}
+.btn-minus:hover{background-position:0 100%;}
+.btn-plus{background-position:100% 0;}
+.btn-plus:hover{background-position:100% 100%;}
+/* multiply-upload */
+.multiply-upload{
+	background:url(../images/btn-multiply-upload.png) no-repeat;
+	width:144px;
+	height:79px;
+	text-indent:-9999px;
+	border:none;
+	display:block;
+	margin:20px auto;
+}
+/*.login-form */
+.login-form .btn-4{
+	padding:0 !important;
+	margin-top:29px !important;
+	line-height:17px !important;
+}
+.login-form .btn-4 span{padding:5px 15px 5px 8px;}
+/* deleteNewPhoto */
+.deleteNewPhoto{
+	position:absolute;
+	right:4px;
+	bottom:4px;
+	background:url(../images/btn-remove.png) no-repeat;
+	width:24px;
+	height:25px;
+	text-indent:-9999px;
+	overflow:hidden;
+}
+/* btn-link */
+.btn-link{
+	background:url(../images/btn-link.png) no-repeat;
+	width:46px;
+	height:33px;
+	border:none;
+	padding:0;
+	text-indent:-9999px;
+	overflow:hidden;
+	margin-right:10px !important;
+}
+.btn-link:hover{background-position:0 100%;}
+/* btn-help */
+.btn-help{
+	background:url(../images/icon-help.png) no-repeat;
+	width:18px;
+	height:18px;
+	margin:0 !important;
+	padding:0 !important;
+	border:none !important;
+	text-indent:-9999px;
+	overflow:hidden;
+	display:inline-block;
+	float:none !important;
+}
+* + html .btn-help{
+	display:inline;
+	zoom:1;
+}
+.popup .gray-section *[class|="btn"]{
+	float:left;
+	margin-right:5px;
+}

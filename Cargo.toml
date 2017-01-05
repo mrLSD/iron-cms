@@ -1,7 +1,37 @@
 [package]
 name = "iron-cms"
+<<<<<<< HEAD
 version = "0.3.0"
 authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
 
 [dependencies]
 nickel = "*"
+=======
+version = "0.2.65"
+authors = ["Evgeny Ukhanov <mrlsd@ya.ru>"]
+
+[dependencies]
+iron = "0.4.0"
+router = "*"
+handlebars-iron = "*"
+rustc-serialize = "*"
+time = "*"
+staticfile = "*"
+mount = "*"
+maplit = "*"
+handlebars = "*"
+params = "*"
+diesel = "0.8.1"
+r2d2 = "*"
+r2d2-diesel = "*"
+regex = "0.1"
+
+[dependencies.iron_diesel_middleware]
+git = "https://github.com/iron-cms/iron-diesel-middleware"
+
+[[bin]]
+name = "iron-cms"
+doc = false
+
+[features]
+>>>>>>> 72d372edd2b2daf38944fa58126bdb5ce740652f

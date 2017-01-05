@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language-pack>
+	<header>
+		<!-- Please fill in contact information (author & email), we might contact you when we are doing updates -->
+		<!-- You will also have the chance to participate in beta releases of new versions -->
+		<author>Knut B. Jacobsen (knut.jacobsen@gmail.com) +47 900 80 241</author>
+		<version minor="2" major="1" releasedate="2007-05-07" />
+		<description>
+			This is the Norwegian (bokmål) language pack for the MCImageManager.
+		</description>
+	</header>
+
+	<language code="nb" title="Norwegian" dir="ltr">
+		<group target="common">
+			<item name="title">Moxiecode Image Mananger</item>
+			<item name="filemanager">Fil utforsker</item>
+			<item name="createdir">Opprett mappe.</item>
+			<item name="refresh">Oppfrisk</item>
+			<item name="upload">Opplasting</item>
+			<item name="help">Hjelp</item>
+			<item name="edit">Editer</item>
+			<item name="deleteit">Slett</item>
+			<item name="view">Vis</item>
+			<item name="insert">Innsett</item>
+			<item name="add_favorite">Legg til favoritter</item>
+			<item name="directory">Velg mappe.</item>
+			<item name="removefavorite">Fjern favoritt</item>
+			<item name="loading">Laster...</item>
+			<item name="filter">Filter</item>
+			<item name="alert_ok">Ok</item>
+			<item name="confirm_yes">Ja</item>
+			<item name="confirm_no">Nei</item>
+			<item name="prev">Forrige</item>
+			<item name="next">Neste</item>
+			<item name="image_data">Henter bildedata, vent...</item>
+		</group>
+
+		<group target="button">
+			<!-- think about the length of the text -->
+			<item name="create">Opprett</item>
+			<item name="cancel">Kanseller</item>
+			<item name="apply">Utfør</item>
+			<item name="save">Lagre</item>
+		</group>
+
+		<group target="error">
+			<!-- common -->
+			<item name="demo">Denne handlingen er avgrenset i demo. modus.</item>
+			<item name="no_filesystem">Filsystem ikke funnet for bane: {path}.</item>
+			<item name="no_access">Ingen tilgang til denne fil/mappe.</item>
+			<item name="no_write_access">Mappen har ikke skrive tillatelse.</item>
+			<item name="file_not_exists">Fil/mappe ikke funnet.</item>
+			<item name="invalid_filename">Filnavn ikke gyldig.</item>
+			<item name="remove_favorite_failed">Kunne ikke fjerne favoritten fra favorittlisten din.</item>
+
+			<!-- create dir -->
+			<item name="template_missing">Valgt template mangler.</item>
+			<item name="folder_exists">Mappe med valgt navn finnes allerede.</item>
+			<item name="createdir_failed">Feil: Kunne ikke opprette mappe.</item>
+
+			<!-- upload -->
+			<item name="upload_failed">Opplasting feilet, sjekk mappens skrive tillatelser.</item>
+			<item name="file_exists">Fil med oppgitt navn finnes allerede.</item>
+			<item name="error_to_large">Filen du prøver laste opp er for stor.</item>
+
+			<!-- delete -->
+			<item name="delete_failed">Kunne ikke slette fil(er).</item>
+			
+			<!-- image edit -->
+			<item name="crop_failed">Kunne ikke beskjære bildet.</item>
+			<item name="resize_failed">Kunne ikke endre størrelsen på bildet.</item>
+			<item name="rotate_failed">Rotering var ikke vellykket.</item>
+			<item name="flip_failed">Vend var ikke vellykket.</item>
+			<item name="save_failed">Lagring var ikke vellykket.</item>
+		</group>
+
+		<group target="message">
+			<!-- common -->
+			<item name="save_success">Fil er lagret OK.</item>
+			<item name="keepalive">Keepalive forespørsel.</item>
+
+			<!-- delete -->
+			<item name="delete_success">Fil(er) er slettet OK.</item>
+
+			<!-- create dir -->
+			<item name="directory_ok">Mappe er opprettet OK.</item>
+
+			<!-- upload -->
+			<item name="upload_ok">Opplastet OK.</item>
+
+			<!-- image edit -->
+			<item name="crop_success">Beskjær vellykket.</item>
+			<item name="resize_success">Skaler vellykket.</item>
+			<item name="rotate_success">Rotering vellykket.</item>
+			<item name="flip_success">Vend vellykket.</item>
+		</group>
+
+		<group target="panel">
+			<item name="categories">Kategorier</item>
+			<item name="folders">Mapper</item>
+			<item name="favorites">Favoritter</item>
+			<item name="history">Histore</item>
+		</group>
+
+		<group target="view">
+			<item name="title">Vis</item>
+			<item name="mode">Vis modus:</item>
+			<item name="thumbnail">Thumbnails</item>
+			<item name="textlist">Tekstliste</item>
+			<item name="images_per_page">bilder/side</item>
+			<item name="confirm_delete">Er det sikkert at du vil fjerne filen?</item>
+			<item name="keyboard_next">Tastatur snarvei: SPACE,N,RIGHTARROW,PAGE DOWN</item>
+			<item name="keyboard_prev">Tastatur snarvei: P,LEFTARROW,PAGE UP</item>
+			<item name="dimensions">Dimensjoner</item>
+			<item name="confirm_remove_favorite">Er det sikkert at du vil fjerne dette fra din favorittliste?</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">Opprett mappe.</item>
+			<item name="description">Gi inn navn på mappen du ønsker å opprette.</item>
+			<item name="template">Template:</item>
+			<item name="select_template">-- Velg template --</item>
+			<item name="directory_name">Mappe navn:</item>
+			<item name="create_in">Opprett i:</item>
+			<item name="progress">Oppretter mappe, vent...</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">Opplasting</item>
+			<item name="description">Bruk formular for opplasting av filer.</item>
+			<item name="valid_extensions">Gyldige filtyper:</item>
+			<item name="max_upload_size">Max opplastings størrelse:</item>
+			<item name="file_to_upload">Fil til opplasting:</item>
+			<item name="as_file_name">Som filnavn:</item>
+			<item name="path">Bane: </item>
+			<item name="button_upload">Last opp</item>
+			<item name="browse">Legg til fil(er)</item>
+		</group>
+
+		<group target="edit_image">
+			<item name="title">Moxiecode ImageManager Editor</item>
+			<item name="save">Lagre</item>
+			<item name="revert">Angre</item>
+			<item name="crop">Beskjær</item>
+			<item name="resize">Skaler</item>
+			<item name="please_wait">Bearbeider bilde, vent...</item>
+			<item name="constrain">Behold proporsjoner</item>
+			<item name="left">Venstre</item>
+			<item name="top">Topp</item>
+			<item name="width">Bredde</item>
+			<item name="height">Høyde</item>
+			<item name="save_as">Lagre som</item>
+			<item name="flip">Vend</item>
+			<item name="rotate">Roter</item>
+			<item name="reload">Oppfrisk</item>
+			<item name="horizontal">Horisontalt</item>
+			<item name="vertical">Vertikalt</item>
+			<item name="saving_wait">Lagrer bilde, vent...</item>
+			<item name="confirm_revert">Er det sikkert at du vil reversere til sist lagrede bilde?</item>
+			<item name="loading">Laster bilde, vent...</item>
+		</group>
+
+		<group target="tinymce">
+			<item name="insertimage_desc">Innsett bilde</item>	
+		</group>
+	</language>
+</language-pack>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-pack>
+	<header>
+		<author>Moxiecode Systems AB</author>
+		<version minor="1" major="0" releasedate="2005-09-27" />
+		<description>
+			This is the japanese language pack for the MCFileManager.
+		</description>
+	</header>
+
+	<language code="ja_utf-8" title="Japanese" dir="ltr">
+		<group target="common">
+			<item name="exe">ファイル</item>
+			<item name="image">イメージファイル</item>
+			<item name="archive">ZIPファイル</item>
+			<item name="html">HTMLファイル</item>
+			<item name="movie">映画</item>
+			<item name="sound">音声ファイル</item>
+			<item name="swf">Flashファイル</item>
+			<item name="powerpoint">PowerPoint</item>
+			<item name="document">ドキュメントファイル</item>
+			<item name="word">ワードファイル</item>
+			<item name="pdf">PDF</item>
+			<item name="excel">Excelファイル</item>
+			<item name="txt">テキストファイル</item>
+			<item name="xml">XMLファイル</item>
+		</group>
+
+		<group target="frameset">
+			<item name="title">ファイル・ブラウザ</item>
+		</group>
+
+		<group target="filelist">
+			<item name="title">ファイル・ブラウザ</item>
+			<item name="filename">ファイル名</item>
+			<item name="size">サイズ</item>
+			<item name="modified">更新日時</item>
+			<item name="confirm_cut">選択したファイルを切り取り？</item>
+			<item name="confirm_copy">選択したファイルをコピー？</item>
+			<item name="confirm_paste">貼り付けしますか？</item>
+			<item name="confirm_delete">選択したファイルを削除？</item>
+			<item name="confirm_unzip">本当に選択されたファイルをunzipする?\nファイルが大きならば、時間がかかります。</item>
+			<item name="zip_removed">次のファイルがzip形式ではないので外しました。</item>
+			<item name="createdir">フォルダを新規作成</item>
+			<item name="createdoc">ファイルを新規作成</item>
+			<item name="refresh">更新</item>
+			<item name="upload">ファイルをアップロード</item>
+			<item name="download">選択したフィルをダウンロード</item>
+			<item name="props">ファイル・フォルダのプロパティ</item>
+			<item name="cut">選択したものを切り取り</item>
+			<item name="copy">選択したものをコピー</item>
+			<item name="paste">貼り付け</item>
+			<item name="delete">選択したものを削除</item>
+			<item name="unzip">選択されたファイルをunzipする</item>
+			<item name="zip">選択されたファイルやフォルダをzipする</item>
+			<item name="imagemanager">映像管理に行く</item>
+			<item name="dir">フォルダ</item>
+			<item name="parent_dir">上のフォルダ</item>
+			<item name="toggle_all">全部をトグル</item>
+			<item name="error_exists">エラー {path} がすでに存在する</item>
+			<item name="error_delete_failed">エラー：アクセス権利がないので、削除できない。</item>
+			<item name="error_directory_not_empty">エラー： {path} が空ではないので、削除できない</item>
+		</group>
+
+		<group target="preview">
+			<item name="title">ファイル・フォルダの情報</item>
+			<item name="directory_information">フォルダ情報</item>
+			<item name="file_information">ファイル情報</item>
+			<item name="creationdate">作成日時:</item>
+			<item name="modificationdate">更新日時:</item>
+			<item name="access">アクセス:</item>
+			<item name="directory">フォルダ:</item>
+			<item name="subdirectories">サッブフォルダ:</item>
+			<item name="files">ファイル:</item>
+			<item name="total_file_size">合計ファイルサイズ:</item>
+			<item name="filename">ファイル名:</item>
+			<item name="file_size">ファイルサイズ:</item>
+			<item name="file_description">ファイル説明:</item>
+			<item name="preview">下見</item>
+			<item name="no_preview">下見がない</item>
+			<item name="button_select">選択</item>
+			<item name="button_view">表示</item>
+			<item name="readable">読込み可</item>
+			<item name="not_readable">読込み不可</item>
+			<item name="writable">書込み可</item>
+			<item name="not_writable">書込み不可</item>
+		</group>
+
+		<group target="fileprops">
+			<item name="title">ファイル・フォルダのプロパティ</item>
+			<item name="description">ファイル・フォルダのプロパティ</item>
+			<item name="properties_on">プロパティ有効:</item>
+			<item name="name">名前:</item>
+			<item name="button_save">保存</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="error_exists">エラー：そのファイルやフォルダがすでに存在する</item>
+		</group>
+
+		<group target="createdir">
+			<item name="title">フォルダ新規作成</item>
+			<item name="description">フォルダ名</item>
+			<item name="template">テンプレート:</item>
+			<item name="select_template">-- テンプレートを選択 --</item>
+			<item name="directory_name">フォルダ名:</item>
+			<item name="create_in">作成先:</item>
+			<item name="button_create">作成</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="error_missing_name">エラー：名前を設定していない</item>
+			<item name="error_invalid_template_selection">エラー：テンプレートを設定していない</item>
+			<item name="error_template_not_found">エラー：テンプレートが見つからない</item>
+			<item name="error_invalid_name">エラー：フォルダ名が無効</item>
+			<item name="error_exists">エラー：そのフォルダがすでに存在する</item>
+		</group>
+
+		<group target="createdoc">
+			<item name="title">ファイル新規作成</item>
+			<item name="description">テンプレートから作成</item>
+			<item name="template">テンプレート:</item>
+			<item name="select_template">-- テンプレートを選択 --</item>
+			<item name="required_filename">ファイル名を記入する必要がある</item>
+			<item name="filename">ファイル名:</item>
+			<item name="create_in">作成先:</item>
+			<item name="button_create">作成</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="error_missing_document_name">エラー：ファイル名が必要</item>
+			<item name="error_missing_template_selection">Error: You must select a template.</item>
+			<item name="error_missing_template">Error: The selected template could not be found.</item>
+			<item name="error_invalid_file_name">エラー：ファイル名が無効</item>
+			<item name="error_exists">エラー：そのファイルがすでに存在する</item>
+		</group>
+
+		<group target="upload">
+			<item name="title">アップロード</item>
+			<item name="description">ファイルをアップロードのフォルム</item>
+			<item name="upload_in">アップロード先:</item>
+			<item name="valid_extensions">有効拡張形式:</item>
+			<item name="max_upload_size">最大サイズ:</item>
+			<item name="file_to_upload">アップロードするファイル:</item>
+			<item name="as_file_name">ファイル名として:</item>
+			<item name="required_filename">ファイル名を記入する必要がある</item>
+			<item name="button_upload">アップロード</item>
+			<item name="button_add_upload">アップロード追加</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="error_exists">エラー：そのファイルがすでに存在する</item>
+			<item name="error_to_large">エラー：そのファイルが大きすぎる</item>
+			<item name="remove">取り除く</item>
+		</group>
+
+		<group target="unzip">
+			<item name="title">Unzipの概要</item>
+			<item name="description">選択したzip形式のファイルの概要</item>
+			<item name="zipfile_name">zipファイル名:</item>
+			<item name="current_folder">現在のフォルダ:</item>
+			<item name="overwrite_files">ファイルを上書き:</item>
+			<item name="name">名前</item>
+			<item name="size">サイズ</item>
+			<item name="csize">Cーサイズ</item>
+			<item name="exists">存在する</item>
+			<item name="status">ステータス</item>
+			<item name="created">作成した</item>
+			<item name="button_unzip">Unzip</item>
+			<item name="button_cancel">キャンセル</item>
+			<item name="button_back">戻る</item>
+			<item name="button_close">閉じる</item>
+			<item name="Accepted">受けた</item>
+			<item name="Denied">否定した</item>
+			<item name="Passed">成功した</item>
+			<item name="Failed">失敗した</item>
+			<item name="Yes">はい</item>
+			<item name="No">いいえ</item>
+		</group>
+
+		<group target="zip">
+			<item name="title">zipを作成</item>
+			<item name="description">作成したいzipファイルの名前を記入：</item>
+			<item name="created_in">zipファイルの保存先:</item>
+			<item name="name">名前:</item>
+			<item name="required_filename">ファイル名を入力する必要がある.</item>
+			<item name="button_create">作成</item>
+			<item name="button_cancel">キャンセル</item>
+		</group>
+	</language>
+</language-pack>

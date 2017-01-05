@@ -1,4 +1,8 @@
 target
 .idea
+<<<<<<< HEAD
 tmp
 *.iml
+=======
+tmp
+>>>>>>> 72d372edd2b2daf38944fa58126bdb5ce740652f

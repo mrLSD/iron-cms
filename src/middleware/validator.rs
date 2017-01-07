@@ -489,7 +489,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// For strings & numbers, eq will ensure that the
     /// value is not equal to the parameter given.
     fn ne(&mut self, value: &Option<Value>) {
-        if value.is_some() && self.ne.is_some() {
+        if value.is_some() {
             let required_value = if let Some(ref required_value) = self.ne {
                 required_value
             } else {
@@ -510,11 +510,10 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// Multitype
     fn ne_field(&mut self, value: &Option<Value>) {
         if value.is_some() && self.ne_field.is_some()  {
-            let (required_value, is_valid) = if let Some(ref required_value) = self.ne_field {
-                let is_valid = !self.compare(&value, &required_value.to_json());
-                (required_value.to_string(), is_valid)
-            } else {
-                ("".to_string(), false)
+            let (mut  required_value, mut is_valid) = ("".to_string(), false);
+            if let Some(ref req_value) = self.ne_field {
+                is_valid = !self.compare(&value, &req_value.to_json());
+                required_value = required_value.to_string();
             };
 
             let value_str = match *value {
@@ -533,7 +532,9 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                 Some(Value::Boolean(value)) => {
                     value.to_string()
                 },
-                _ => "".to_string()
+                _ => {
+                    "".to_string()
+                }
             };
 
             if !is_valid {

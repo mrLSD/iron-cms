@@ -488,11 +488,12 @@ mod test {
     test!(regexp_validator_test = {
         let rule = r"\A(?i)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z";
         // Value is not set
-        validate!(regexp [false] rule => String);
+        valid! (regexp rule => String);
         // Valid value
-        validate!(regexp [false] rule => String "test@google.com");
+        valid! (regexp rule => String "test@google.com");
         // Not valid value
-        validate!(regexp [true] rule => String "test@google.com.");
+        invalid! (regexp rule => String "test@google.com.");
+        invalid! (regexp rule => u64 10u64);
     });
 
     /// Test validator: equals

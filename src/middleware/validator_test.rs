@@ -755,6 +755,107 @@ mod test {
         ));
         assert!(validator.get_errors().is_some());
 
+        //=========================
+        // Test types
+        let mut values = Map::new();
+        values.assign("item", Value::I64(-10)).unwrap();
+        values.assign("new_item", Value::I64(-10)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "i64".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        let mut values = Map::new();
+        values.assign("item", Value::U64(10)).unwrap();
+        values.assign("new_item", Value::U64(20)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<u64>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "u64".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("item", Value::F64(-20.1)).unwrap();
+        values.assign("new_item", Value::F64(30.4)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<f64>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("item", Value::Boolean(true)).unwrap();
+        values.assign("new_item", Value::Boolean(true)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<bool>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "bool".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Valid Value set to Null - no set
+        let mut values = Map::new();
+        values.assign("item", Value::Boolean(true)).unwrap();
+        values.assign("new_item", Value::Null).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<bool>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "bool".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Value - new_item - explicitely not set
+        let mut values = Map::new();
+        values.assign("item", Value::Boolean(true)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<bool>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "bool".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_none());
+
+        // Base value set as Null - not set
+        let mut values = Map::new();
+        values.assign("item", Value::Null).unwrap();
+        values.assign("new_item", Value::Boolean(true)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<bool>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "bool".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Base value explicitely not set
+        let mut values = Map::new();
+        values.assign("new_item", Value::Boolean(true)).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<bool>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new_item"])).to_json(),
+                "vtype".to_string() => "bool".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
+        ));
+        assert!(validator.get_errors().is_some());
+        //=========================
+
         let mut values = Map::new();
         values.assign("new[email]", Value::String(("test@google.com.").into())).unwrap();
 
@@ -767,7 +868,7 @@ mod test {
                 "vtype".to_string() => "string".to_json(),
             }).validate("user_email".to_string(), values.find(&["user", "email"])),
         ));
-        assert!(validator.get_errors().is_none());
+        assert!(validator.get_errors().is_some());
 
         let mut values = Map::new();
         values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
@@ -785,6 +886,24 @@ mod test {
             }).validate("new_email".to_string(), values.find(&["new", "email"])),
         ));
         assert!(validator.get_errors().is_some());
+        //=======
+        let mut values = Map::new();
+        values.assign("user[email]", Value::String(("test@google.com").into())).unwrap();
+        values.assign("new[email]", Value::String(("test@google.com").into())).unwrap();
+
+        // We should added required validator for 2-d field
+        // if we want check fields equal
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "eq_field".to_string() => CompareField(values.find(&["new", "email"])).to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+            Validator::<String>::new(btreemap! {
+                "required".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("new_email".to_string(), values.find(&["new", "email"])),
+        ));
+        assert!(validator.get_errors().is_none());
     });
 
     /// Test validator: nor equals

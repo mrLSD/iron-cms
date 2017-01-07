@@ -98,6 +98,7 @@ pub struct ValidateResults(pub Vec<ValidateResult>);
 // Error result aggregator
 pub type ErrorsResult = Option<Vec<ErrorValidator>>;
 
+#[derive(Debug)]
 pub struct CompareField<'a>(pub Option<&'a Value>);
 
 /// Validation results methods
@@ -448,13 +449,12 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// Equals to another fiold validator
     /// Multitype
     fn eq_field(&mut self, value: &Option<Value>) {
-        if value.is_some() && self.eq_field.is_some()  {
-            let (required_value, is_valid) = if let Some(ref required_value) = self.eq_field {
-                let is_valid = self.compare(&value, &required_value.to_json());
-                (required_value.to_string(), is_valid)
-            } else {
-                ("".to_string(), false)
-            };
+        if self.eq_field.is_some()  {
+            let (mut required_value, mut is_valid) = ("".to_string(), false);
+            if let Some(ref req_value) = self.eq_field {
+                is_valid = self.compare(&value, &req_value.to_json());
+                required_value = req_value.to_string();
+            }
 
             let value_str = match *value {
                 Some(Value::String(ref value)) => {
@@ -1120,7 +1120,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             Some(Value::Boolean(value)) => {
                 value.to_json() == *required_value
             },
-            _ => false
+            _ => false,
         }
     }
 

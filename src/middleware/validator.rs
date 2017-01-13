@@ -355,15 +355,12 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                     value.chars().count() as i64 >= required_value
                 },
                 Some(Value::U64(value)) => {
-                    value as i64>= required_value
+                    value as i64 >= required_value
                 },
                 Some(Value::I64(value)) => {
                     value >= required_value
                 },
                 Some(Value::F64(value)) => {
-                    value as i64 >= required_value
-                },
-                Some(Value::Boolean(value)) => {
                     value as i64 >= required_value
                 },
                 _ => false
@@ -437,7 +434,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// For strings & numbers, eq will ensure that the
     /// value is equal to the parameter given.
     fn eq(&mut self, value: &Option<Value>) {
-        if value.is_some() && self.eq.is_some() {
+        if value.is_some() {
             let required_value = if let Some(ref required_value) = self.eq {
                 required_value
             } else {

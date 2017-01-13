@@ -90,9 +90,7 @@ mod test {
         };
         // Valid with equal expression and without value
         ($validator:ident $eq:expr => $t:ident) => {
-            $(
-                validate!($validator [false] $eq => $t);
-            )+
+            validate!($validator [false] $eq => $t);
         }
     }
 
@@ -245,10 +243,12 @@ mod test {
     test!(not_empty_validator_test = {
         // Field is set
         validate!(not_empty [false] true => String "Test");
+        validate!(not_empty [false] true => i64 10);
         // Field is empty
         validate!(not_empty [true] true => String "");
         // Field is not set
         validate!(not_empty [false] true => String);
+        validate!(not_empty [false] true => i64);
     });
 
     /// Test validator: max
@@ -279,6 +279,11 @@ mod test {
         validate!(min [false] 10 => String);
         // Field is set as not valid
         validate!(min [true] 5 => String "Test");
+
+        validate!(min [false] 0 => bool);
+        validate!(min [true] 0 => bool true);
+
+        //--
         // Not valid
         validate!(min [true] -10 => i64 -20);
         // Valid
@@ -286,13 +291,13 @@ mod test {
 
         // Test max + min, whare max <= min
         let mut values = Map::new();
-        values.assign("temperature", Value::I64(10)).unwrap();
+        values.assign("temperature", Value::U64(10)).unwrap();
 
         let validator = ValidateResults(vec!(
-            Validator::<i64>::new(btreemap! {
+            Validator::<u64>::new(btreemap! {
                 "max".to_string() => 5.to_json(),
                 "min".to_string() => 10.to_json(),
-                "vtype".to_string() => "i64".to_json(),
+                "vtype".to_string() => "u64".to_json(),
             }).validate("temperature".to_string(), values.find(&["temperature"])),
         ));
         assert!(validator.get_errors().is_some());
@@ -1121,6 +1126,16 @@ mod test {
         valid! (hsla => String "hsla(0,0%,0%, 0)");
         // Value not set
         valid! (hsla => String);
+    });
+
+    /// Test validator: len
+    test!(len_validator_test = {
+        // Invalid
+        invalid! (len 4 => String "");
+        // Valid
+        valid! (len 4 => String "test");
+        // Value not set
+        valid! (len 4 => String);
     });
 
     /*

@@ -1,5 +1,5 @@
 # Iron CMS
-[![Build Status](https://travis-ci.org/mrLSD/iron-cms.svg?branch=master)](https://travis-ci.org/mrLSD/iron-cms) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/mrLSD/iron-cms/master/LICENSE)
+[![Build Status](https://travis-ci.org/mrLSD/iron-cms.svg?branch=master)](https://travis-ci.org/mrLSD/iron-cms) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/mrLSD/iron-cms/master/LICENSE) [![codecov](https://codecov.io/gh/mrLSD/iron-cms/branch/master/graph/badge.svg)](https://codecov.io/gh/mrLSD/iron-cms)
 
 Inspired by Rust, CMS based on Iron framework
 
@@ -13,6 +13,9 @@ Inspired by Rust, CMS based on Iron framework
 * We tests cover our code as far as it possible
 * We trying develop full-featured tool, including: templates, for fetching and validation, auth, cookies, session, database, http-security tools,cloud integration, admin/backend tools, caching, migrations, CI-orientation, flexible integration new features.
 * We want to attract interest in Rust and to the fact that web development with Rust is funny and effective.
+
+### Our investigation project for that:
+https://github.com/iron-cms/nickel-cms
 
 #### Web site
 https://iron-cms.github.io

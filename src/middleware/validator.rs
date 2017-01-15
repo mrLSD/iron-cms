@@ -384,7 +384,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         if self.len.is_some() && value.is_some() {
             let mut required_value: u64 = 0;
             if let Some(len) = self.len {
-                if len == 0 {
+                if len <= 0 {
                     if let Some(ref mut error) = self.errors {
                         let msg = format!("Validation value can't be equal: {}", len);
                         error.add(msg);
@@ -406,9 +406,6 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                     value as u64 == required_value
                 },
                 Some(Value::F64(value)) => {
-                    value as u64 == required_value
-                },
-                Some(Value::Boolean(value)) => {
                     value as u64 == required_value
                 },
                 _ => false

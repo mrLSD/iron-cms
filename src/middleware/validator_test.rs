@@ -6,8 +6,8 @@ mod test {
     // Convert Json to Value
     fn to_value(json_value: Json) -> Value {
         match json_value {
-            Json::I64(value) => Value::I64(value),
             Json::U64(value) => Value::U64(value),
+            Json::I64(value) => Value::I64(value),
             Json::F64(value) => Value::F64(value),
             Json::String( ref value) => Value::String(value.clone()),
             Json::Boolean(value) => Value::Boolean(value),
@@ -119,6 +119,16 @@ mod test {
             )+
         }
     }
+
+    /// Test JSON to Values for Tests
+    test!(test_json_to_value_for_tests = {
+        assert_eq!( to_value(Json::U64(10)), Value::U64(10) );
+        assert_eq!( to_value(Json::I64(-10)), Value::I64(-10) );
+        assert_eq!( to_value(Json::F64(-10.3)), Value::F64(-10.3) );
+        assert_eq!( to_value(Json::Null), Value::Null );
+        assert_eq!( to_value(Json::Boolean(false)), Value::Boolean(false) );
+        assert_eq!( to_value(Json::String("test".into())), Value::String("test".into()) );
+    });
 
     /// Test "test macros"
     test!(test_macros = {
@@ -283,11 +293,12 @@ mod test {
         validate!(min [false] 0 => bool);
         validate!(min [true] 0 => bool true);
 
-        //--
         // Not valid
         validate!(min [true] -10 => i64 -20);
         // Valid
         validate!(min [false] -20 => i64 -20);
+        validate!(min [false] 20 => u64 20);
+        validate!(min [false] 20 => u64 20u64);
 
         // Test max + min, whare max <= min
         let mut values = Map::new();
@@ -473,8 +484,13 @@ mod test {
         let rule = "test@google.com";
         // Value is not set
         validate!(eq [false] rule => String);
+        invalid! (eq true => bool false);
         // Valid value
         validate!(eq [false] rule => String "test@google.com");
+        valid! (eq 10 => u64 10u64);
+        valid! (eq -10 => i64 -10);
+        valid! (eq -10.0 => f64 -10.0);
+        valid! (eq true => bool true);
         // Not valid value
         validate!(eq [true] rule => String "test");
         // Valid value- Valid type
@@ -488,6 +504,18 @@ mod test {
             Validator::<i64>::new(btreemap! {
                 "eq".to_string() => 100.to_json(),
                 "vtype".to_string() => "f64".to_json(),
+            }).validate("user_email".to_string(), values.find(&["user", "email"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        // Invalid value and invalid type
+        let mut values = Map::new();
+        values.assign("user[email]", Value::Null).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "eq".to_string() => Json::Null,
+                "vtype".to_string() => "i64".to_json(),
             }).validate("user_email".to_string(), values.find(&["user", "email"])),
         ));
         assert!(validator.get_errors().is_some());
@@ -1132,8 +1160,13 @@ mod test {
     test!(len_validator_test = {
         // Invalid
         invalid! (len 4 => String "");
+        invalid! (len 4 => bool true);
+        invalid! (len 0 => i64 0);
         // Valid
         valid! (len 4 => String "test");
+        valid! (len 4 => u64 4u64);
+        valid! (len 4 => i64 4i64);
+        valid! (len 4 => f64 4.0f64);
         // Value not set
         valid! (len 4 => String);
     });

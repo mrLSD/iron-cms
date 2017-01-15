@@ -53,7 +53,7 @@ pub struct Validator<T: Display> {
     pub required: Option<bool>,
     pub not_empty: Option<bool>,
     pub min: Option<i64>,
-    pub max: Option<u64>,
+    pub max: Option<i64>,
     pub len: Option<u64>,
     pub email: Option<bool>,
     pub url: Option<bool>,
@@ -295,32 +295,29 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// Multitype
     fn max(&mut self, value: &Option<Value>) {
         if self.max.is_some() && value.is_some() {
-            let mut required_value: u64 = 0;
+            let mut required_value: i64 = 0;
+            let mut less_then_0 = false;
             if let Some(max) = self.max {
-                if max == 0 {
-                    if let Some(ref mut error) = self.errors {
-                        let msg = format!("Validation value can't be equal: {}", max);
-                        error.add(msg);
-                    }
-                    return ()
+                if max <= 0 {
+                    less_then_0 = true;
                 }
                 required_value = max;
             }
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    value.chars().count() as u64 <= required_value
+                    value.chars().count() as i64 <= required_value && !less_then_0
                 },
                 Some(Value::U64(value)) => {
-                    value <= required_value
+                    value as i64 <= required_value && !less_then_0
                 },
                 Some(Value::I64(value)) => {
-                    value as u64 <= required_value
+                    value <= required_value
                 },
                 Some(Value::F64(value)) => {
-                    value as u64 <= required_value
+                    value as i64 <= required_value
                 },
                 Some(Value::Boolean(value)) => {
-                    value as u64 <= required_value
+                    value as i64 <= required_value && !less_then_0
                 },
                 _ => false
             };

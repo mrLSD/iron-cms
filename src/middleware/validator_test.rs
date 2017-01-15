@@ -264,17 +264,33 @@ mod test {
     /// Test validator: max
     test!(max_validator_test = {
         // Field is set as valid
-        validate!(max [false] 10 => String "Test");
+        valid! (max 10 => String "Test");
         // Field is set as not valid
-        validate!(max [true] 3 => String "Test");
+        invalid! (max 3 => String "Test");
+        invalid! (max -3 => String "Test");
+        invalid! (max -12 => u64 12u64);
         // Field is set as valid - UTF8
-        validate!(max [false] 16 => String "Test Тест délice");
+        valid! (max 16 => String "Test Тест délice");
         // Field is not set
-        validate!(max [false] 16 => String);
+        valid! (max 16 => String);
         // Valid
-        validate!(max [false] 12 => i64 10);
+        valid! (max 12 => i64 10);
+        valid! (max 12 => u64 8u64);
+        valid! (max 12 => f64 8.0f64);
+        valid! (max 12 => bool true);
         // Not valid
-        validate!(max [true] 9 => i64 10);
+        invalid! (max 9 => i64 10);
+
+        let mut values = Map::new();
+        values.assign("pages[title]", Value::Null).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "max".to_string() => 2.to_json(),
+                "vtype".to_string() => "vec".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_some());
     });
 
     /// Test validator: min

@@ -53,9 +53,10 @@ impl BaseDataMapDecoder for BaseDataMap {
         match json::decode(&json_obj.to_string()) {
             Ok(decoded) => decoded,
             Err(err) => {
-                let msg = match err {
-                    ExpectedError(_, _) => "Validation field expected (wrong type for field)",
-                    _ => "JSON parse error",
+                let msg = if let ExpectedError(_, _) = err {
+                    "Validation field expected (wrong type for field)"
+                } else {
+                    "Json parse error"
                 };
                 panic!("\
               \n\n |> Validator::new error: {:?}\

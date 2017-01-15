@@ -482,6 +482,7 @@ mod test {
         for url in invalid_urls {
             validate!(url [true] true => String url);
         }
+        invalid! (url => i64 10);
     });
 
     /// Test validator: regexp

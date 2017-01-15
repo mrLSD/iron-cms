@@ -410,14 +410,13 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             };
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
-                    let msg;
-                    if numeric {
+                    let msg = if numeric {
                         // For numbers
-                        msg = format!("Field {} value should be equal: {}", error.field, required_value);
+                        format!("Field {} value should be equal: {}", error.field, required_value)
                     } else {
                         // For strings
-                        msg = format!("Field {} value should be equal length: {}", error.field, required_value);
-                    }
+                        format!("Field {} value should be equal length: {}", error.field, required_value)
+                    };
                     error.add(msg);
                 }
             }
@@ -861,7 +860,9 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                     let re = Regex::new(r"\A(?i)(https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?\z").unwrap();
                     re.is_match(value)
                 },
-                _ => false,
+                _ => {
+                    false
+                },
             };
             if !is_valid {
                 if let Some(ref mut error) = self.errors {

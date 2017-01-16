@@ -219,6 +219,20 @@ mod test {
         assert!(validator.get_errors().is_some());
     });
 
+    /// Test to_value conversion
+    test!(json_to_value_test = {
+        let validator = Validator::<i64>::new(btreemap! {
+            "required".to_string() => true.to_json(),
+            "vtype".to_string() => "i64".to_json(),
+        });
+        assert_eq! (validator.to_value(Json::I64(10)), Some(Value::I64(10)));
+        assert_eq! (validator.to_value(Json::U64(10)), Some(Value::U64(10)));
+        assert_eq! (validator.to_value(Json::F64(10.)), Some(Value::F64(10.)));
+        assert_eq! (validator.to_value(Json::Boolean(true)), Some(Value::Boolean(true)));
+        assert_eq! (validator.to_value(Json::String("test".into())), Some(Value::String("test".into())));
+        assert_eq! (validator.to_value(Json::Null), None);
+    });
+
     /// Test validator: default
     test!(default_validator_test = {
         // Field is set
@@ -236,9 +250,49 @@ mod test {
         assert!(validator.get_errors().is_none());
         assert_eq!(validator.get_values()["title"], "Test".to_json());
 
+        //===================
         // Field is not set
         let values = Map::new();
+        let validator = ValidateResults(vec!(
+            Validator::<u64>::new(btreemap! {
+                "default".to_string() => 10u64.to_json(),
+                "vtype".to_string() => "u64".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+        assert_eq!(validator.get_values()["title"], 10u64.to_json());
 
+        let values = Map::new();
+        let validator = ValidateResults(vec!(
+            Validator::<i64>::new(btreemap! {
+                "default".to_string() => (-10).to_json(),
+                "vtype".to_string() => "i64".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+        assert_eq!(validator.get_values()["title"], (-10).to_json());
+
+        let values = Map::new();
+        let validator = ValidateResults(vec!(
+            Validator::<f64>::new(btreemap! {
+                "default".to_string() => (10.3).to_json(),
+                "vtype".to_string() => "f64".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+        assert_eq!(validator.get_values()["title"], (10.3).to_json());
+
+        let values = Map::new();
+        let validator = ValidateResults(vec!(
+            Validator::<bool>::new(btreemap! {
+                "default".to_string() => true.to_json(),
+                "vtype".to_string() => "bool".to_json(),
+            }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_none());
+        assert_eq!(validator.get_values()["title"], true.to_json());
+
+        let values = Map::new();
         let validator = ValidateResults(vec!(
             Validator::<String>::new(btreemap! {
                 "default".to_string() => "Default text".to_json(),
@@ -289,6 +343,17 @@ mod test {
                 "max".to_string() => 2.to_json(),
                 "vtype".to_string() => "vec".to_json(),
             }).validate("title".to_string(), values.find(&["pages", "title"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("item", Value::Array(vec![Value::U64(2)])).unwrap();
+
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "max".to_string() => 2.to_json(),
+                "vtype".to_string() => "vec".to_json(),
+            }).validate("item".to_string(), values.find(&["item"])),
         ));
         assert!(validator.get_errors().is_some());
     });

@@ -206,14 +206,44 @@ mod test {
         // Field with int type
         validate!(required [false] true => i64 23);
 
-        // Field with wrong type
+        //================================
+        // Field with wrong types
         let mut values = Map::new();
-        values.assign("age", Value::String("Test".into())).unwrap();
-
+        values.assign("age", Value::String("test".into())).unwrap();
         let validator = ValidateResults(vec!(
             Validator::<i64>::new(btreemap! {
                 "required".to_string() => true.to_json(),
                 "vtype".to_string() => "i64".to_json(),
+            }).validate("man_age".to_string(), values.find(&["age"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("age", Value::String("Test".into())).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<u64>::new(btreemap! {
+                "required".to_string() => true.to_json(),
+                "vtype".to_string() => "u64".to_json(),
+            }).validate("man_age".to_string(), values.find(&["age"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("age", Value::Array(vec![Value::F64(0.3), Value::F64(-20.4)])).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "required".to_string() => true.to_json(),
+                "vtype".to_string() => "string".to_json(),
+            }).validate("man_age".to_string(), values.find(&["age"])),
+        ));
+        assert!(validator.get_errors().is_some());
+
+        let mut values = Map::new();
+        values.assign("age", Value::Array(vec![Value::F64(0.3), Value::F64(-20.4)])).unwrap();
+        let validator = ValidateResults(vec!(
+            Validator::<String>::new(btreemap! {
+                "required".to_string() => true.to_json(),
+                "vtype".to_string() => "str1".to_json(),
             }).validate("man_age".to_string(), values.find(&["age"])),
         ));
         assert!(validator.get_errors().is_some());

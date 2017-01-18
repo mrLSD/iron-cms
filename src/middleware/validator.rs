@@ -224,7 +224,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.rgba(&value);
         self.hsl(&value);
         self.hsla(&value);
-        //self.contains(&value);
+        self.contains(&value);
         if self.default.is_some() {
             value = self.default(&value);
         }
@@ -790,14 +790,15 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     ///
     /// This validates that a string value contains the
     /// substring value.
-    /*fn contains(&mut self, value: &Option<Value>) {
-        if self.contains.is_some() && value.is_some() {
+    fn contains(&mut self, value: &Option<Value>) {
+        if value.is_some() {
             let required_value = match self.contains {
                 Some(ref val) => val,
                 _ => return (),
             };
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
+                    println!("  VAL: {}", required_value);
                     value.contains(required_value)
                 },
                 _ => false,
@@ -809,7 +810,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                 }
             }
         }
-    }*/
+    }
 
     /// number validator
     ///

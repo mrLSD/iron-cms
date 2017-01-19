@@ -84,6 +84,7 @@ pub struct Validator<T: Display> {
     pub hsl: Option<bool>,
     pub hsla: Option<bool>,
     pub contains: Option<String>,
+    pub excludes: Option<String>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -225,6 +226,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.hsl(&value);
         self.hsla(&value);
         self.contains(&value);
+        self.excludes(&value);
         if self.default.is_some() {
             value = self.default(&value);
         }
@@ -798,7 +800,6 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             };
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    println!("  VAL: {}", required_value);
                     value.contains(required_value)
                 },
                 _ => false,
@@ -806,6 +807,31 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should contain {} string.", error.field, required_value);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// Excludes String validator
+    ///
+    /// This validates that a string value does not contain
+    /// the substring value.
+    fn excludes(&mut self, value: &Option<Value>) {
+        if value.is_some() {
+            let required_value = match self.excludes {
+                Some(ref val) => val,
+                _ => return (),
+            };
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    !value.contains(required_value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should exludes {} string.", error.field, required_value);
                     error.add(msg);
                 }
             }

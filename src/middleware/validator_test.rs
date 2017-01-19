@@ -1493,6 +1493,7 @@ mod test {
         // Valid
         valid! (contains "te" => String "test");
         valid! (contains "ест" => String "Тест");
+        valid! (contains "@" => String "test@google.com");
         // Value not set
         valid! (contains "test" => String);
     });

@@ -1483,4 +1483,18 @@ mod test {
         valid! (len 4 => String);
     });
 
+    /// Test validator: contains
+    test!(contains_validator_test = {
+        // Invalid
+        invalid! (contains "test" => String "");
+        invalid! (contains "tset" => f64 100.3);
+        invalid! (contains "new" => String "test");
+        invalid! (contains "test" => String "Тест");
+        // Valid
+        valid! (contains "te" => String "test");
+        valid! (contains "ест" => String "Тест");
+        // Value not set
+        valid! (contains "test" => String);
+    });
+
 }

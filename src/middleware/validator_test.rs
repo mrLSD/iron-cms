@@ -1498,4 +1498,21 @@ mod test {
         valid! (contains "test" => String);
     });
 
+
+    /// Test validator: excludes
+    test!(excludes_validator_test = {
+        // Invalid
+        invalid! (excludes "tset" => f64 100.3);
+        invalid! (excludes "tes" => String "test");
+        invalid! (excludes "ест" => String "Тест");
+        invalid! (excludes "@" => String "test@google.com");
+        // Valid
+        valid! (excludes "test" => String "");
+        valid! (excludes "new" => String "test");
+        valid! (excludes "Строка" => String "Тест");
+        valid! (excludes "#" => String "test@google.com");
+        // Value not set
+        valid! (excludes "test" => String);
+    });
+
 }

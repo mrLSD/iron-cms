@@ -7,7 +7,6 @@ rust:
   - nightly
 # fix osx openssl compilation error
 os:
-  - linux
   - osx:
     - env:
       - OPENSSL_INCLUDE_DIR=/usr/local/opt/openssl/include

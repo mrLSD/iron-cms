@@ -9,7 +9,7 @@ fn main() {
     // Add db middleware
     chain.link_before(iron_cms::middleware::db("postgres://postgres:qwe123qwe123@172.18.0.2:5432/test_db"));
     // Add Template renderer and views path
-    chain.link_after(iron_cms::middleware::template_render(vec!["./views/"]));
+    chain.link_after(iron_cms::middleware::template_render(vec!["/home/evgeny/rs/iron-cms/views/"]));
     // Add error-404 handler
     chain.link_after(iron_cms::middleware::Error404);
     // Start application

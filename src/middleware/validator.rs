@@ -85,6 +85,7 @@ pub struct Validator<T: Display> {
     pub hsla: Option<bool>,
     pub contains: Option<String>,
     pub excludes: Option<String>,
+    pub isbn10: Option<String>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -227,6 +228,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
         self.hsla(&value);
         self.contains(&value);
         self.excludes(&value);
+        self.isbn10(&value);
         if self.default.is_some() {
             value = self.default(&value);
         }
@@ -832,6 +834,28 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             if !is_valid {
                 if let Some(ref mut error) = self.errors {
                     let msg = format!("Field {} should exludes {} string.", error.field, required_value);
+                    error.add(msg);
+                }
+            }
+        }
+    }
+
+    /// isbn10 - International Standard Book Number 10
+    ///
+    /// This validates that a string value contains
+    /// a valid isbn10 value.
+    fn isbn10(&mut self, value: &Option<Value>) {
+        if self.isbn10.is_some() && value.is_some() {
+            let is_valid = match *value {
+                Some(Value::String(ref value)) => {
+                    let re = Regex::new(r"(?:[0-9]{9}X|[0-9]{10})$").unwrap();
+                    re.is_match(value)
+                },
+                _ => false,
+            };
+            if !is_valid {
+                if let Some(ref mut error) = self.errors {
+                    let msg = format!("Field {} should contain isbn10 characters only", error.field);
                     error.add(msg);
                 }
             }

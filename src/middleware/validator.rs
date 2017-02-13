@@ -85,8 +85,8 @@ pub struct Validator<T: Display> {
     pub hsla: Option<bool>,
     pub contains: Option<String>,
     pub excludes: Option<String>,
-    pub isbn10: Option<String>,
-    pub isbn13: Option<String>,
+    pub isbn10: Option<bool>,
+    pub isbn13: Option<bool>,
     pub default: Option<T>,
     errors: Option<ErrorValidator>,
 }
@@ -845,13 +845,16 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
     /// isbn10 - International Standard Book Number 10
     ///
     /// This validates that a string value contains
-    /// a valid isbn10 value.
+    /// a valid isbn10 value. It's simple validation
+    /// without check sum
     fn isbn10(&mut self, value: &Option<Value>) {
         if self.isbn10.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    let re = Regex::new(r"(?:[0-9]{9}X|[0-9]{10})$").unwrap();
-                    re.is_match(value)
+                    let re = Regex::new(r"^(?:[0-9]{9}X|[0-9]{10})$").unwrap();
+                    let mut val = value.replace(" ", "");
+                    val = val.replace("-", "");
+                    re.is_match(&value)
                 },
                 _ => false,
             };
@@ -866,12 +869,13 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
 
     /// isbn13 - International Standard Book Number 13
     /// This validates that a string value contains
-    /// a valid isbn13 value.
+    /// a valid isbn13 value. It's simple validation
+    /// without check sum
     fn isbn13(&mut self, value: &Option<Value>) {
         if self.isbn13.is_some() && value.is_some() {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
-                    let re = Regex::new(r"(?:(?:97(?:8|9))[0-9]{10})$").unwrap();
+                    let re = Regex::new(r"^(?:(?:97(?:8|9))[0-9]{10})$").unwrap();
                     re.is_match(value)
                 },
                 _ => false,

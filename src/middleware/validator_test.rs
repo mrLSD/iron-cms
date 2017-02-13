@@ -1498,7 +1498,6 @@ mod test {
         valid! (contains "test" => String);
     });
 
-
     /// Test validator: excludes
     test!(excludes_validator_test = {
         // Invalid

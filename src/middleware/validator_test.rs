@@ -1514,4 +1514,21 @@ mod test {
         valid! (excludes "test" => String);
     });
 
+    /// Test validator: isbn10
+    test!(isbn10_validator_test = {
+        // Invalid
+        invalid! (isbn10 => String "test");
+        invalid! (isbn10 => String "Тест");
+        invalid! (isbn10 => String "978-3836221191");
+        invalid! (isbn10 => String "3-423-21412-1-123123123123123123");
+        invalid! (isbn10 => String "978-3-8362-2119-1");
+        // Valid
+        valid! (isbn10 => String "3836221195");
+        valid! (isbn10 => String "1-61729-085-8");
+        valid! (isbn10 => String "3 423 21412 0");
+        valid! (isbn10 => String "3 401 01319 X");
+        // Value not set
+        valid! (isbn10  => String);
+    });
+
 }

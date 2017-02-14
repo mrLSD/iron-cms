@@ -854,7 +854,7 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
                     let re = Regex::new(r"^(?:[0-9]{9}X|[0-9]{10})$").unwrap();
                     let mut val = value.replace(" ", "");
                     val = val.replace("-", "");
-                    re.is_match(&value)
+                    re.is_match(&val)
                 },
                 _ => false,
             };

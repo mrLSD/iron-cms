@@ -876,7 +876,9 @@ impl<T: FromValue + ToJson + Decodable + Display> Validator<T> {
             let is_valid = match *value {
                 Some(Value::String(ref value)) => {
                     let re = Regex::new(r"^(?:(?:97(?:8|9))[0-9]{10})$").unwrap();
-                    re.is_match(value)
+                    let mut val = value.replace(" ", "");
+                    val = val.replace("-", "");
+                    re.is_match(&val)
                 },
                 _ => false,
             };

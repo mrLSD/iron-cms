@@ -1531,4 +1531,20 @@ mod test {
         valid! (isbn10  => String);
     });
 
+    /// Test validator: isbn13
+    test!(isbn13_validator_test = {
+        // Invalid
+        invalid! (isbn13 => String "test");
+        invalid! (isbn13 => String "Тест");
+        invalid! (isbn13 => String "978-383-622-119-123");
+        invalid! (isbn13 => String "3-423-21412-1-123123123123123123");
+        invalid! (isbn13 => String "978-3-8362-2119");
+        // Valid
+        valid! (isbn13 => String "9783153641234");
+        valid! (isbn13 => String "9-79729-085-823-1");
+        valid! (isbn13 => String "9 783 21412 02 23");
+        // Value not set
+        valid! (isbn10  => String);
+    });
+
 }

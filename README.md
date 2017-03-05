@@ -26,7 +26,7 @@ Active development
 #### How to build and run:
 ```
 $ git clone http://github.com/mrlsd/iron-cms
-$ make release
+$ cargo build --release
 $ target/release/iron-cms
 ```
 
@@ -35,10 +35,10 @@ $ target/release/iron-cms
   
 #### Some useful command:
 * **install Rust:** `make install`
-* **run:** `make`
-* **build:** `make build`
-* **release build:** `make release`
-* **test:** `make test`
+* **run:** `cargo run` or `make`
+* **build:** `cargo build` or `make build`
+* **release build:** `cargo build --release` or `make release`
+* **test:** `cargo test` or `make test`
 
 
 ####License: MIT
